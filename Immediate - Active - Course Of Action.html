@@ -1,0 +1,1816 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0D0E11">
+<style>
+:root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; font: 14px system-ui, sans-serif; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
+<title>Immediate / Active - Course Of Action</title>
+<link rel="icon" type="image/png" sizes="64x64" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Layout: header with overall progress, goal-distribution wheel, a sessions panel (V and R), filter chips, then one colored card per life area. Single blackish look with bright contrast colors. */
+:root {
+  --bg: #0D0E11;
+  --surface: #15171C;
+  --surface2: #1E2128;
+  --ink: #EEF0F4;
+  --muted: #9BA2B0;
+  --line: #292D36;
+  --on: #0D0E11;
+  --ap-c: #FF7DB9; --ap-t: #2A1823;
+  --pe-c: #45D9D2; --pe-t: #112628;
+  --fi-c: #7EE08B; --fi-t: #14261A;
+  --ca-c: #7FA6FF; --ca-t: #151E3A;
+  --se-c: #FF7070; --se-t: #2D1616;
+  --ch-c: #FFC555; --ch-t: #2B2111;
+  --v-c: #B794FF;
+  --r-c: #FF9250;
+  --van: #F3E3B3;
+  --sl-c: #8C93FF;
+  --font-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Figtree', 'Segoe UI', system-ui, sans-serif;
+  color-scheme: dark;
+}
+
+.a-appearance  { --c: var(--ap-c); --t: var(--ap-t); }
+.a-personality { --c: var(--pe-c); --t: var(--pe-t); }
+.a-financial   { --c: var(--fi-c); --t: var(--fi-t); }
+.a-career      { --c: var(--ca-c); --t: var(--ca-t); }
+.a-sexual      { --c: var(--se-c); --t: var(--se-t); }
+.a-character   { --c: var(--ch-c); --t: var(--ch-t); }
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.45;
+  padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; border-radius: 6px; }
+.wrap { max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+
+/* Header */
+.top { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+.top > div { min-width: 0; }
+.eyebrow { margin: 0 0 6px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+h1 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 6vw, 46px); line-height: 1.05; letter-spacing: -.02em; text-wrap: balance; }
+.sub { margin: 10px 0 0; max-width: 60ch; color: var(--muted); }
+.overall { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 12px 18px 12px 12px; }
+.overall svg { display: block; flex: none; }
+.overall .big { font-family: var(--font-display); font-weight: 700; font-size: 26px; line-height: 1; font-variant-numeric: tabular-nums; }
+.overall .small { font-size: 13px; color: var(--muted); margin-top: 4px; font-variant-numeric: tabular-nums; }
+
+/* Panels */
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 22px; }
+.panel-wheel { display: grid; grid-template-columns: minmax(0, 270px) minmax(0, 1fr); gap: 28px; align-items: center; }
+.wheel { width: 100%; max-width: 270px; margin: 0 auto; }
+.wheel svg { width: 100%; height: auto; display: block; overflow: visible; }
+.seg { fill: none; stroke: var(--c); stroke-width: 34; cursor: pointer; transition: stroke-width .18s ease, opacity .18s ease; }
+.seg:hover, .seg:focus-visible, .seg.on { stroke-width: 42; }
+.seg.dim { opacity: .28; }
+.wheel text { text-anchor: middle; fill: var(--ink); }
+.wheel .w-big { font-family: var(--font-display); font-weight: 700; font-size: 34px; }
+.wheel .w-label { font-size: 13px; font-weight: 600; }
+.wheel .w-small { font-size: 11px; fill: var(--muted); }
+.right { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.legend { display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.lrow { width: 100%; display: grid; grid-template-columns: 14px minmax(0, 1.1fr) minmax(0, 1.4fr) auto; align-items: center; gap: 12px; text-align: left; background: transparent; border: 1px solid transparent; border-radius: 12px; padding: 8px 10px; transition: background .15s ease, border-color .15s ease, opacity .15s ease; }
+.lrow:hover { background: var(--t); }
+.lrow.on { background: var(--t); border-color: var(--c); }
+.lrow.dim { opacity: .4; }
+.dot { width: 14px; height: 14px; border-radius: 50%; background: var(--c); flex: none; }
+.lname { font-weight: 600; min-width: 0; }
+.lname small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.track { height: 10px; border-radius: 99px; background: var(--surface2); overflow: hidden; }
+.track i { display: block; height: 100%; background: var(--c); border-radius: 99px; transition: width .3s ease; }
+.lshare { font-variant-numeric: tabular-nums; font-weight: 600; min-width: 3ch; text-align: right; }
+.notice { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.notice li { background: var(--surface2); border-radius: 12px; padding: 10px 14px; font-size: 14px; }
+.notice b { font-weight: 600; }
+.notice-h { margin: 0 0 8px; font-family: var(--font-display); font-size: 16px; font-weight: 700; }
+
+/* Sessions panel */
+.sess-panel { display: flex; flex-direction: column; gap: 18px; }
+.sec-h { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 24px; letter-spacing: -.01em; }
+.sec-sub { margin: 6px 0 0; color: var(--muted); max-width: 70ch; }
+.sec-sub b { color: var(--ink); font-weight: 600; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 12px; }
+.tile { text-align: left; border-radius: 16px; padding: 14px 16px; background: var(--surface2); border: 1.5px solid color-mix(in srgb, var(--c) 40%, transparent); display: flex; flex-direction: column; gap: 3px; transition: background .15s ease, border-color .15s ease, transform .15s ease; }
+.tile:hover { border-color: var(--c); transform: translateY(-2px); }
+.tile[aria-pressed="true"] { background: color-mix(in srgb, var(--c) 22%, var(--surface2)); border-color: var(--c); }
+.tile .tn { font-family: var(--font-display); font-weight: 700; font-size: 36px; line-height: 1; color: var(--c); font-variant-numeric: tabular-nums; }
+.tile .tl { font-weight: 600; }
+.tile .ts { font-size: 13px; color: var(--muted); }
+.tile.t-v { --c: var(--v-c); }
+.tile.t-r { --c: var(--r-c); }
+.tile.t-n { --c: var(--muted); }
+.srows { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.srow { display: grid; grid-template-columns: minmax(0, 180px) minmax(0, 1fr) auto; gap: 12px 16px; align-items: center; background: var(--t); border: 1.5px solid color-mix(in srgb, var(--c) 30%, transparent); border-radius: 14px; padding: 10px 14px; transition: opacity .2s ease; }
+.srow.dim { opacity: .3; }
+.sname { display: flex; align-items: center; gap: 10px; background: none; border: 0; padding: 0; text-align: left; font-weight: 600; }
+.sname:hover { text-decoration: underline; text-decoration-color: var(--c); text-underline-offset: 4px; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.sess { --sc: var(--r-c); display: inline-flex; align-items: center; gap: 8px; border: 1.5px solid var(--sc); background: transparent; border-radius: 99px; padding: 4px 14px 4px 4px; font-weight: 500; transition: background .15s ease, color .15s ease; }
+.sess.v { --sc: var(--v-c); }
+.sess .sl { width: 24px; height: 24px; border-radius: 50%; background: var(--sc); color: var(--on); display: grid; place-items: center; font-weight: 700; font-size: 12px; }
+.sess .tick { display: none; align-items: center; }
+.sess:hover { background: color-mix(in srgb, var(--sc) 18%, transparent); }
+.sess[aria-pressed="true"] { background: var(--sc); color: var(--on); }
+.sess[aria-pressed="true"] .sl { background: var(--on); color: var(--sc); }
+.sess[aria-pressed="true"] .tick { display: inline-flex; }
+.none { color: var(--muted); font-size: 14px; }
+.scount { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Controls */
+.controls { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; }
+.chips, .seg-ctl { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 8px; border: 1.5px solid var(--line); background: var(--surface); border-radius: 99px; padding: 7px 14px; font-weight: 500; transition: background .15s ease, border-color .15s ease, color .15s ease; }
+.chip .dot { width: 10px; height: 10px; }
+.chip:hover { border-color: var(--c, var(--ink)); }
+.chip[aria-pressed="true"] { background: var(--c, var(--ink)); border-color: var(--c, var(--ink)); color: var(--on); }
+.chip[aria-pressed="true"] .dot { background: var(--on); }
+.chip.all { --c: var(--ink); }
+.seg-ctl { background: var(--surface2); border-radius: 99px; padding: 4px; gap: 2px; flex-wrap: nowrap; }
+.seg-ctl button { border: 0; background: transparent; padding: 6px 14px; border-radius: 99px; font-weight: 500; color: var(--muted); }
+.seg-ctl button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+
+/* Cards */
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr)); gap: 18px; align-items: start; }
+.card { background: var(--t); border: 1.5px solid color-mix(in srgb, var(--c) 35%, transparent); border-radius: 20px; overflow: hidden; transition: transform .2s ease, opacity .2s ease, box-shadow .2s ease, filter .2s ease; scroll-margin-top: 16px; }
+.card:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -18px color-mix(in srgb, var(--c) 80%, #000); }
+.card.dim { opacity: .34; filter: saturate(.6); }
+.card-h { background: var(--c); color: var(--on); padding: 16px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.card-h h2 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: -.01em; min-width: 0; }
+.badge { font-size: 12px; font-weight: 600; letter-spacing: .04em; border-radius: 99px; padding: 4px 11px; background: color-mix(in srgb, var(--on) 18%, transparent); white-space: nowrap; }
+.strip { display: flex; align-items: center; gap: 12px; padding: 10px 18px 0; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.strip .track { flex: 1; background: color-mix(in srgb, var(--c) 20%, transparent); }
+.card-s { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; padding: 12px 18px 0; }
+.card-s .lab { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-right: 2px; }
+.goals { list-style: none; margin: 0; padding: 12px; display: grid; gap: 8px; }
+.goal { background: color-mix(in srgb, var(--surface) 72%, transparent); border-radius: 14px; }
+.row { display: flex; align-items: flex-start; gap: 12px; padding: 11px 10px 11px 12px; border-radius: 14px; cursor: pointer; transition: background .15s ease; }
+.row:hover { background: var(--surface2); }
+.check { flex: none; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--c); background: transparent; display: grid; place-items: center; color: var(--on); padding: 0; transition: background .15s ease, transform .15s ease; }
+.check svg { opacity: 0; }
+.check[aria-pressed="true"] { background: var(--c); }
+.check[aria-pressed="true"] svg, .check.partial svg { opacity: 1; }
+.check.partial { background: color-mix(in srgb, var(--c) 55%, transparent); }
+.row:active .check { transform: scale(.9); }
+.gtext { flex: 1; min-width: 0; padding-top: 2px; overflow-wrap: anywhere; }
+.gtext strong { font-weight: 600; }
+.is-done .gtext { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--c); text-decoration-thickness: 2px; }
+.star { flex: none; width: 30px; height: 30px; display: grid; place-items: center; border: 0; background: transparent; color: var(--muted); border-radius: 50%; padding: 0; transition: color .15s ease, background .15s ease; }
+.star:hover { background: color-mix(in srgb, var(--c) 18%, transparent); color: var(--c); }
+.star svg path { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; }
+.star[aria-pressed="true"] { color: var(--c); }
+.star[aria-pressed="true"] svg path { fill: currentColor; }
+.subs { list-style: none; margin: 0 12px 10px 30px; padding: 0 0 0 14px; border-left: 2px dashed color-mix(in srgb, var(--c) 55%, transparent); display: grid; gap: 2px; }
+.subs .row { padding: 8px 10px; }
+.subs .check { width: 22px; height: 22px; }
+.empty { margin: 0; padding: 6px 8px; color: var(--muted); font-size: 14px; }
+
+/* Notes */
+.notes { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 22px; display: grid; gap: 10px; }
+.notes label { font-family: var(--font-display); font-weight: 700; font-size: 18px; }
+.notes p { margin: 0; color: var(--muted); font-size: 14px; }
+.notes textarea { width: 100%; min-height: 130px; resize: vertical; background: var(--bg); color: var(--ink); border: 1.5px solid var(--line); border-radius: 14px; padding: 14px; font: inherit; line-height: 1.5; }
+.notes textarea:focus-visible { outline-offset: 0; border-color: var(--ink); }
+
+/* Tabs and day view */
+.view { display: flex; flex-direction: column; gap: 24px; }
+.view[hidden] { display: none; }
+.tabs { display: flex; gap: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 99px; padding: 5px; width: max-content; max-width: 100%; }
+.tabs button { border: 0; background: transparent; padding: 9px 22px; border-radius: 99px; font-weight: 600; color: var(--muted); transition: background .15s ease, color .15s ease; }
+.tabs button:hover { color: var(--ink); }
+.tabs button[aria-selected="true"] { background: var(--van); color: var(--on); }
+
+.timing { display: grid; grid-template-columns: minmax(0, 310px) minmax(0, 1fr); gap: 28px; align-items: center; }
+.ring { width: 100%; max-width: 310px; margin: 0 auto; }
+.ring svg { width: 100%; height: auto; display: block; overflow: visible; }
+.rseg { fill: none; stroke-width: 26; cursor: pointer; transition: stroke-width .18s ease, stroke-opacity .18s ease; }
+.rseg.awake { stroke: var(--van); opacity: .92; }
+.rseg.sleep { stroke: var(--sl-c); }
+.rseg.s2 { opacity: .62; }
+.rseg.s3 { opacity: .34; }
+.rseg:hover, .rseg:focus-visible, .rseg.on { stroke-width: 34; }
+.rseg.dim { stroke-opacity: .25; }
+.ring text { text-anchor: middle; fill: var(--ink); }
+.ring .rt { font-size: 11px; fill: var(--muted); }
+.ring .rt.k { fill: var(--ink); font-weight: 600; }
+.ring .r-big { font-family: var(--font-display); font-weight: 700; font-size: 26px; }
+.ring .r-lab { font-size: 13px; font-weight: 600; }
+.ring .r-sm { font-size: 11px; fill: var(--muted); }
+.sw { width: 14px; height: 14px; border-radius: 5px; flex: none; }
+.facts { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.facts li { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; gap: 12px; align-items: center; background: var(--surface2); border-radius: 12px; padding: 10px 14px; }
+.facts b { font-weight: 600; }
+.facts small { display: block; color: var(--muted); font-size: 12px; }
+.facts .ft { font-family: var(--font-display); font-weight: 700; font-size: 18px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.order { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; }
+.ostep { border: 1.5px solid var(--line); background: var(--surface2); border-radius: 99px; padding: 6px 14px; font-weight: 500; display: inline-flex; gap: 8px; align-items: center; transition: border-color .15s ease, background .15s ease; }
+.ostep b { color: var(--van); font-family: var(--font-display); }
+button.ostep:hover { border-color: var(--van); background: color-mix(in srgb, var(--van) 14%, var(--surface2)); }
+.ostep.end { background: transparent; border-style: dashed; color: var(--muted); }
+.oarr { color: var(--muted); }
+
+.blocks { display: flex; flex-direction: column; gap: 16px; }
+.block { --c: var(--van); display: grid; grid-template-columns: 176px minmax(0, 1fr); background: var(--surface); border: 1.5px solid var(--line); border-radius: 20px; overflow: hidden; scroll-margin-top: 16px; transition: border-color .2s ease; }
+.block:hover { border-color: color-mix(in srgb, var(--van) 45%, transparent); }
+.block .goal { background: var(--surface2); }
+.b-side { background: color-mix(in srgb, var(--van) 9%, var(--surface2)); border-right: 1px solid var(--line); padding: 20px 18px; display: flex; flex-direction: column; justify-content: center; gap: 4px; min-width: 0; }
+.b-num { font-family: var(--font-display); font-weight: 700; font-size: 58px; line-height: .95; color: var(--van); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.b-lab { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.b-name { margin: 4px 0 0; font-family: var(--font-display); font-size: 21px; line-height: 1.15; text-wrap: balance; }
+.b-sub { color: var(--muted); font-size: 13px; }
+.b-prog { margin-top: 10px; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.b-side .track { margin-top: 4px; background: color-mix(in srgb, var(--van) 18%, transparent); }
+.b-main { min-width: 0; padding: 6px; }
+.m-h { margin: 0; padding: 12px 12px 0; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--van); }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.split > * + * { border-left: 1px solid var(--line); }
+.hair { padding: 0 18px 18px; display: flex; flex-direction: column; gap: 10px; }
+.hair .m-h { padding: 12px 0 0; }
+.moved { font-size: 12px; color: var(--muted); }
+.hair-t { margin: 0; font-weight: 600; }
+.hbar { display: flex; gap: 4px; height: 34px; }
+.hbar i { display: grid; place-items: center; font-style: normal; font-size: 12px; font-weight: 600; color: var(--on); border-radius: 10px; }
+.hbar .w { background: var(--pe-c); }
+.hbar .s { background: var(--ch-c); }
+.hleg { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.hleg li { display: flex; align-items: center; gap: 10px; }
+.hleg .sw { width: 12px; height: 12px; }
+.subs .subs { margin: 0 0 6px 18px; }
+.hbig { display: flex; align-items: baseline; gap: 10px; }
+.hn { font-family: var(--font-display); font-weight: 700; font-size: 44px; line-height: 1; color: var(--pe-c); font-variant-numeric: tabular-nums; }
+.hl { color: var(--muted); }
+.hflow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; }
+.hstep { display: inline-flex; gap: 8px; align-items: center; border: 1.5px solid var(--ch-c); border-radius: 99px; padding: 6px 14px; font-weight: 500; background: color-mix(in srgb, var(--ch-c) 10%, transparent); }
+.hstep.s { border-color: var(--pe-c); background: color-mix(in srgb, var(--pe-c) 12%, transparent); }
+.hstep b { font-family: var(--font-display); }
+.pflow { display: flex; flex-direction: column; align-items: stretch; max-width: 860px; }
+.pnode { display: flex; align-items: center; gap: 12px; width: max-content; max-width: 100%; padding: 12px 20px; border-radius: 99px; font-weight: 600; background: var(--surface); border: 1.5px dashed var(--line); transition: background .25s ease, color .25s ease, border-color .25s ease; }
+.pnode small { display: block; font-weight: 400; font-size: 12px; color: var(--muted); }
+.pnode .pdot { width: 12px; height: 12px; border-radius: 50%; background: var(--pc); flex: none; }
+.pnode.fall { --pc: var(--se-c); border-color: color-mix(in srgb, var(--se-c) 55%, transparent); }
+.pnode.end { --pc: var(--van); border-color: color-mix(in srgb, var(--van) 55%, transparent); }
+.pnode.end.on { background: var(--van); color: var(--on); border-style: solid; border-color: var(--van); }
+.pnode.end.on small { color: var(--on); opacity: .75; }
+.pnode.end.on .pdot { background: var(--on); }
+.plink { width: 3px; height: 30px; margin-left: 31px; background: var(--line); border-radius: 2px; transition: background .25s ease; }
+.plink.on { background: var(--van); }
+.pstep { margin: 0; grid-template-columns: 220px minmax(0, 1fr); }
+.pstep .b-name { font-size: 19px; overflow-wrap: anywhere; }
+.ptags { display: flex; flex-wrap: wrap; gap: 8px; padding: 4px 12px 14px; }
+.ptag { --sc: var(--r-c); display: inline-flex; align-items: center; gap: 8px; border: 1.5px solid var(--sc); border-radius: 99px; padding: 4px 14px 4px 4px; font-weight: 500; }
+.ptag.v { --sc: var(--v-c); }
+.ptag .sl { width: 24px; height: 24px; border-radius: 50%; background: var(--sc); color: var(--on); display: grid; place-items: center; font-weight: 700; font-size: 12px; }
+.pact { margin-top: 14px; }
+.pnote ul { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; max-width: 860px; }
+.pnote li { background: var(--surface2); border-radius: 14px; padding: 14px 18px; color: var(--muted); }
+.pnote li.final { background: color-mix(in srgb, var(--van) 12%, var(--surface2)); color: var(--ink); font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.3; text-wrap: balance; }
+.rtag { display: inline-grid; place-items: center; width: 22px; height: 22px; margin-right: 10px; border-radius: 50%; background: var(--r-c); color: var(--on); font-weight: 700; font-size: 12px; vertical-align: middle; }
+.wnote { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 18px; padding: 12px 12px 4px; font-size: 14px; color: var(--muted); }
+.wnote b { color: var(--ink); font-weight: 600; }
+.wgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 14px; padding: 12px 8px 8px; align-items: start; }
+.block .card .goal { background: color-mix(in srgb, var(--surface) 72%, transparent); }
+.card-s:last-child { padding-bottom: 16px; }
+.wcol { background: var(--t); border: 1.5px solid color-mix(in srgb, var(--c) 35%, transparent); border-radius: 16px; overflow: hidden; min-width: 0; }
+.wcol .goal { background: color-mix(in srgb, var(--surface) 72%, transparent); }
+.wc-h { background: var(--c); color: var(--on); padding: 12px 14px; }
+.wc-h h4 { margin: 0; font-family: var(--font-display); font-size: 18px; font-weight: 700; }
+.wc-h small { display: block; font-size: 12px; font-weight: 500; opacity: .85; margin-top: 2px; }
+.gate { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 12px 14px 4px; }
+.gate.none { color: var(--muted); font-size: 13px; }
+.gcap { font-size: 12px; color: var(--muted); }
+.then { padding: 4px 14px 0; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.locked .goal { opacity: .55; }
+.goals .goal { transition: opacity .2s ease; }
+
+@media (max-width: 760px) {
+  .timing { grid-template-columns: 1fr; }
+  .block, .pstep { grid-template-columns: 1fr; }
+  .b-side { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; border-right: 0; border-bottom: 1px solid var(--line); padding: 14px 16px; }
+  .b-num { font-size: 40px; }
+  .b-name { margin: 0; }
+  .b-prog { margin: 0; }
+  .b-side .track { display: none; }
+  .split { grid-template-columns: 1fr; }
+  .split > * + * { border-left: 0; border-top: 1px solid var(--line); }
+  .tabs { width: 100%; }
+  .tabs button { flex: 1; padding-inline: 12px; }
+}
+@media (max-width: 760px) {
+  .panel { padding: 18px; }
+  .panel-wheel { grid-template-columns: 1fr; }
+  .lrow { grid-template-columns: 14px minmax(0, 1fr) auto; }
+  .lrow .track { grid-column: 2 / 4; grid-row: 2; }
+  .srow { grid-template-columns: 1fr; gap: 8px; }
+  .seg-ctl { width: 100%; overflow-x: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+/* ===== Routine Conditioning (fourth tab) ===== */
+.tabs button { white-space: nowrap; }
+.view.rc { gap: 48px; }
+.rc { --xc: var(--ch-c); --yc: var(--ap-c); --chaos: var(--se-c); --spirit: var(--fi-c); }
+.c-x { --c: var(--ch-c); } .c-y { --c: var(--ap-c); } .c-chaos { --c: var(--se-c); }
+.c-cons { --c: var(--ca-c); } .c-sub { --c: var(--v-c); } .c-bod { --c: var(--pe-c); }
+.c-spirit { --c: var(--fi-c); } .c-van { --c: var(--van); } .c-r { --c: var(--r-c); }
+
+.rc-jump { display: flex; flex-wrap: wrap; gap: 8px; }
+.rc-jump button { display: inline-flex; align-items: center; gap: 8px; border: 1.5px solid var(--line); background: var(--surface); border-radius: 99px; padding: 6px 14px 6px 6px; font-weight: 500; transition: border-color .15s ease, background .15s ease; }
+.rc-jump button b { width: 24px; height: 24px; border-radius: 50%; background: var(--van); color: var(--on); display: grid; place-items: center; font: 700 12px var(--font-display); }
+.rc-jump button:hover { border-color: var(--van); background: color-mix(in srgb, var(--van) 14%, var(--surface)); }
+
+.rc-sec { display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 16px; }
+.rc-sh { display: flex; align-items: center; gap: 14px; }
+.rc-n { flex: none; width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--van); color: var(--van); display: grid; place-items: center; font: 700 20px var(--font-display); }
+.rc-sh h2 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 4vw, 30px); line-height: 1.1; letter-spacing: -.01em; text-wrap: balance; }
+.rc-sub { margin: 10px 0 0; font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: -.005em; }
+.rc-lead { margin: 0; color: var(--muted); max-width: 72ch; }
+.rc-lead b { color: var(--ink); font-weight: 600; }
+.rc-key { margin: 0; background: color-mix(in srgb, var(--van) 12%, var(--surface2)); border-radius: 14px; padding: 14px 18px; font-family: var(--font-display); font-weight: 700; font-size: 18px; line-height: 1.3; text-wrap: balance; max-width: 860px; }
+.rc-defs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 12px; }
+.rc-def { background: var(--surface2); border-radius: 14px; padding: 14px 18px; border-top: 3px solid var(--c, var(--van)); }
+.rc-def h3 { margin: 0 0 4px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--c, var(--van)); }
+.rc-def p { margin: 0; }
+.rc-points { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; max-width: 860px; }
+.rc-points li { background: var(--surface2); border-radius: 12px; padding: 10px 14px; color: var(--muted); }
+.rc-points li b { color: var(--ink); font-weight: 600; }
+
+/* Interactive diagram shell */
+.rc-dia { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 22px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 22px; }
+.rc-dia.stack { grid-template-columns: minmax(0, 1fr); }
+.rc-hint { margin: 0 0 12px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.rc-info { --ic: var(--van); background: var(--surface2); border: 1.5px solid var(--line); border-left: 4px solid var(--ic); border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; min-height: 210px; transition: border-color .2s ease; }
+.rc-info .tag { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ic); }
+.rc-info h4 { margin: 0; font-family: var(--font-display); font-size: 21px; line-height: 1.15; text-wrap: balance; }
+.rc-info p { margin: 0; }
+.rc-info p b { font-weight: 600; }
+.rc-next { align-self: flex-start; margin-top: auto; border: 1.5px solid var(--line); background: var(--surface); border-radius: 99px; padding: 6px 16px; font-weight: 600; transition: border-color .15s ease, background .15s ease; }
+.rc-next:hover { border-color: var(--ic); background: color-mix(in srgb, var(--ic) 14%, var(--surface)); }
+
+.rc-svg { width: 100%; max-width: 560px; height: auto; display: block; overflow: visible; margin: 0 auto; }
+.rc-svg text { fill: var(--ink); font-family: var(--font-body); }
+.rc-svg .lbl { font-size: 13px; font-weight: 700; letter-spacing: .08em; }
+.rc-svg .side { font-size: 16px; font-weight: 600; }
+.rc-svg .xx { font-size: 17px; font-weight: 700; text-anchor: middle; }
+.rc-svg .plain { stroke: var(--muted); stroke-width: 2; fill: none; }
+.rc-part { cursor: pointer; outline-offset: 3px; transition: opacity .18s ease; }
+.rc-part .shape { fill: color-mix(in srgb, var(--c) 14%, transparent); stroke: var(--c); stroke-width: 2.5; transition: fill .18s ease, stroke-width .18s ease; }
+.rc-part .ln { stroke: var(--c); stroke-width: 2; fill: none; }
+.rc-part .arw { stroke: var(--c); stroke-width: 2; fill: none; }
+.rc-part:hover .shape, .rc-part.on .shape, .rc-part:focus-visible .shape { fill: color-mix(in srgb, var(--c) 34%, transparent); stroke-width: 4; }
+.rc-part.on text.side, .rc-part:hover text.side { fill: var(--c); }
+.rc-dia.has-on .rc-part:not(.on), .rc-dia.has-on .rc-node:not(.on) { opacity: .5; }
+
+/* Nodes (HTML parts of diagrams) */
+.rc-node { --c: var(--van); display: flex; flex-direction: column; gap: 2px; text-align: left; background: color-mix(in srgb, var(--c) 10%, var(--surface2)); border: 1.5px solid color-mix(in srgb, var(--c) 45%, transparent); border-radius: 14px; padding: 12px 16px; font: inherit; font-weight: 600; color: var(--ink); cursor: pointer; transition: border-color .15s ease, background .15s ease, transform .15s ease, opacity .18s ease; }
+.rc-node small { font-weight: 400; color: var(--muted); font-size: 12px; }
+.rc-node .n { font: 700 12px var(--font-display); color: var(--c); letter-spacing: .1em; }
+.rc-node:hover, .rc-node.on { border-color: var(--c); background: color-mix(in srgb, var(--c) 24%, var(--surface2)); transform: translateY(-2px); }
+.rc-node.ctr { align-items: center; text-align: center; }
+.rc-arr { color: var(--muted); font-size: 22px; line-height: 1; align-self: center; }
+.rc-row { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; }
+.rc-row > .rc-node { flex: 1 1 120px; }
+.rc-col { display: flex; flex-direction: column; gap: 6px; max-width: 520px; margin: 0 auto; }
+.rc-col .rc-arr { text-align: center; }
+
+/* Clash diagram */
+.rc-clash { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); grid-template-areas: "x mid y" "ch ch ch" "chips chips chips"; gap: 12px; align-items: center; }
+.rc-clash .gx { grid-area: x; } .rc-clash .gy { grid-area: y; } .rc-clash .gch { grid-area: ch; justify-self: center; min-width: min(100%, 240px); }
+.rc-mid { grid-area: mid; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; padding: 6px 4px; border-radius: 12px; font-family: var(--font-display); font-weight: 700; color: var(--chaos); transition: opacity .18s ease, background .15s ease; }
+.rc-mid .ar { color: var(--muted); font-size: 20px; line-height: 1; font-weight: 400; }
+.rc-mid:hover, .rc-mid.on { background: color-mix(in srgb, var(--chaos) 18%, transparent); }
+.rc-chips { grid-area: chips; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; cursor: pointer; padding: 6px; border-radius: 14px; transition: opacity .18s ease, background .15s ease; }
+.rc-chips.on { background: color-mix(in srgb, var(--chaos) 12%, transparent); }
+.rc-chips span { border: 1.5px solid color-mix(in srgb, var(--chaos) 55%, transparent); border-radius: 99px; padding: 4px 12px; font-size: 13px; font-weight: 500; }
+.rc-chips.on span, .rc-chips:hover span { background: color-mix(in srgb, var(--chaos) 22%, transparent); border-color: var(--chaos); }
+.rc-dia.has-on .rc-mid:not(.on), .rc-dia.has-on .rc-chips:not(.on) { opacity: .5; }
+
+/* Factors */
+.rc-factors { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rc-factor { --c: var(--van); position: relative; text-align: left; background: var(--surface2); border: 1.5px dashed var(--line); border-radius: 14px; padding: 16px 14px; font: inherit; font-weight: 600; color: var(--muted); cursor: pointer; display: flex; flex-direction: column; gap: 6px; transition: background .2s ease, border-color .2s ease, color .2s ease; }
+.rc-factor .sw2 { width: 34px; height: 20px; border-radius: 99px; background: var(--line); position: relative; transition: background .2s ease; }
+.rc-factor .sw2::after { content: ""; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: var(--muted); transition: transform .2s ease, background .2s ease; }
+.rc-factor.is-on { background: color-mix(in srgb, var(--c) 20%, var(--surface2)); border: 1.5px solid var(--c); color: var(--ink); }
+.rc-factor.is-on .sw2 { background: var(--c); }
+.rc-factor.is-on .sw2::after { transform: translateX(14px); background: var(--on); }
+.rc-factor:hover { border-color: var(--c); }
+.rc-factor.on { box-shadow: 0 0 0 2px color-mix(in srgb, var(--c) 45%, transparent); }
+.rc-meter { margin-top: 14px; display: grid; gap: 8px; }
+.rc-bars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.rc-bars i { height: 12px; border-radius: 99px; background: var(--surface2); transition: background .25s ease; }
+.rc-bars i.f { background: var(--van); }
+.rc-verdict { margin: 0; font-weight: 600; }
+.rc-verdict small { display: block; font-weight: 400; color: var(--muted); margin-top: 2px; }
+.rc-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.rc-btn { border: 1.5px solid var(--line); background: var(--surface); border-radius: 99px; padding: 6px 14px; font-weight: 500; transition: border-color .15s ease, background .15s ease; }
+.rc-btn:hover { border-color: var(--van); background: color-mix(in srgb, var(--van) 14%, var(--surface)); }
+.rc-btn[aria-pressed="true"] { background: var(--van); color: var(--on); border-color: var(--van); }
+.rc-note { margin: 12px 0 0; background: var(--surface2); border-radius: 12px; padding: 12px 14px; font-size: 14px; color: var(--muted); }
+.rc-note b { color: var(--ink); font-weight: 600; }
+.rc-fine { margin: 0; font-size: 13px; color: var(--muted); max-width: 72ch; }
+
+/* Segmented switch + cases */
+.rc-seg { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.rc-case { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 22px; display: grid; gap: 12px; }
+.rc-case h3 { margin: 0; font-family: var(--font-display); font-size: 20px; }
+.rc-case ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.rc-case li { background: var(--surface2); border-radius: 12px; padding: 10px 14px; }
+.rc-case.focus { border-color: color-mix(in srgb, var(--chaos) 55%, transparent); }
+
+/* Harmony / clash flow */
+.rc-flow { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; }
+.rc-flow > .rc-node { flex: 1 1 110px; }
+.rc-flow .rc-link { align-self: center; font-size: 22px; line-height: 1; color: var(--spirit); }
+.rc-flow .rc-link .bad { display: none; }
+.rc-flow[data-mode="clash"] .rc-link.l2 { color: var(--chaos); }
+.rc-flow[data-mode="clash"] .rc-link.l2 .ok { display: none; }
+.rc-flow[data-mode="clash"] .rc-link.l2 .bad { display: inline; }
+.rc-flow[data-mode="clash"] .rc-node.act { border-style: dashed; }
+.rc-power { height: 8px; border-radius: 99px; margin: 14px 0 6px; background: var(--spirit); transition: background .3s ease; }
+.rc-flow[data-mode="clash"] ~ .rc-power { background: linear-gradient(90deg, var(--spirit) 0 46%, var(--chaos) 46% 58%, color-mix(in srgb, var(--spirit) 22%, var(--surface2)) 58% 100%); }
+.rc-cap { margin: 0; font-size: 12px; color: var(--muted); }
+
+/* Principles and summary */
+.rc-pr { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 12px; align-items: start; }
+.rc-pc { background: var(--surface); border: 1.5px solid var(--line); border-radius: 18px; transition: border-color .15s ease; }
+.rc-pc:hover, .rc-pc[open] { border-color: color-mix(in srgb, var(--van) 55%, transparent); }
+.rc-pc summary { list-style: none; cursor: pointer; display: flex; gap: 12px; align-items: flex-start; padding: 16px; font-weight: 600; }
+.rc-pc summary::-webkit-details-marker { display: none; }
+.rc-pc summary b { flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--van); color: var(--on); display: grid; place-items: center; font: 700 14px var(--font-display); }
+.rc-pc summary small { display: block; font-weight: 400; color: var(--muted); margin-top: 2px; }
+.rc-pc .body { padding: 0 16px 16px 56px; color: var(--muted); display: grid; gap: 8px; }
+.rc-pc .body p { margin: 0; }
+.rc-pc .body b { color: var(--ink); font-weight: 600; }
+.rc-sum { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 6px; align-items: center; }
+.rc-sum li { border: 1.5px solid var(--line); background: var(--surface2); border-radius: 99px; padding: 6px 14px; font-weight: 500; }
+.rc-sum li + li::before { content: "\203A"; color: var(--muted); margin-right: 14px; margin-left: -8px; }
+.rc-sum li.hl { border-color: var(--chaos); background: color-mix(in srgb, var(--chaos) 14%, transparent); }
+.rc-sum li.end { border-color: var(--van); background: color-mix(in srgb, var(--van) 14%, transparent); }
+
+/* Retrieval paragraph */
+.rc-ret { background: color-mix(in srgb, var(--van) 7%, var(--surface)); border: 2px solid color-mix(in srgb, var(--van) 55%, transparent); border-radius: 22px; padding: 26px; display: grid; gap: 14px; }
+.rc-ret h3 { margin: 0; font-family: var(--font-display); font-size: 26px; letter-spacing: -.01em; }
+.rc-ret .when { margin: 0; font-style: italic; color: var(--muted); }
+.rc-ret .text { margin: 0; font-size: 19px; line-height: 1.75; max-width: 70ch; }
+.rc-ret .text b { font-weight: 700; }
+.rc-ret .ur { font-family: "Noto Nastaliq Urdu", "Jameel Noori Nastaleeq", "Noto Naskh Arabic", "Segoe UI", Tahoma, sans-serif; font-size: 1.1em; }
+
+@media (max-width: 760px) {
+  .tabs { flex-wrap: wrap; border-radius: 22px; }
+  .tabs button { flex: 1 1 auto; }
+  .rc-dia { grid-template-columns: minmax(0, 1fr); padding: 16px; }
+  .rc-ret { padding: 18px; }
+  .rc-ret .text { font-size: 17px; }
+  .rc-pc .body { padding-left: 16px; }
+  .rc-clash .rc-node { padding: 10px; font-size: 14px; }
+}
+</style>
+
+</head>
+<body>
+<main class="wrap">
+  <nav class="tabs" role="tablist" aria-label="Views">
+    <button type="button" role="tab" id="tab-goals" data-act="tab" data-v="goals" data-key="tab-goals" aria-selected="true">Goals</button>
+    <button type="button" role="tab" id="tab-day" data-act="tab" data-v="day" data-key="tab-day" aria-selected="false">The Day</button>
+    <button type="button" role="tab" id="tab-path" data-act="tab" data-v="path" data-key="tab-path" aria-selected="false">Back on the Path</button>
+    <button type="button" role="tab" id="tab-rc" data-act="tab" data-v="rc" data-key="tab-rc" aria-selected="false">Routine Conditioning</button>
+  </nav>
+<div id="view-goals" class="view">
+  <header class="top">
+    <div>
+      <p class="eyebrow">Current Phase and Its Goals</p>
+      <h1>Current Phase: This Year</h1>
+      <p class="sub">Six areas, 16 goals and 5 sessions. Tap a goal to mark it done, star the ones that need attention first, and tap the wheel to focus on one area.</p>
+    </div>
+    <div class="overall" id="overall"></div>
+  </header>
+
+  <section class="panel panel-wheel" aria-label="How the goals are spread across areas">
+    <div class="wheel"><svg id="wheel" viewBox="0 0 220 220" role="group" aria-label="Goals per area"></svg></div>
+    <div class="right">
+      <ul class="legend" id="legend"></ul>
+      <div>
+        <h3 class="notice-h">What stands out</h3>
+        <ul class="notice" id="notice"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel sess-panel" aria-label="Sessions needed">
+    <div>
+      <h2 class="sec-h">Sessions</h2>
+      <p class="sec-sub"><b>V session</b> is a visualization session. <b>R session</b> is a reprogramming session. Not every area needs one. <span id="sline"></span> Tap a tile to highlight the areas that use it, and tap a session to mark it done.</p>
+    </div>
+    <div class="tiles" id="tiles"></div>
+    <ul class="srows" id="srows"></ul>
+  </section>
+
+  <div class="controls">
+    <div class="chips" id="chips" role="group" aria-label="Show area"></div>
+    <div class="seg-ctl" id="status" role="group" aria-label="Show goals">
+      <button type="button" data-act="status" data-v="all" data-key="st-all">All</button>
+      <button type="button" data-act="status" data-v="todo" data-key="st-todo">To do</button>
+      <button type="button" data-act="status" data-v="done" data-key="st-done">Done</button>
+      <button type="button" data-act="status" data-v="star" data-key="st-star">Starred</button>
+    </div>
+  </div>
+
+  <section class="grid" id="grid" aria-label="Goals by area"></section>
+
+  <section class="notes">
+    <label for="notes">What I notice</label>
+    <p>Write what stands out: which area needs the most time, what depends on what, what to start first. This stays in this browser.</p>
+    <textarea id="notes" placeholder="For example: Appearance has two R sessions and three goals, so I should plan those sessions before the training block starts."></textarea>
+  </section>
+</div>
+
+<div id="view-day" class="view" hidden>
+  <header class="top">
+    <div>
+      <p class="eyebrow">Physical Representation of a Day</p>
+      <h1>A Productive &amp; Meaningful Day</h1>
+      <p class="sub">Four blocks, done in order. Tap any task to tick it. Ticks reset each day.</p>
+    </div>
+    <div class="overall" id="dayOverall"></div>
+  </header>
+
+  <section class="panel timing" aria-label="Sleep and wake timing">
+    <div class="ring"><svg id="ring" viewBox="0 0 300 300" role="group" aria-label="24-hour clock showing sleep and awake time"></svg></div>
+    <div class="right">
+      <div>
+        <h2 class="sec-h">The shape of the day</h2>
+        <p class="sec-sub">Tap a part of the clock to read it. The day starts at wake-up and runs block by block until sleep.</p>
+      </div>
+      <ul class="facts">
+        <li><span class="sw" style="background: var(--sl-c); opacity: .4"></span><div><b>Bedtime</b><small>Block 4 ends with Sleep</small></div><span class="ft">9&ndash;10 PM</span></li>
+        <li><span class="sw" style="background: var(--sl-c); opacity: .7"></span><div><b>Wake-up</b><small>Block 1 starts. 4 AM at the latest</small></div><span class="ft">2&ndash;3 AM</span></li>
+        <li><span class="sw" style="background: var(--sl-c)"></span><div><b>Time asleep</b><small>Worked out from the two times above</small></div><span class="ft">4&ndash;7 h</span></li>
+        <li><span class="sw" style="background: var(--van)"></span><div><b>Time awake</b><small>Blocks 1 to 4 fit inside this</small></div><span class="ft">17&ndash;20 h</span></li>
+      </ul>
+      <div class="order" aria-label="Order of the day">
+        <span class="ostep end">Wake 2&ndash;3 AM</span><span class="oarr" aria-hidden="true">&rsaquo;</span>
+        <button type="button" class="ostep" data-act="goto" data-id="b1"><b>1</b>Fresh Up</button><span class="oarr" aria-hidden="true">&rsaquo;</span>
+        <button type="button" class="ostep" data-act="goto" data-id="b2"><b>2</b>Worship</button><span class="oarr" aria-hidden="true">&rsaquo;</span>
+        <button type="button" class="ostep" data-act="goto" data-id="b3"><b>3</b>Work Blocks</button><span class="oarr" aria-hidden="true">&rsaquo;</span>
+        <button type="button" class="ostep" data-act="goto" data-id="b4"><b>4</b>Evening Reset &amp; Rest</button><span class="oarr" aria-hidden="true">&rsaquo;</span>
+        <span class="ostep end">Sleep 9&ndash;10 PM</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="blocks" id="blocks"></div>
+
+</div>
+<div id="view-path" class="view" hidden>
+  <header class="top">
+    <div>
+      <p class="eyebrow">Every time you fall</p>
+      <h1>Practical Steps to Get Back Up on the Path</h1>
+      <p class="sub">Get up to Normality, Uniformity (Fitrah Path).</p>
+    </div>
+    <div class="overall" id="pathOverall"></div>
+  </header>
+  <div class="pflow" id="pathSteps"></div>
+  <section class="panel pnote" aria-label="Note">
+    <h2 class="sec-h">Note</h2>
+    <ul>
+      <li>Being able to restart these sessions indicates that the actions associated with a fitrah life are being cemented within one’s conditioning and subconscious mind.</li>
+      <li class="final">In effect, fitrah life is being firmly established as a permanent part of your life.</li>
+    </ul>
+  </section>
+</div>
+<div id="view-rc" class="view rc" hidden>
+  <header class="top">
+    <div>
+      <p class="eyebrow">The Theory</p>
+      <h1>Routine Conditioning</h1>
+      <p class="sub">How the mind builds automatic behaviour, why a new goal feels hard to start, and the exact method for turning it into a routine. Hover or tap any part of a diagram to see what it does.</p>
+    </div>
+  </header>
+
+  <nav class="rc-jump" aria-label="Sections of this page">
+    <button type="button" data-go="rc-s1"><b>1</b>The mind</button>
+    <button type="button" data-go="rc-s2"><b>2</b>How we act</button>
+    <button type="button" data-go="rc-s3"><b>3</b>The clash</button>
+    <button type="button" data-go="rc-s4"><b>4</b>How routines form</button>
+    <button type="button" data-go="rc-s5"><b>5</b>The method</button>
+    <button type="button" data-go="rc-s6"><b>6</b>In the moment</button>
+    <button type="button" data-go="rc-s7"><b>7</b>Retrieval paragraph</button>
+  </nav>
+
+  <!-- 1 THE MIND -->
+  <section class="rc-sec" id="rc-s1" aria-label="The mind diagram">
+    <div class="rc-sh"><span class="rc-n">1</span><h2>The mind, and what sits inside it</h2></div>
+    <p class="rc-lead">Everything starts with the <b>Mind Diagram</b>: a circle split in two, with the body underneath. It shows how conditioning develops and why acting on something new can feel hard.</p>
+    <div class="rc-defs">
+      <div class="rc-def c-van"><h3>Habit</h3><p>An idea that has become fixed in the subconscious mind and that we act upon.</p></div>
+      <div class="rc-def c-van"><h3>Conditioning</h3><p>A multitude of habits that produce our automatic behaviour. It is built over a lifetime, not born with us.</p></div>
+      <div class="rc-def c-x"><h3>X-type conditioning</h3><p>The existing habits we want to change. Neither good nor bad in itself: a paradise or a prison, depending on whether it supports our goals.</p></div>
+    </div>
+
+    <div class="rc-dia" data-dia="mind">
+      <div>
+        <p class="rc-hint">Mind Diagram</p>
+        <svg class="rc-svg" viewBox="0 0 560 430" role="group" aria-label="Mind diagram: conscious mind above, subconscious mind below, body underneath">
+          <defs><marker id="rcArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#FFC555"/></marker></defs>
+          <line class="plain" x1="30" y1="370" x2="146" y2="370"/>
+          <line class="plain" x1="214" y1="370" x2="310" y2="370"/>
+          <line class="plain" x1="180" y1="300" x2="180" y2="336"/>
+
+          <g class="rc-part c-cons" data-p="conscious" tabindex="0" role="button" aria-label="Conscious mind">
+            <path class="shape" d="M50 170 A130 130 0 0 1 310 170 Z"/>
+            <text class="lbl" x="165" y="88" text-anchor="middle">CONSCIOUS MIND</text>
+          </g>
+          <g class="rc-part c-sub" data-p="subconscious" tabindex="0" role="button" aria-label="Subconscious mind">
+            <path class="shape" d="M50 170 A130 130 0 0 0 310 170 Z"/>
+            <text class="lbl" x="180" y="204" text-anchor="middle">SUBCONSCIOUS MIND</text>
+          </g>
+
+          <g class="rc-part c-x" data-p="xthought" tabindex="0" role="button" aria-label="X-type thoughts">
+            <g class="spk" transform="translate(245,128)" data-spikes="10,21,29"></g>
+            <circle class="shape" cx="245" cy="128" r="16"/>
+            <text class="xx" x="245" y="134">X</text>
+            <rect x="380" y="82" width="175" height="28" fill="transparent"/>
+            <text class="side" x="385" y="102">X-type thoughts</text>
+            <line class="arw" x1="378" y1="98" x2="282" y2="122" marker-end="url(#rcArr)"/>
+          </g>
+
+          <g class="rc-part c-x" data-p="xcond" tabindex="0" role="button" aria-label="X-type conditioning">
+            <circle class="shape" cx="135" cy="255" r="18"/>
+            <text class="xx" x="135" y="261">X</text>
+            <rect x="380" y="240" width="175" height="28" fill="transparent"/>
+            <text class="side" x="385" y="260">X-type conditioning</text>
+            <line class="arw" x1="378" y1="256" x2="158" y2="255" marker-end="url(#rcArr)"/>
+          </g>
+
+          <g class="rc-part c-x" data-p="xvib" tabindex="0" role="button" aria-label="X-type vibration">
+            <g class="spk" transform="translate(180,370)" data-spikes="4,39,49,45"></g>
+            <circle cx="180" cy="370" r="54" fill="transparent"/>
+            <rect x="380" y="382" width="175" height="28" fill="transparent"/>
+            <text class="side" x="385" y="402">X-type vibration</text>
+            <line class="arw" x1="378" y1="396" x2="236" y2="380" marker-end="url(#rcArr)"/>
+          </g>
+
+          <g class="rc-part c-bod" data-p="body" tabindex="0" role="button" aria-label="Body">
+            <circle class="shape" cx="180" cy="370" r="34"/>
+            <text class="lbl" x="180" y="375" text-anchor="middle">BODY</text>
+          </g>
+        </svg>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+    <p class="rc-key">Existing conditioning sets our vibration, and our vibration decides which thoughts we attract.</p>
+  </section>
+
+  <!-- 2 HOW WE ACT -->
+  <section class="rc-sec" id="rc-s2" aria-label="How humans take action">
+    <div class="rc-sh"><span class="rc-n">2</span><h2>How humans actually take action</h2></div>
+    <p class="rc-lead">We take action when an idea is <b>impressed upon the subconscious mind</b>. Follow the chain below, step by step.</p>
+    <div class="rc-dia stack" data-dia="action">
+      <div>
+        <p class="rc-hint">The sequence of action</p>
+        <div class="rc-row">
+          <button type="button" class="rc-node c-van" data-p="idea"><span class="n">1</span>Idea</button><span class="rc-arr" aria-hidden="true">›</span>
+          <button type="button" class="rc-node c-cons" data-p="conscious"><span class="n">2</span>Conscious mind</button><span class="rc-arr" aria-hidden="true">›</span>
+          <button type="button" class="rc-node c-sub" data-p="subconscious"><span class="n">3</span>Subconscious mind</button><span class="rc-arr" aria-hidden="true">›</span>
+          <button type="button" class="rc-node c-bod" data-p="vibration"><span class="n">4</span>Body’s vibration</button><span class="rc-arr" aria-hidden="true">›</span>
+          <button type="button" class="rc-node c-x" data-p="motivation"><span class="n">5</span>Motivation</button><span class="rc-arr" aria-hidden="true">›</span>
+          <button type="button" class="rc-node c-spirit" data-p="action"><span class="n">6</span>Action</button>
+        </div>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+    <div class="rc-defs">
+      <div class="rc-def c-bod"><h3>Existing X-type habit</h3><p>The idea is already fixed in the subconscious, so the action happens automatically.</p></div>
+      <div class="rc-def c-x"><h3>New X-type idea</h3><p>New, but similar in nature to our conditioning. No conflict, so it feels natural and relatively easy, though not automatic.</p></div>
+    </div>
+    <p class="rc-key">Actions become easy when the ideas behind them are harmonious with our existing conditioning.</p>
+  </section>
+
+  <!-- 3 THE CLASH -->
+  <section class="rc-sec" id="rc-s3" aria-label="Chaos vibration">
+    <div class="rc-sh"><span class="rc-n">3</span><h2>When the new idea is different: Chaos Vibration</h2></div>
+    <p class="rc-lead">We watch the world and start wanting something different for ourselves. That brings a <b>Y-type idea</b>: something we want to achieve, experience or become, but different in nature from our conditioning. It is impressed on a subconscious that already holds X-type habits. What happens?</p>
+    <div class="rc-dia" data-dia="clash">
+      <div>
+        <p class="rc-hint">The clash</p>
+        <div class="rc-clash">
+          <button type="button" class="rc-node c-x ctr gx" data-p="xc">X-type conditioning<small>existing habits</small></button>
+          <div class="rc-mid" data-p="clash" tabindex="0" role="button" aria-label="The clash"><span class="ar">→ ←</span>CLASH<span class="ar">↓</span></div>
+          <button type="button" class="rc-node c-y ctr gy" data-p="yidea">Y-type idea<small>new desire</small></button>
+          <button type="button" class="rc-node c-chaos ctr gch" data-p="chaos">CHAOS VIBRATION</button>
+          <div class="rc-chips" data-p="manifest" tabindex="0" role="button" aria-label="Manifestations of Chaos Vibration"><span>Fear</span><span>Hesitation</span><span>Reluctance</span><span>Resistance</span><span>Loss of motivation</span><span>Disarray</span></div>
+        </div>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+    <p class="rc-key">Taking action on the new Y-type idea becomes difficult.</p>
+  </section>
+
+  <!-- 4 HOW ROUTINES FORM -->
+  <section class="rc-sec" id="rc-s4" aria-label="How routines form">
+    <div class="rc-sh"><span class="rc-n">4</span><h2>How a routine forms, and why some stay</h2></div>
+    <p class="rc-lead">When a multitude of habits show up in our everyday actions, that is our <b>routine</b>: conditioning expressed in daily life. Most people never study this, yet they still build routines (we call them <b>unaware people</b>). Why do some routines last for years while others fade? Four factors decide it. Switch them on and off and watch the routine.</p>
+    <div class="rc-dia" data-dia="factors">
+      <div>
+        <p class="rc-hint">The four factors · tap to switch on</p>
+        <div class="rc-factors">
+          <button type="button" class="rc-factor c-ap" style="--c: var(--ap-c)" data-p="selfimage" aria-pressed="false"><span class="sw2"></span>Self-image</button>
+          <button type="button" class="rc-factor" style="--c: var(--pe-c)" data-p="identity" aria-pressed="false"><span class="sw2"></span>Self-identity</button>
+          <button type="button" class="rc-factor" style="--c: var(--ch-c)" data-p="emotion" aria-pressed="false"><span class="sw2"></span>Emotional charge</button>
+          <button type="button" class="rc-factor" style="--c: var(--ca-c)" data-p="focus" aria-pressed="false"><span class="sw2"></span>Focus / attention</button>
+        </div>
+        <div class="rc-meter">
+          <div class="rc-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <p class="rc-verdict" id="rcVerdict" aria-live="polite"></p>
+        </div>
+        <div class="rc-actions">
+          <button type="button" class="rc-btn" data-fset="all">All four on</button>
+          <button type="button" class="rc-btn" data-fset="none">Clear</button>
+          <button type="button" class="rc-btn" data-fset="college" aria-pressed="false">College-student example</button>
+        </div>
+        <p class="rc-note" id="rcCollege" hidden>A student’s routine (wake up, get ready, travel, attend classes, return) ran for years, then disappeared the moment college ended. Emotional charge stayed, since they still miss it. But self-image, self-identity and focus were never tied to the routine itself. <b>The need for the routine went away, so the routine went away.</b></p>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+    <p class="rc-fine">These four factors are the working explanation inside this theory. Their presence is not a literal guarantee that a routine can never change.</p>
+  </section>
+
+  <!-- 5 THE METHOD -->
+  <section class="rc-sec" id="rc-s5" aria-label="The deliberate method">
+    <div class="rc-sh"><span class="rc-n">5</span><h2>The deliberate method of cultivating a routine</h2></div>
+    <p class="rc-lead">Instead of leaving routines to circumstance, we build one with a precise method. First, two situations.</p>
+    <div>
+      <div class="rc-seg" role="group" aria-label="Choose a case">
+        <button type="button" class="rc-btn" data-case="1" aria-pressed="false">Case 1 · X-type idea</button>
+        <button type="button" class="rc-btn" data-case="2" aria-pressed="true">Case 2 · Y-type idea</button>
+      </div>
+      <div class="rc-case" data-casepanel="1" hidden>
+        <h3>X-type conditioning + X-type idea</h3>
+        <ul>
+          <li>The idea is harmonious with our conditioning, so there is <b>no clash and no Chaos Vibration</b>.</li>
+          <li>The idea is impressed, the body’s vibration is compatible, motivation appears, and we act. The first step is not something we have to force.</li>
+          <li>What decides how deep the routine grows is the involvement of the <b>four factors</b>.</li>
+        </ul>
+      </div>
+      <div class="rc-case focus" data-casepanel="2">
+        <h3>X-type conditioning + Y-type idea</h3>
+        <ul>
+          <li>This is the situation we actually care about. The Y-type idea clashes with X-type conditioning and produces <b>Chaos Vibration</b>: fear, hesitation, reluctance, no motivation.</li>
+          <li>The normal flow of motivation is disturbed, so we cannot wait to feel motivated.</li>
+          <li><b>The initial step must be taken deliberately. We have to force ourselves to initiate the action.</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="rc-sub">Why is the first step always mine?</h3>
+    <ul class="rc-points">
+      <li>The fear is <b>not necessarily about the Y-type idea at all</b>. It is about my existing conditioning and its clash with the idea.</li>
+      <li>I may truly want it and know it is good for me, and still feel resistance. <b>The difficulty of starting comes from the resistance, not from the activity.</b></li>
+      <li>Even with a harmonious idea I am the one who acts. The only difference is that motivation is already there. So in the X–Y situation, I take the first step despite Chaos Vibration.</li>
+    </ul>
+    <div class="rc-dia stack" data-dia="flow" data-mode="harmony">
+      <div>
+        <div class="rc-seg" role="group" aria-label="Choose a situation">
+          <button type="button" class="rc-btn" data-modebtn="harmony" aria-pressed="true">Harmonious idea</button>
+          <button type="button" class="rc-btn" data-modebtn="clash" aria-pressed="false">X–Y clash</button>
+        </div>
+        <p class="rc-hint">The flow of power through us · as described in this theory</p>
+        <div class="rc-flow" data-mode="harmony">
+          <button type="button" class="rc-node c-cons" data-p="cons"><span class="n">1</span>Conscious mind</button><span class="rc-link l1" aria-hidden="true">›</span>
+          <button type="button" class="rc-node c-sub" data-p="sub"><span class="n">2</span>Subconscious mind</button><span class="rc-link l2" aria-hidden="true"><span class="ok">›</span><span class="bad">✕</span></span>
+          <button type="button" class="rc-node c-bod" data-p="bod"><span class="n">3</span>Body</button><span class="rc-link l3" aria-hidden="true">›</span>
+          <button type="button" class="rc-node c-spirit act" data-p="act"><span class="n">4</span>Action</button>
+        </div>
+        <div class="rc-power" aria-hidden="true"></div>
+        <p class="rc-cap">Green: the flowing power. This spiritual description is a personal understanding, and the flowing power and vibrations are concepts within this theory, not claims about scientifically measured physical energy.</p>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+
+    <h3 class="rc-sub">The formulated method</h3>
+    <p class="rc-lead">Repeating an activity does not by itself make a routine sticky. So the method has two parts, run together every day.</p>
+    <div class="rc-dia" data-dia="method">
+      <div>
+        <p class="rc-hint">The method</p>
+        <div class="rc-col">
+          <button type="button" class="rc-node c-chaos ctr" data-p="begin">Deliberately begin<small>X / Y clash</small></button>
+          <span class="rc-arr" aria-hidden="true">↓</span>
+          <div class="rc-row">
+            <div class="rc-node c-sub" data-p="internal" tabindex="0" role="button">INTERNAL WORK<small>self-image · identity · emotion · focus</small><span style="display:flex;gap:6px;margin-top:6px"><span class="rc-chips" style="padding:0;gap:6px;justify-content:flex-start;background:none" data-p="rv"><span style="border-color:var(--r-c)">R session</span><span style="border-color:var(--v-c)">V session</span></span></span></div>
+            <div class="rc-node c-bod" data-p="external" tabindex="0" role="button">EXTERNAL WORK<small>perform the actual activity with focused attention</small></div>
+          </div>
+          <span class="rc-arr" aria-hidden="true">↓</span>
+          <button type="button" class="rc-node c-van ctr" data-p="repeat">Repeat each day<small>around 20–30 days to begin with</small></button>
+        </div>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 6 IN THE MOMENT -->
+  <section class="rc-sec" id="rc-s6" aria-label="How to act in the moment">
+    <div class="rc-sh"><span class="rc-n">6</span><h2>How to actually take action in the moment</h2></div>
+    <p class="rc-lead">The aim is to make the work behind our goals part of everyday routine. That routine is made of single tasks, so the real question is small: <b>how do I get up and do this one task while I feel fear, hesitation and reluctance?</b> Whatever the answer is, it works for the second task, the third, and every one after.</p>
+    <div class="rc-dia" data-dia="moment">
+      <div>
+        <p class="rc-hint">The moment before a task</p>
+        <div class="rc-col">
+          <button type="button" class="rc-node c-van" data-p="choose"><span class="n">1</span>Choose the task</button>
+          <span class="rc-arr" aria-hidden="true">↓</span>
+          <button type="button" class="rc-node c-chaos" data-p="resist"><span class="n">2</span>Resistance appears<small>Chaos Vibration</small></button>
+          <span class="rc-arr" aria-hidden="true">↓</span>
+          <button type="button" class="rc-node c-sub" data-p="remember"><span class="n">3</span>Remember the routine · set aside fear<small>principles 1 and 2</small></button>
+          <span class="rc-arr" aria-hidden="true">↓</span>
+          <button type="button" class="rc-node c-bod" data-p="focus"><span class="n">4</span>Focus on engaging · affirm courage<small>principles 3 and 4</small></button>
+          <span class="rc-arr" aria-hidden="true">↓</span>
+          <button type="button" class="rc-node c-spirit" data-p="begin"><span class="n">5</span>Take the first step and begin</button>
+        </div>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+
+    <h3 class="rc-sub">The four principles</h3>
+    <div class="rc-pr">
+      <details class="rc-pc"><summary><b>1</b><span>My initiative will turn into a routine<small>Tap to open</small></span></summary>
+        <div class="body"><p>The step I am about to take is part of cultivating my routine. I already have the method: the sessions, the activity, the repetition.</p><p><b>I remind myself that my initiative will contribute to the routine I want, then I leave the question of routine formation alone.</b></p></div></details>
+      <details class="rc-pc"><summary><b>2</b><span>Understand the fear and turn a blind eye<small>Tap to open</small></span></summary>
+        <div class="body"><p>The fear is connected to my X-type conditioning and its clash with the Y-type idea. It is not necessarily about the activity. It does not mean the activity is bad, or that I do not want it.</p><p><b>Turn a blind eye:</b> acknowledge the feeling, but refuse to let it decide an activity I have already judged worthwhile and safe. This means willingness to act despite discomfort, not disregard for real harm, punishment or responsibilities.</p></div></details>
+      <details class="rc-pc"><summary><b>3</b><span>My intention is to engage in the activity<small>Tap to open</small></span></summary>
+        <div class="body"><p>I do not focus on whether I feel motivated, on the fear, or on how hard it might be. I focus on doing the activity itself: get up, prepare, begin the session. When it is done, move to the next.</p><p><b>My focus is on the action, not on the reluctance before it.</b></p></div></details>
+      <details class="rc-pc"><summary><b>4</b><span>Affirm yourself for courage<small>Tap to open</small></span></summary>
+        <div class="body"><p><b>Courage does not mean the absence of fear. Courage means taking action despite fear.</b> I do not wait to become fearless or comfortable.</p><p>I tell myself: <b>“Let’s just do this and see what happens. Jo hoga dekh lenge.”</b> Whatever reasonable challenge comes, we will deal with it.</p></div></details>
+    </div>
+
+    <h3 class="rc-sub">The whole theory in one line</h3>
+    <ul class="rc-sum">
+      <li>Goals</li><li>Daily activities</li><li>Want them as routine</li><li class="hl">Y-type clash → Chaos Vibration</li><li>Begin anyway</li><li>R / V sessions on the four factors</li><li>Repeat daily</li><li class="end">Sticky routine, closer to goals</li>
+    </ul>
+    <p class="rc-key">I understand the process. I know what I have to do. I take the first step, and I continue doing my part.</p>
+  </section>
+
+  <!-- 7 RETRIEVAL -->
+  <section class="rc-sec" id="rc-s7" aria-label="The retrieval paragraph">
+    <div class="rc-sh"><span class="rc-n">7</span><h2>Retrieval paragraph</h2></div>
+    <div class="rc-ret">
+      <h3>The Retrieval Paragraph</h3>
+      <p class="when">To be read at the exact moment when I need to begin an activity and am experiencing fear, hesitation, or reluctance.</p>
+      <p class="text" id="rcRetText">I know what is happening right now. I have decided to do an activity, and I am feeling fear, hesitation, and reluctance. But I already understand this process. This resistance is coming from the clash between my X-type conditioning and the Y-type idea. It is <b>Chaos Vibration</b> at work. This fear is not about the Y-type idea itself. It does not mean that the activity is bad for me, that I do not want it, or that I should avoid it. This fear is natural, innate to the process, and simply part of how my existing conditioning reacts to something new. So I can ignore it. I do not need to give it any importance. I also know that <b>my initiative right now is contributing to the routine I want to cultivate.</b> So I am turning a blind eye to this fear, hesitation, and reluctance. <b>My intention right now is simply to engage in the activity.</b> That is what I want to do, and that is where my focus belongs. I know that the first step has to be mine, and I am willing to take it. <b>Let's just do this and see what happens. <span class="ur" lang="ur" dir="rtl">جو ہوگا دیکھ لیں گے۔</span></b> Whatever comes afterward, we will deal with it, InshaAllah.</p>
+      <div><button type="button" class="rc-btn" data-copy>Copy paragraph</button></div>
+    </div>
+  </section>
+</div>
+</main>
+
+<script>
+(function () {
+  var CHECK = '<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var DASH = '<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 8h8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
+  var STAR = '<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M10 2.5l2.2 4.8 5.2.6-3.9 3.5 1.1 5.1L10 13.9 5.4 16.5l1.1-5.1L2.6 7.9l5.2-.6z"/></svg>';
+
+  var AREAS = [
+    { id: 'appearance', name: 'Appearance', cls: 'a-appearance',
+      sessions: [{ id: 'ap-s1', t: 'R' }, { id: 'ap-s2', t: 'R' }],
+      goals: [
+        { id: 'ap1', t: 'Fat-to-Fit Transformation' },
+        { id: 'ap2', t: 'Aesthetic Hypertrophy' },
+        { id: 'ap3', t: 'Jawline Development' }
+    ]},
+    { id: 'personality', name: 'Personality', cls: 'a-personality',
+      sessions: [],
+      goals: [
+        { id: 'pe1', t: 'Voice Sophistication', kids: [
+          { id: 'pe1a', t: 'Deep Voice Development' },
+          { id: 'pe1b', t: 'Accent Training' }
+        ]},
+        { id: 'pe2', t: 'Fashion Sense Development' }
+    ]},
+    { id: 'financial', name: 'Financial', cls: 'a-financial',
+      sessions: [{ id: 'fi-s1', t: 'V' }],
+      goals: [
+        { id: 'fi1', t: 'Earn <strong>$1,081</strong>' }
+    ]},
+    { id: 'career', name: 'Career', cls: 'a-career',
+      sessions: [{ id: 'ca-s1', t: 'R' }],
+      goals: [
+        { id: 'ca1', t: 'Complete and <strong>pass the Chartered Accountancy (CA) PRC Level</strong>' }
+    ]},
+    { id: 'sexual', name: 'Sexual Health', cls: 'a-sexual',
+      sessions: [],
+      goals: [
+        { id: 'se1', t: 'Hip Mobility Improvement' },
+        { id: 'se2', t: 'Core Improvement' },
+        { id: 'se3', t: 'Stamina Improvement' },
+        { id: 'se4', t: 'Breath-Control Improvement' },
+        { id: 'se5', t: 'Strength Improvement' },
+        { id: 'se6', t: 'Blood-Flow Improvement' }
+    ]},
+    { id: 'character', name: 'Character', cls: 'a-character',
+      sessions: [{ id: 'ch-s1', t: 'R' }],
+      goals: [
+        { id: 'ch1', t: 'Remove <strong>Zina</strong> from character' },
+        { id: 'ch2', t: 'Remove <strong>transgression against the body</strong> from character' },
+        { id: 'ch3', t: '<strong>Diet</strong> — develop an identity of eating less and eating properly' }
+    ]}
+  ];
+
+  var byId = {}, areaById = {}, sessById = {};
+  var total = 0;
+  AREAS.forEach(function (a) {
+    areaById[a.id] = a;
+    total += a.goals.length;
+    a.goals.forEach(function (g) {
+      byId[g.id] = g;
+      (g.kids || []).forEach(function (k) { byId[k.id] = k; });
+    });
+    a.sessions.forEach(function (s) { sessById[s.id] = s; });
+  });
+
+  var KEY = 'phase-goals-v1';
+  var S = { done: {}, star: {}, sess: {}, notes: '', focus: 'all', status: 'all', sf: 'all' };
+  try {
+    var raw = localStorage.getItem(KEY);
+    if (raw) {
+      var p = JSON.parse(raw);
+      S.done = p.done || {}; S.star = p.star || {}; S.sess = p.sess || {}; S.notes = p.notes || '';
+    }
+  } catch (e) {}
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify({ done: S.done, star: S.star, sess: S.sess, notes: S.notes })); } catch (e) {}
+  }
+
+  function isDone(g) {
+    return g.kids ? g.kids.every(function (k) { return !!S.done[k.id]; }) : !!S.done[g.id];
+  }
+  function isPartial(g) {
+    return !!g.kids && !isDone(g) && g.kids.some(function (k) { return !!S.done[k.id]; });
+  }
+  function matches(g) {
+    if (S.status === 'todo') return !isDone(g);
+    if (S.status === 'done') return isDone(g);
+    if (S.status === 'star') return !!S.star[g.id];
+    return true;
+  }
+  function areaStats(a) {
+    return { d: a.goals.filter(isDone).length, n: a.goals.length };
+  }
+  function hasType(a, t) { return a.sessions.some(function (s) { return s.t === t; }); }
+  function sessMatch(a) {
+    if (S.sf === 'V') return hasType(a, 'V');
+    if (S.sf === 'R') return hasType(a, 'R');
+    if (S.sf === 'none') return a.sessions.length === 0;
+    return true;
+  }
+  function dimmed(a) {
+    return (S.focus !== 'all' && S.focus !== a.id) || !sessMatch(a);
+  }
+  function plural(n, w) { return n + ' ' + w + (n === 1 ? '' : 's'); }
+  function pct(n) { return Math.round((n / total) * 100); }
+  function joinNames(arr) {
+    if (arr.length < 2) return arr.join('');
+    return arr.slice(0, -1).join(', ') + ' and ' + arr[arr.length - 1];
+  }
+  function sessTotals() {
+    var o = { R: 0, V: 0, dR: 0, dV: 0 };
+    AREAS.forEach(function (a) {
+      a.sessions.forEach(function (s) {
+        o[s.t]++;
+        if (S.sess[s.id]) o['d' + s.t]++;
+      });
+    });
+    return o;
+  }
+
+  /* ---------- Wheel (built once) ---------- */
+  var R = 78, C = 2 * Math.PI * R, GAP = 3;
+  function buildWheel() {
+    var svg = document.getElementById('wheel');
+    var acc = 0, out = '';
+    AREAS.forEach(function (a) {
+      var frac = a.goals.length / total;
+      var len = frac * C;
+      var dash = Math.max(len - GAP, 1);
+      var angle = acc * 360 - 90 + (GAP / C) * 180;
+      out += '<circle class="seg ' + a.cls + '" data-area="' + a.id + '" data-act="focus" data-id="' + a.id + '" data-key="seg-' + a.id + '" tabindex="0" role="button" aria-label="' + a.name + ', ' + plural(a.goals.length, 'goal') + '" cx="110" cy="110" r="' + R + '" stroke-dasharray="' + dash + ' ' + (C - dash) + '" transform="rotate(' + angle + ' 110 110)"/>';
+      acc += frac;
+    });
+    out += '<text class="w-big" id="w-big" x="110" y="112"></text><text class="w-label" id="w-label" x="110" y="132"></text><text class="w-small" id="w-small" x="110" y="149"></text>';
+    svg.innerHTML = out;
+  }
+  var hoverId = null;
+  function updateWheel() {
+    var id = hoverId || (S.focus !== 'all' ? S.focus : null);
+    var a = id ? areaById[id] : null;
+    var big = document.getElementById('w-big'), lab = document.getElementById('w-label'), sm = document.getElementById('w-small');
+    if (a) {
+      var st = areaStats(a);
+      big.textContent = a.goals.length; lab.textContent = a.name;
+      sm.textContent = pct(a.goals.length) + '% of goals · ' + st.d + ' done';
+    } else {
+      big.textContent = total; lab.textContent = 'goals this year';
+      sm.textContent = AREAS.length + ' areas';
+    }
+    document.querySelectorAll('.seg').forEach(function (s) {
+      var ar = areaById[s.dataset.area];
+      s.classList.toggle('on', s.dataset.area === S.focus);
+      s.classList.toggle('dim', dimmed(ar));
+    });
+  }
+
+  /* ---------- Renderers ---------- */
+  function renderOverall() {
+    var d = 0;
+    AREAS.forEach(function (a) { d += areaStats(a).d; });
+    var stars = Object.keys(S.star).filter(function (k) { return S.star[k] && byId[k]; }).length;
+    var t = sessTotals();
+    var r = 26, c = 2 * Math.PI * r, off = c * (1 - d / total);
+    document.getElementById('overall').innerHTML =
+      '<svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true">' +
+      '<circle cx="32" cy="32" r="' + r + '" fill="none" stroke="var(--line)" stroke-width="7"/>' +
+      '<circle cx="32" cy="32" r="' + r + '" fill="none" stroke="var(--ink)" stroke-width="7" stroke-linecap="round" stroke-dasharray="' + c + '" stroke-dashoffset="' + off + '" transform="rotate(-90 32 32)" style="transition:stroke-dashoffset .4s ease"/>' +
+      '</svg><div><div class="big">' + d + ' / ' + total + '</div><div class="small">goals done · ' + stars + ' starred</div>' +
+      '<div class="small">' + (t.dR + t.dV) + ' / ' + (t.R + t.V) + ' sessions done</div></div>';
+  }
+
+  function renderLegend() {
+    document.getElementById('legend').innerHTML = AREAS.map(function (a) {
+      var st = areaStats(a);
+      var cls = 'lrow ' + a.cls + (S.focus === a.id ? ' on' : '') + (dimmed(a) ? ' dim' : '');
+      var w = (st.d / st.n) * 100;
+      return '<li><button type="button" class="' + cls + '" data-area="' + a.id + '" data-act="focus" data-id="' + a.id + '" data-key="lg-' + a.id + '" aria-pressed="' + (S.focus === a.id) + '">' +
+        '<span class="dot"></span>' +
+        '<span class="lname">' + a.name + '<small>' + plural(st.n, 'goal') + ' · ' + st.d + ' done</small></span>' +
+        '<span class="track" aria-hidden="true"><i style="width:' + w + '%"></i></span>' +
+        '<span class="lshare">' + pct(a.goals.length) + '%</span></button></li>';
+    }).join('');
+  }
+
+  function renderNotice() {
+    var max = Math.max.apply(null, AREAS.map(function (a) { return a.goals.length; }));
+    var heavy = AREAS.filter(function (a) { return a.goals.length === max; }).map(function (a) { return a.name; }).join(' and ');
+    var ones = AREAS.filter(function (a) { return a.goals.length === 1; }).map(function (a) { return a.name; });
+    var withS = AREAS.filter(function (a) { return a.sessions.length; }).map(function (a) { return a.name; });
+    var noS = AREAS.filter(function (a) { return !a.sessions.length; }).map(function (a) { return a.name; });
+    var t = sessTotals();
+    var items = [
+      '<b>' + heavy + '</b> holds ' + max + ' of ' + total + ' goals (' + pct(max) + '%), the largest share of this phase.',
+      '<b>' + joinNames(ones) + '</b> hold one goal each. Both name a single result with a clear finish line.',
+      '<b>Sessions:</b> ' + joinNames(withS) + ' need them (' + t.R + ' R, ' + t.V + ' V). ' + joinNames(noS) + ' need none.',
+      '<b>Personality</b> has one goal with two parts: Voice Sophistication splits into Deep Voice Development and Accent Training. It counts as one goal here.',
+      '<b>Character</b> is written as changes to who you are: two things to remove and one identity to build.'
+    ];
+    document.getElementById('notice').innerHTML = items.map(function (x) { return '<li>' + x + '</li>'; }).join('');
+  }
+
+  function sessWord(a, s) {
+    var same = a.sessions.filter(function (x) { return x.t === s.t; });
+    return 'session' + (same.length > 1 ? ' ' + (same.indexOf(s) + 1) : '');
+  }
+  function sessHTML(a, s) {
+    var d = !!S.sess[s.id];
+    var kind = s.t === 'V' ? 'Visualization' : 'Reprogramming';
+    return '<button type="button" class="sess ' + (s.t === 'V' ? 'v' : 'r') + '" data-act="sess" data-id="' + s.id + '" data-key="ss-' + s.id + '" aria-pressed="' + d + '" aria-label="Mark done: ' + kind + ' ' + sessWord(a, s) + ', ' + a.name + '">' +
+      '<span class="sl">' + s.t + '</span>' + sessWord(a, s) + '<span class="tick">' + CHECK + '</span></button>';
+  }
+
+  function renderSessions() {
+    var t = sessTotals();
+    var withS = AREAS.filter(function (a) { return a.sessions.length; });
+    var noS = AREAS.filter(function (a) { return !a.sessions.length; }).map(function (a) { return a.name; });
+    document.getElementById('sline').textContent = (t.R + t.V) + ' sessions across ' + withS.length + ' areas.';
+
+    function listFor(type) {
+      return AREAS.filter(function (a) { return hasType(a, type); }).map(function (a) {
+        var n = a.sessions.filter(function (s) { return s.t === type; }).length;
+        return a.name + (n > 1 ? ' (' + n + ')' : '');
+      });
+    }
+    function tile(kind, cls, num, label, sub) {
+      return '<button type="button" class="tile ' + cls + '" data-act="sf" data-v="' + kind + '" data-key="tile-' + kind + '" aria-pressed="' + (S.sf === kind) + '">' +
+        '<span class="tn">' + num + '</span><span class="tl">' + label + '</span><span class="ts">' + sub + '</span></button>';
+    }
+    document.getElementById('tiles').innerHTML =
+      tile('R', 't-r', t.R, 'R session' + (t.R === 1 ? '' : 's') + ' (reprogramming)', joinNames(listFor('R')) + ' · ' + t.dR + ' done') +
+      tile('V', 't-v', t.V, 'V session' + (t.V === 1 ? '' : 's') + ' (visualization)', joinNames(listFor('V')) + ' · ' + t.dV + ' done') +
+      tile('none', 't-n', noS.length, 'Areas with no sessions', joinNames(noS));
+
+    document.getElementById('srows').innerHTML = AREAS.map(function (a) {
+      var d = a.sessions.filter(function (s) { return S.sess[s.id]; }).length;
+      var pills = a.sessions.length ? a.sessions.map(function (s) { return sessHTML(a, s); }).join('') : '<span class="none">No sessions</span>';
+      var count = a.sessions.length ? d + ' of ' + a.sessions.length + ' done' : '';
+      return '<li class="srow ' + a.cls + (dimmed(a) ? ' dim' : '') + '" data-area="' + a.id + '">' +
+        '<button type="button" class="sname" data-act="focus" data-id="' + a.id + '" data-key="sn-' + a.id + '"><span class="dot"></span>' + a.name + '</button>' +
+        '<div class="pills">' + pills + '</div><span class="scount">' + count + '</span></li>';
+    }).join('');
+  }
+
+  function renderChips() {
+    var h = '<button type="button" class="chip all" data-act="chip" data-id="all" data-key="chip-all" aria-pressed="' + (S.focus === 'all') + '">All areas</button>';
+    AREAS.forEach(function (a) {
+      h += '<button type="button" class="chip ' + a.cls + '" data-act="chip" data-id="' + a.id + '" data-key="chip-' + a.id + '" aria-pressed="' + (S.focus === a.id) + '"><span class="dot"></span>' + a.name + '</button>';
+    });
+    document.getElementById('chips').innerHTML = h;
+    document.querySelectorAll('#status button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.v === S.status));
+    });
+  }
+
+  function plain(s) { return s.replace(/<[^>]+>/g, ''); }
+  function goalHTML(g) {
+    if (!matches(g)) return '';
+    var done = isDone(g), starred = !!S.star[g.id];
+    var starBtn = '<button type="button" class="star" data-act="star" data-id="' + g.id + '" data-key="s-' + g.id + '" aria-pressed="' + starred + '" aria-label="Star: ' + plain(g.t) + '">' + STAR + '</button>';
+    var check = '<button type="button" class="check' + (isPartial(g) ? ' partial' : '') + '" data-act="done" data-id="' + g.id + '" data-key="d-' + g.id + '" aria-pressed="' + done + '" aria-label="Mark done: ' + plain(g.t) + '">' + (isPartial(g) && !done ? DASH : CHECK) + '</button>';
+    var main = '<div class="row' + (done ? ' is-done' : '') + '" data-act="done" data-id="' + g.id + '">' + check + '<span class="gtext">' + g.t + '</span>' + starBtn + '</div>';
+    if (g.kids) {
+      var kids = g.kids.map(function (k) {
+        var kd = !!S.done[k.id];
+        return '<li class="row' + (kd ? ' is-done' : '') + '" data-act="done" data-id="' + k.id + '">' +
+          '<button type="button" class="check" data-act="done" data-id="' + k.id + '" data-key="d-' + k.id + '" aria-pressed="' + kd + '" aria-label="Mark done: ' + k.t + '">' + CHECK + '</button>' +
+          '<span class="gtext">' + k.t + '</span></li>';
+      }).join('');
+      return '<li class="goal">' + main + '<ul class="subs">' + kids + '</ul></li>';
+    }
+    return '<li class="goal">' + main + '</li>';
+  }
+
+  function renderGrid() {
+    document.getElementById('grid').innerHTML = AREAS.map(function (a) {
+      var st = areaStats(a);
+      var items = a.goals.map(goalHTML).join('');
+      var sess = '<div class="card-s"><span class="lab">Sessions</span>' +
+        (a.sessions.length ? a.sessions.map(function (s) { return sessHTML(a, s); }).join('') : '<span class="none">No sessions</span>') + '</div>';
+      return '<article class="card ' + a.cls + (dimmed(a) ? ' dim' : '') + '" id="card-' + a.id + '">' +
+        '<header class="card-h"><h2>' + a.name + '</h2><span class="badge">' + plural(st.n, 'goal') + '</span></header>' +
+        '<div class="strip"><span>' + st.d + ' of ' + st.n + ' done</span><span class="track" aria-hidden="true"><i style="width:' + (st.d / st.n) * 100 + '%"></i></span></div>' +
+        sess +
+        '<ul class="goals">' + (items || '<li><p class="empty">No goals match this filter.</p></li>') + '</ul></article>';
+    }).join('');
+  }
+
+  function render() {
+    var k = document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.key : null;
+    renderOverall(); renderLegend(); renderSessions(); renderChips(); renderGrid(); updateWheel();
+    if (k) {
+      var n = document.querySelector('[data-key="' + k + '"]');
+      if (n) n.focus({ preventScroll: true });
+    }
+  }
+
+  /* ---------- Actions ---------- */
+  function toggleDone(id) {
+    var g = byId[id];
+    if (!g) return;
+    if (g.kids) {
+      var target = !isDone(g);
+      g.kids.forEach(function (k) { S.done[k.id] = target; });
+    } else {
+      S.done[id] = !S.done[id];
+    }
+    save();
+  }
+  function setFocus(id, scroll) {
+    S.focus = id;
+    render();
+    if (scroll && id !== 'all') {
+      var el = document.getElementById('card-' + id);
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (el) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'nearest' });
+    }
+  }
+
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-act]');
+    if (!el) return;
+    var act = el.dataset.act, id = el.dataset.id;
+    if (act === 'done') { toggleDone(id); render(); }
+    else if (act === 'star') { S.star[id] = !S.star[id]; save(); render(); }
+    else if (act === 'sess') { if (sessById[id]) { S.sess[id] = !S.sess[id]; save(); render(); } }
+    else if (act === 'sf') { S.sf = S.sf === el.dataset.v ? 'all' : el.dataset.v; render(); }
+    else if (act === 'focus') { setFocus(S.focus === id ? 'all' : id, true); }
+    else if (act === 'chip') { setFocus(id, true); }
+    else if (act === 'status') { S.status = el.dataset.v; render(); }
+    else if (act === 'tab') { setTab(el.dataset.v, true); }
+    else if (act === 'dtick') { toggleDay(id); renderDay(); }
+    else if (act === 'dstar') { DS[id] = !DS[id]; saveStars(); renderDay(); }
+    else if (act === 'seg') { ringSel = ringSel === id ? null : id; updateRing(); }
+    else if (act === 'goto') { gotoBlock(id); }
+    else if (act === 'ptick') { PS[id] = !PS[id]; savePath(); renderPath(); }
+    else if (act === 'preset') { PS = {}; savePath(); renderPath(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('seg')) {
+      e.preventDefault();
+      setFocus(S.focus === e.target.dataset.id ? 'all' : e.target.dataset.id, true);
+    }
+  });
+  document.addEventListener('mouseover', function (e) {
+    var el = e.target.closest('[data-area]');
+    var id = el ? el.dataset.area : null;
+    if (id !== hoverId) { hoverId = id; updateWheel(); }
+  });
+  document.addEventListener('focusin', function (e) {
+    var el = e.target.closest && e.target.closest('.seg');
+    if (el) { hoverId = el.dataset.area; updateWheel(); }
+  });
+  document.addEventListener('focusout', function (e) {
+    if (e.target.classList && e.target.classList.contains('seg')) { hoverId = null; updateWheel(); }
+  });
+
+  var notes = document.getElementById('notes');
+  notes.value = S.notes;
+  notes.addEventListener('input', function () { S.notes = notes.value; save(); });
+
+  /* ---------- Day plan ---------- */
+  var DAYKEY = 'phase-day-v1', TABKEY = 'phase-tab-v1';
+  function todayStr() {
+    var d = new Date();
+    return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+  }
+  var D = { date: todayStr(), done: {} };
+  try {
+    var dr = localStorage.getItem(DAYKEY);
+    if (dr) { var dp = JSON.parse(dr); if (dp && dp.date === D.date) D.done = dp.done || {}; }
+  } catch (e) {}
+  function saveDay() { try { localStorage.setItem(DAYKEY, JSON.stringify(D)); } catch (e) {} }
+  var DS = {};
+  try { var dsr = localStorage.getItem('phase-day-stars-v1'); if (dsr) DS = JSON.parse(dsr) || {}; } catch (e) {}
+  function saveStars() { try { localStorage.setItem('phase-day-stars-v1', JSON.stringify(DS)); } catch (e) {} }
+
+  function T(id, t, kids, tag) { return { id: id, t: t, kids: kids || null, tag: tag || '' }; }
+  var BLOCKS = [
+    { id: 'b1', n: 1, name: 'Fresh Up', hair: true,
+      tasks: [T('b1a', 'Teeth Brush'), T('b1b', 'Miswak'), T('b1c', 'Face Wash'), T('b1d', 'Tongue Wash')] },
+    { id: 'b2', n: 2, name: 'Worship',
+      tasks: [T('b2a', 'Tahajjud'), T('b2b', 'Dua'), T('b2c', 'Quran Recitation'), T('b2d', 'Fajr'), T('b2e', 'Azkar'), T('b2r', 'Character R session', null, 'R')] },
+    { id: 'b3', n: 3, name: 'Work Blocks', sub: 'Focus &amp; Grow',
+      cols: [
+        { id: 'appearance', name: 'Appearance', cls: 'a-appearance',
+          sess: [{ id: 'g-app1', k: 'R' }, { id: 'g-app2', k: 'R' }],
+          tasks: [
+            T('fat', 'Fat-to-Fit Transformation', [T('fat1', 'Cardio'), T('fat2', 'Strength Training')]),
+            T('hyp', 'Aesthetic Hypertrophy'),
+            T('jaw', 'Jawline Development', [T('jaw1', 'Jawline Exercises')])
+          ] },
+        { id: 'personality', name: 'Personality', cls: 'a-personality', sess: [],
+          tasks: [T('p1', 'Voice Sophistication', [T('p1a', 'Deep Voice Exercises'), T('p1b', 'Accent Training')])] },
+        { id: 'financial', name: 'Financial', cls: 'a-financial', sess: [{ id: 'g-financial', k: 'V' }], tasks: [] },
+        { id: 'career', name: 'Career', cls: 'a-career', sess: [{ id: 'g-career', k: 'R' }], tasks: [] },
+        { id: 'sexual', name: 'Sexual Health', cls: 'a-sexual', sess: [],
+          tasks: [
+            T('hip', 'Hip Mobility Improvement'),
+            T('keg', 'Kegels'),
+            T('oil', 'Oil Massage'),
+            T('core', 'Core Improvement', [T('core1', 'Body Weight Exercises', [T('core1a', 'Squats'), T('core1b', 'Push ups')])]),
+            T('sta', 'Stamina Improvement', [T('hiit', 'Cardio \u2013 HIIT')]),
+            T('bre', 'Breath-Control Improvement', [T('hiit', 'Cardio \u2013 HIIT')]),
+            T('blo', 'Blood-Flow Improvement', [T('walk', 'Cardio \u2013 Brisk Walking')])
+          ] }
+      ] },
+    { id: 'b4', n: 4, name: 'Evening Reset &amp; Rest',
+      tasks: [T('b4a', 'Dinner'), T('b4b', 'Concentration Increase Session (1 Hour)'), T('b4c', 'Azkar'), T('b4d', 'Sleep')] }
+  ];
+  var dParents = {};
+  function regParents(t) { if (t.kids) { dParents[t.id] = t; t.kids.forEach(regParents); } }
+  BLOCKS.forEach(function (b) {
+    (b.tasks || []).forEach(regParents);
+    (b.cols || []).forEach(function (c) { c.tasks.forEach(regParents); });
+  });
+
+  function uniq(a) { return a.filter(function (x, i) { return a.indexOf(x) === i; }); }
+  function dLeaves(t) {
+    if (!t.kids) return [t.id];
+    var out = [];
+    t.kids.forEach(function (k) { out = out.concat(dLeaves(k)); });
+    return uniq(out);
+  }
+  function blockIds(b) {
+    var ids = [];
+    (b.tasks || []).forEach(function (t) { ids = ids.concat(dLeaves(t)); });
+    (b.cols || []).forEach(function (c) {
+      (c.sess || []).forEach(function (s) { ids.push(s.id); });
+      c.tasks.forEach(function (t) { ids = ids.concat(dLeaves(t)); });
+    });
+    return uniq(ids);
+  }
+  function dDone(t) { return dLeaves(t).every(function (i) { return !!D.done[i]; }); }
+  function toggleDay(id) {
+    var p = dParents[id];
+    if (p) {
+      var target = !dDone(p);
+      dLeaves(p).forEach(function (i) { D.done[i] = target; });
+    } else {
+      D.done[id] = !D.done[id];
+    }
+    saveDay();
+  }
+
+  function dCheck(t, pk) {
+    var done = dDone(t);
+    var part = !!t.kids && !done && dLeaves(t).some(function (i) { return !!D.done[i]; });
+    return '<button type="button" class="check' + (part ? ' partial' : '') + '" data-act="dtick" data-id="' + t.id + '" data-key="dk-' + (pk ? pk + '-' : '') + t.id + '" aria-pressed="' + done + '" aria-label="Mark done: ' + t.t + '">' + (part ? DASH : CHECK) + '</button>';
+  }
+  function dSub(k, pk) {
+    var h2 = '<li><div class="row' + (dDone(k) ? ' is-done' : '') + '" data-act="dtick" data-id="' + k.id + '">' + dCheck(k, pk) + '<span class="gtext">' + k.t + '</span></div>';
+    if (k.kids) h2 += '<ul class="subs">' + k.kids.map(function (x) { return dSub(x, k.id); }).join('') + '</ul>';
+    return h2 + '</li>';
+  }
+  function dRow(t, withStar) {
+    var h2 = '<li class="goal"><div class="row' + (dDone(t) ? ' is-done' : '') + '" data-act="dtick" data-id="' + t.id + '">' + dCheck(t, '') +
+      '<span class="gtext">' + (t.tag ? '<span class="rtag">' + t.tag + '</span>' : '') + t.t + '</span>' +
+      (withStar ? '<button type="button" class="star" data-act="dstar" data-id="' + t.id + '" data-key="dst-' + t.id + '" aria-pressed="' + !!DS[t.id] + '" aria-label="Star: ' + t.t + '">' + STAR + '</button>' : '') + '</div>';
+    if (t.kids) h2 += '<ul class="subs">' + t.kids.map(function (k) { return dSub(k, t.id); }).join('') + '</ul>';
+    return h2 + '</li>';
+  }
+
+  function colHTML(c) {
+    var ids = c.sess.map(function (s) { return s.id; });
+    c.tasks.forEach(function (t) { ids = ids.concat(dLeaves(t)); });
+    ids = uniq(ids);
+    var d = ids.filter(function (i) { return !!D.done[i]; }).length;
+    var pills = c.sess.length ? c.sess.map(function (s, i) {
+      var label = 'session' + (c.sess.length > 1 ? ' ' + (i + 1) : '');
+      var v = s.k === 'V';
+      return '<button type="button" class="sess ' + (v ? 'v' : 'r') + '" data-act="dtick" data-id="' + s.id + '" data-key="dk-' + s.id + '" aria-pressed="' + !!D.done[s.id] + '" aria-label="Mark done: ' + s.k + ' ' + label + ', ' + plain(c.name) + '">' +
+        '<span class="sl">' + s.k + '</span>' + label + '<span class="tick">' + CHECK + '</span></button>';
+    }).join('') : '<span class="none">No sessions</span>';
+    var badge = c.tasks.length ? plural(c.tasks.length, 'item') : plural(c.sess.length, 'session');
+    var list = c.tasks.length ? '<ul class="goals">' + c.tasks.map(function (t) { return dRow(t, true); }).join('') + '</ul>' : '';
+    return '<article class="card ' + c.cls + '"><header class="card-h"><h2>' + c.name + '</h2><span class="badge">' + badge + '</span></header>' +
+      '<div class="strip"><span>' + d + ' of ' + ids.length + ' done</span><span class="track" aria-hidden="true"><i style="width:' + (d / ids.length * 100) + '%"></i></span></div>' +
+      '<div class="card-s"><span class="lab">Sessions</span>' + pills + '</div>' + list + '</article>';
+  }
+  function hairHTML() {
+    return '<div class="hair"><h4 class="m-h">Hair wash routine</h4>' +
+      '<div class="hbig"><span class="hn">3\u20134</span><span class="hl">days between shampoos</span></div>' +
+      '<div class="hflow"><span class="hstep"><b>1</b>Oil your hair</span><span class="oarr" aria-hidden="true">&rsaquo;</span><span class="hstep s"><b>2</b>Shampoo</span></div>' +
+      '<p class="moved">Shampoo is done after oiling your hair.</p></div>';
+  }
+  function blockMain(b) {
+    if (b.cols) {
+      return '<div class="wnote"><span><b>No fixed order.</b> Start with whichever area you feel like.</span><span><b>Rule:</b> begin an area with its session, then do the work.</span></div>' +
+        '<div class="wgrid">' + b.cols.map(colHTML).join('') + '</div>';
+    }
+    var list = '<ul class="goals">' + b.tasks.map(function (t) { return dRow(t); }).join('') + '</ul>';
+    if (b.hair) return '<div class="split"><div><h4 class="m-h">Tasks</h4>' + list + '</div>' + hairHTML() + '</div>';
+    return '<h4 class="m-h">Tasks</h4>' + list;
+  }
+
+  function renderDay() {
+    var k = document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.key : null;
+    var all = 0, got = 0, html = '';
+    BLOCKS.forEach(function (b) {
+      var ids = blockIds(b);
+      var d = ids.filter(function (i) { return !!D.done[i]; }).length;
+      all += ids.length; got += d;
+      html += '<article class="block" id="blk-' + b.id + '"><div class="b-side"><span class="b-num">0' + b.n + '</span><span class="b-lab">Block ' + b.n + '</span>' +
+        '<h3 class="b-name">' + b.name + '</h3>' + (b.sub ? '<span class="b-sub">' + b.sub + '</span>' : '') +
+        '<span class="b-prog">' + d + ' / ' + ids.length + ' done</span><span class="track" aria-hidden="true"><i style="width:' + (d / ids.length * 100) + '%"></i></span></div>' +
+        '<div class="b-main">' + blockMain(b) + '</div></article>';
+    });
+    document.getElementById('blocks').innerHTML = html;
+    var r = 26, c = 2 * Math.PI * r, off = c * (1 - got / all);
+    document.getElementById('dayOverall').innerHTML =
+      '<svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="' + r + '" fill="none" stroke="var(--line)" stroke-width="7"/>' +
+      '<circle cx="32" cy="32" r="' + r + '" fill="none" stroke="var(--van)" stroke-width="7" stroke-linecap="round" stroke-dasharray="' + c + '" stroke-dashoffset="' + off + '" transform="rotate(-90 32 32)" style="transition:stroke-dashoffset .4s ease"/></svg>' +
+      '<div><div class="big">' + got + ' / ' + all + '</div><div class="small">done today</div></div>';
+    if (k) {
+      var n = document.querySelector('[data-key="' + k + '"]');
+      if (n) n.focus({ preventScroll: true });
+    }
+  }
+  function gotoBlock(id) {
+    var el = document.getElementById('blk-' + id);
+    if (!el) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  /* 24-hour clock: midnight at the top, hours run clockwise */
+  function pol(h, r) {
+    var a = h * 15 * Math.PI / 180;
+    return [150 + r * Math.sin(a), 150 - r * Math.cos(a)];
+  }
+  function arc(h1, h2, r) {
+    var p1 = pol(h1, r), p2 = pol(h2, r), large = (h2 - h1) * 15 > 180 ? 1 : 0;
+    return 'M' + p1[0].toFixed(2) + ' ' + p1[1].toFixed(2) + ' A' + r + ' ' + r + ' 0 ' + large + ' 1 ' + p2[0].toFixed(2) + ' ' + p2[1].toFixed(2);
+  }
+  var SEGS = [
+    { id: 'awake', h1: 4, h2: 21, cls: 'awake', big: 'Blocks 1–4', lab: 'always awake', sm: '4 AM to 9 PM' },
+    { id: 'bed', h1: 21, h2: 22, cls: 'sleep s3', big: '9–10 PM', lab: 'bedtime window', sm: 'Block 4 ends in Sleep' },
+    { id: 'core', h1: 22, h2: 26, cls: 'sleep', big: '10 PM–2 AM', lab: 'always asleep', sm: '4 hours in every case' },
+    { id: 'wake', h1: 26, h2: 27, cls: 'sleep s2', big: '2–3 AM', lab: 'usual wake time', sm: 'Block 1 starts' },
+    { id: 'late', h1: 27, h2: 28, cls: 'sleep s3', big: '3–4 AM', lab: 'latest wake time', sm: '4 AM at the latest' }
+  ];
+  var TICKS = [
+    { h: 0, l: '12 AM' }, { h: 6, l: '6 AM' }, { h: 12, l: '12 PM' }, { h: 18, l: '6 PM' },
+    { h: 21, l: '9 PM', k: 1 }, { h: 22, l: '10 PM', k: 1 }, { h: 26, l: '2 AM', k: 1 }, { h: 27, l: '3 AM', k: 1 }, { h: 28, l: '4 AM', k: 1 }
+  ];
+  var ringHover = null, ringSel = null;
+  function buildRing() {
+    var out = '';
+    SEGS.forEach(function (s) {
+      out += '<path class="rseg ' + s.cls + '" data-seg="' + s.id + '" data-act="seg" data-id="' + s.id + '" data-key="rg-' + s.id + '" tabindex="0" role="button" aria-label="' + s.big + ', ' + s.lab + '" d="' + arc(s.h1, s.h2, 100) + '"/>';
+    });
+    TICKS.forEach(function (t) {
+      var p = pol(t.h, 128);
+      out += '<text class="rt' + (t.k ? ' k' : '') + '" x="' + p[0].toFixed(1) + '" y="' + (p[1] + 4).toFixed(1) + '">' + t.l + '</text>';
+    });
+    out += '<text class="r-big" id="r-big" x="150" y="148"></text><text class="r-lab" id="r-lab" x="150" y="170"></text><text class="r-sm" id="r-sm" x="150" y="188"></text>';
+    document.getElementById('ring').innerHTML = out;
+    updateRing();
+  }
+  function updateRing() {
+    var id = ringHover || ringSel, s = null;
+    SEGS.forEach(function (x) { if (x.id === id) s = x; });
+    document.getElementById('r-big').textContent = s ? s.big : '4–7 h';
+    document.getElementById('r-lab').textContent = s ? s.lab : 'of sleep';
+    document.getElementById('r-sm').textContent = s ? s.sm : 'bed 9–10 PM, up 2–4 AM';
+    document.querySelectorAll('.rseg').forEach(function (p) {
+      p.classList.toggle('on', p.dataset.seg === id);
+      p.classList.toggle('dim', !!id && p.dataset.seg !== id);
+    });
+  }
+  document.addEventListener('mouseover', function (e) {
+    var el = e.target.closest && e.target.closest('[data-seg]');
+    var id = el ? el.dataset.seg : null;
+    if (id !== ringHover) { ringHover = id; updateRing(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('rseg')) {
+      e.preventDefault();
+      ringSel = ringSel === e.target.dataset.id ? null : e.target.dataset.id;
+      updateRing();
+    }
+  });
+
+  /* ---------- Back on the path ---------- */
+  var PKEY = 'phase-path-v1', PS = {};
+  try { var pr = localStorage.getItem(PKEY); if (pr) PS = JSON.parse(pr) || {}; } catch (e) {}
+  function savePath() { try { localStorage.setItem(PKEY, JSON.stringify(PS)); } catch (e) {} }
+  var PSTEPS = [
+    { n: 1, name: 'Repentance', body: 'Begin with repentance, carried out in the proper manner.' },
+    { n: 2, name: 'Reprogramming and Visualization Sessions', body: 'Proceed to resume the reprogramming and visualization sessions.', tags: true }
+  ];
+  function renderPath() {
+    var k = document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.key : null;
+    var n = (PS[1] ? 1 : 0) + (PS[2] ? 1 : 0);
+    var html = '<div class="pnode fall"><span class="pdot"></span><span>Every time you fall</span></div>';
+    PSTEPS.forEach(function (s) {
+      var done = !!PS[s.n];
+      html += '<div class="plink' + (n >= s.n - 1 && (s.n === 1 || PS[s.n - 1]) ? ' on' : '') + '"></div>';
+      html += '<article class="block pstep"><div class="b-side"><span class="b-num">0' + s.n + '</span><span class="b-lab">Step ' + s.n + '</span><h3 class="b-name">' + s.name + '</h3></div>' +
+        '<div class="b-main"><h4 class="m-h">What to do</h4><ul class="goals"><li class="goal"><div class="row' + (done ? ' is-done' : '') + '" data-act="ptick" data-id="' + s.n + '">' +
+        '<button type="button" class="check" data-act="ptick" data-id="' + s.n + '" data-key="pk-' + s.n + '" aria-pressed="' + done + '" aria-label="Mark done: Step ' + s.n + ', ' + s.name + '">' + CHECK + '</button>' +
+        '<span class="gtext">' + s.body + '</span></div></li></ul>' +
+        (s.tags ? '<div class="ptags"><span class="ptag r"><span class="sl">R</span>Reprogramming</span><span class="ptag v"><span class="sl">V</span>Visualization</span></div>' : '') +
+        '</div></article>';
+    });
+    html += '<div class="plink' + (PS[1] && PS[2] ? ' on' : '') + '"></div>' +
+      '<div class="pnode end' + (n === 2 ? ' on' : '') + '"><span class="pdot"></span><span>Back on the Fitrah Path<small>Normality, Uniformity</small></span></div>' +
+      '<div class="pact"><button type="button" class="chip" data-act="preset" data-key="preset">Start over</button></div>';
+    document.getElementById('pathSteps').innerHTML = html;
+    var r = 26, c = 2 * Math.PI * r, off = c * (1 - n / 2);
+    document.getElementById('pathOverall').innerHTML =
+      '<svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="' + r + '" fill="none" stroke="var(--line)" stroke-width="7"/>' +
+      '<circle cx="32" cy="32" r="' + r + '" fill="none" stroke="var(--van)" stroke-width="7" stroke-linecap="round" stroke-dasharray="' + c + '" stroke-dashoffset="' + off + '" transform="rotate(-90 32 32)" style="transition:stroke-dashoffset .4s ease"/></svg>' +
+      '<div><div class="big">' + n + ' / 2</div><div class="small">steps done</div></div>';
+    if (k) { var el = document.querySelector('[data-key="' + k + '"]'); if (el) el.focus({ preventScroll: true }); }
+  }
+
+  /* Tabs */
+  var tab = 'day';
+  try { var tv = localStorage.getItem(TABKEY); if (tv === 'goals' || tv === 'day' || tv === 'path' || tv === 'rc') tab = tv; } catch (e) {}
+  try { if (location.hash === '#goals') tab = 'goals'; else if (location.hash === '#day') tab = 'day'; else if (location.hash === '#path') tab = 'path'; else if (location.hash === '#rc') tab = 'rc'; } catch (e) {}
+  function setTab(v, scroll) {
+    tab = v;
+    try { localStorage.setItem(TABKEY, v); } catch (e) {}
+    document.getElementById('view-goals').hidden = v !== 'goals';
+    document.getElementById('view-day').hidden = v !== 'day';
+    document.getElementById('view-path').hidden = v !== 'path';
+    document.getElementById('view-rc').hidden = v !== 'rc';
+    document.querySelectorAll('.tabs button').forEach(function (b) {
+      b.setAttribute('aria-selected', String(b.dataset.v === v));
+    });
+    if (scroll) window.scrollTo(0, 0);
+  }
+
+  buildWheel();
+  renderNotice();
+  render();
+  buildRing();
+  renderDay();
+  renderPath();
+  setTab(tab, false);
+})();
+</script>
+<script>
+(function () {
+  var root = document.getElementById('view-rc');
+  if (!root) return;
+
+  var C = { cons: 'var(--ca-c)', sub: 'var(--v-c)', bod: 'var(--pe-c)', x: 'var(--ch-c)', y: 'var(--ap-c)', chaos: 'var(--se-c)', spirit: 'var(--fi-c)', van: 'var(--van)' };
+
+  var D = {
+    mind: {
+      order: ['conscious', 'xthought', 'subconscious', 'xcond', 'body', 'xvib'],
+      intro: { t: 'Hover or tap any part', b: 'The circle is the mind. The <b>upper half</b> is the conscious mind, the <b>lower half</b> is the subconscious mind, and the <b>body</b> sits beneath. Use “Start” to take the tour in order.' },
+      items: {
+        conscious: { c: C.cons, t: 'Conscious mind', b: 'The upper half. Ideas enter here through <b>thinking</b>. From here an idea can be impressed upon the subconscious mind, and that impression is what leads to action.' },
+        xthought: { c: C.x, t: 'X-type thoughts', b: 'The spiked circle in the conscious mind. Thoughts are energy, and every vibration has thoughts that are harmonious with it. When the body runs at X-type vibration, we naturally attract <b>X-type thoughts</b>, and they enter here.' },
+        subconscious: { c: C.sub, t: 'Subconscious mind', b: 'The lower half. Ideas that are repeated and acted upon become <b>fixed</b> here and form habits. It acts as the instrument that influences the body’s vibration.' },
+        xcond: { c: C.x, t: 'X-type conditioning', b: 'The circle inside the subconscious mind: our existing habits and automatic behaviours, built up through repetition over a lifetime. These are the habits we want to change. It sets the body to operate at a particular vibration.' },
+        body: { c: C.bod, t: 'Body', b: 'Beneath the circle. The subconscious mind influences the body’s vibration, and that vibration creates the <b>motivation</b> to take action.' },
+        xvib: { c: C.x, t: 'X-type vibration', b: 'The vibration the body runs at because of X-type conditioning. It attracts matching thoughts, so <b>existing conditioning influences our vibration, and our vibration influences the thoughts we naturally attract</b>.' }
+      }
+    },
+    action: {
+      order: ['idea', 'conscious', 'subconscious', 'vibration', 'motivation', 'action'],
+      intro: { t: 'Tap each step', b: 'The central principle of how action takes place: <b>Idea → Conscious mind → Subconscious mind → Body’s vibration → Motivation → Action.</b>' },
+      items: {
+        idea: { c: C.van, t: 'Idea', b: 'Ideas come from parents, family, upbringing, environment and circumstances, and later from our own wants and desires. Every action starts as an idea.' },
+        conscious: { c: C.cons, t: 'Conscious mind', b: 'The idea first enters the conscious mind through thinking.' },
+        subconscious: { c: C.sub, t: 'Subconscious mind', b: 'The idea is impressed upon the subconscious mind, which acts as the instrument that influences the body’s vibration. Ideas repeated and acted upon become fixed here as habits.' },
+        vibration: { c: C.bod, t: 'Body’s vibration', b: 'The subconscious mind sets the vibration at which the body operates.' },
+        motivation: { c: C.x, t: 'Motivation', b: 'The vibration creates the motivation to take action.' },
+        action: { c: C.spirit, t: 'Action', b: 'Motivation turns into action. Repeating action turns ideas into habits, and a multitude of habits forms our conditioning, which feeds back into the next idea.' }
+      }
+    },
+    clash: {
+      order: ['xc', 'yidea', 'clash', 'chaos', 'manifest'],
+      intro: { t: 'What happens at the clash?', b: 'Tap each part. The new idea meets the old habits, the two clash, and the body enters a different state.' },
+      items: {
+        xc: { c: C.x, t: 'X-type conditioning', b: 'Our existing habits, already established in the subconscious mind through repetition.' },
+        yidea: { c: C.y, t: 'Y-type idea', b: 'A new idea or desire: something we want to achieve, experience or become, but different in nature from our existing conditioning. It enters the conscious mind first and must be impressed on the subconscious like any other idea.' },
+        clash: { c: C.chaos, t: 'The clash', b: 'Because the two differ in nature, they clash when the Y-type idea is impressed on the subconscious. The clash disturbs the normal process through which the subconscious influences the body’s vibration.' },
+        chaos: { c: C.chaos, t: 'Chaos Vibration', b: 'The state the body enters when a new idea conflicts with existing conditioning. Instead of motivation we feel resistance, so <b>acting on the Y-type idea becomes difficult</b>. In the theory’s language, the nervous system is upset or disturbed.' },
+        manifest: { c: C.chaos, t: 'Manifestations', b: 'Fear, uncertainty, hesitation, reluctance, loss of motivation, disorientation, disorder and a feeling of complete disarray. These are the ways Chaos Vibration shows itself.' }
+      }
+    },
+    factors: {
+      order: ['selfimage', 'identity', 'emotion', 'focus'],
+      intro: { t: 'Four factors, one routine', b: 'Tap a factor to switch it on or off and to read what it means. When all four are strongly present, the routine becomes much more sticky, consistent and lasting.' },
+      items: {
+        selfimage: { c: 'var(--ap-c)', t: 'Self-image', b: 'The standard a person holds of themselves. When an activity is tied to it, doing it feels like maintaining or improving that image, and stopping feels like it is slipping. So they go back to the activity to recalibrate.' },
+        identity: { c: 'var(--pe-c)', t: 'Self-identity', b: 'Who a person believes they are, such as “a student who studies consistently” or “a person who exercises regularly”. The activity stops being something they occasionally do and becomes part of who they are.' },
+        emotion: { c: 'var(--ch-c)', t: 'Emotional charge', b: 'The intensity of emotion around the activity: desire, enjoyment, attachment, deep meaning. A stronger charge means more willingness to engage, but <b>on its own it does not make a routine permanent</b>. Someone can be very excited for a while and still abandon it.' },
+        focus: { c: 'var(--ca-c)', t: 'Focus / attention', b: 'The quality of attention: how much we give, how focused we are while doing it, and how consistently we engage. High, steady attention gives the activity a deliberate place in daily life. Inconsistent attention contributes to an inconsistent routine.' }
+      }
+    },
+    flow: {
+      order: ['cons', 'sub', 'bod', 'act'],
+      mode: 'harmony',
+      intro: { t: 'Switch the situation and tap a stage', b: 'Imagine a green power flowing through the conscious mind, the subconscious mind and the body, and out as action. See what a harmonious idea does to it, and what an X–Y clash does.' },
+      items: {
+        cons: { c: C.cons, t: 'Conscious mind', m: {
+          harmony: { t: 'The idea arrives', b: 'A harmonious idea enters the conscious mind. The flow passes through with nothing in its way.' },
+          clash: { t: 'A Y-type idea arrives', b: 'A new desire enters the conscious mind and is impressed on a subconscious that already holds X-type conditioning.' } } },
+        sub: { c: C.sub, t: 'Subconscious mind', m: {
+          harmony: { t: 'Impressed without conflict', b: 'There is no clash, so the subconscious influences the body’s vibration in the normal way.' },
+          clash: { t: 'The clash happens here', b: 'The two differ in nature, so they clash. The normal process through which the subconscious influences the body is disturbed.' } } },
+        bod: { c: C.bod, t: 'Body', m: {
+          harmony: { t: 'Vibration becomes motivation', b: 'The body’s vibration supports the idea and produces motivation.' },
+          clash: { t: 'Chaos Vibration', b: 'The flow is interrupted: fear, hesitation, reluctance, lost motivation. This is the nervous system being disturbed, <b>not proof that the idea is wrong</b>.' } } },
+        act: { c: C.spirit, t: 'Action', m: {
+          harmony: { t: 'We feel motivated and do the work', b: 'Even here I take the action myself. The only difference is that motivation is already present.' },
+          clash: { t: 'The first step is mine', b: 'I am still the one who has to act. Only motivation is missing. <b>I take the first step despite Chaos Vibration</b>, stay open to the process, keep doing my part, and trust Allah Almighty’s system and help.' } } }
+      }
+    },
+    method: {
+      order: ['begin', 'internal', 'rv', 'external', 'repeat'],
+      intro: { t: 'Two kinds of work, every day', b: 'The <b>internal</b> part is handled through reprogramming and visualization. The <b>external</b> part is handled through the actual activity and repetition. Tap each box.' },
+      items: {
+        begin: { c: C.chaos, t: 'Deliberately begin', b: 'The activity is a Y-type idea, so Chaos Vibration appears. We force ourselves to take the initial step, then repeat the next day, and the day after. Unaware people leave the four factors to chance; we work on them on purpose.' },
+        internal: { c: C.sub, t: 'Internal work', b: 'Before the activity, a reprogramming or visualization session. Its purpose is to connect the activity to our <b>self-image</b> and <b>self-identity</b>, build a strong <b>emotional charge</b>, and strengthen our <b>attention</b> toward the life and routine we are creating.' },
+        rv: { c: C.sub, t: 'R and V sessions', b: '<b>R session</b> is a Reprogramming Session. <b>V session</b> is a Visualization Session. The session is itself an activity, so if Chaos Vibration appears before it, we deliberately initiate it too.' },
+        external: { c: C.bod, t: 'External work', b: 'After the R or V session we perform the actual activity: begin it deliberately, do it, and give it focused attention. This is the external side, handled by action and repetition.' },
+        repeat: { c: C.van, t: 'Repeat each day', b: 'Every day: session first, then the activity. Commit to around <b>20–30 days</b> to begin with. The exact number is not the point and does not guarantee permanence; what matters is to keep both the internal work and the activity going long enough for the behaviour to become established.' }
+      }
+    },
+    moment: {
+      order: ['choose', 'resist', 'remember', 'focus', 'begin'],
+      intro: { t: 'The exact moment before a task', b: 'This is the smallest and most practical part of the theory. Follow the five stops. Example task: a reprogramming session followed by cardio.' },
+      items: {
+        choose: { c: C.van, t: 'Choose the task', b: 'For example: “In five minutes I will do my reprogramming session, and after that my cardio.” The routine is made of single tasks like this, one after another.' },
+        resist: { c: C.chaos, t: 'Resistance appears', b: 'Almost at once: reluctance, hesitation, fear, no wish to get up. The Y-type idea has been impressed on a subconscious full of X-type conditioning, and they clash. <b>Instead of being confused, I know what is happening.</b>' },
+        remember: { c: C.sub, t: 'Remember the routine · set aside fear', b: '<b>Principle 1:</b> my initiative is part of cultivating my routine, so I leave the question of routine formation alone. <b>Principle 2:</b> this fear comes from the X–Y clash, not necessarily from the activity, so I turn a blind eye to it.' },
+        focus: { c: C.bod, t: 'Focus on engaging · affirm courage', b: '<b>Principle 3:</b> my intention is simply to engage in the activity. <b>Principle 4:</b> courage is action despite fear. “Let’s just do this and see what happens. Jo hoga dekh lenge.”' },
+        begin: { c: C.spirit, t: 'Take the first step and begin', b: 'Begin the session. When it is complete, move on to the cardio. If resistance comes back, apply exactly the same four principles. With three, four or five activities in a day, there is no separate theory for each one.' }
+      }
+    }
+  };
+
+  /* ---------- spikes ---------- */
+  root.querySelectorAll('[data-spikes]').forEach(function (g) {
+    var a = g.dataset.spikes.split(','), n = +a[0], r1 = +a[1], r2 = +a[2], off = (+a[3] || 0) * Math.PI / 180;
+    for (var i = 0; i < n; i++) {
+      var t = off + (i / n) * Math.PI * 2;
+      var l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      l.setAttribute('class', 'ln');
+      l.setAttribute('stroke-linecap', 'round');
+      l.setAttribute('x1', (Math.cos(t) * r1).toFixed(1)); l.setAttribute('y1', (Math.sin(t) * r1).toFixed(1));
+      l.setAttribute('x2', (Math.cos(t) * r2).toFixed(1)); l.setAttribute('y2', (Math.sin(t) * r2).toFixed(1));
+      g.appendChild(l);
+    }
+  });
+
+  /* ---------- factors state ---------- */
+  var FACT = ['selfimage', 'identity', 'emotion', 'focus'];
+  var VERDICT = [
+    ['Nothing connected yet', 'Repetition alone: the routine may still form, but it can stay temporary, inconsistent and easy to abandon.'],
+    ['One factor on', 'Some factors are missing or weak. The routine may still develop, but it can remain temporary or inconsistent.'],
+    ['Two factors on', 'Some factors are missing or weak. The routine may still develop, but it can remain temporary or inconsistent.'],
+    ['Three factors on', 'Almost there. With one factor missing or weak, the routine can still be inconsistent or temporary.'],
+    ['All four strongly present', 'The routine becomes much more sticky, consistent and lasting.']
+  ];
+  function factorsOn() { return root.querySelectorAll('.rc-factor.is-on').length; }
+  function updateMeter() {
+    var n = factorsOn();
+    root.querySelectorAll('.rc-bars i').forEach(function (b, i) { b.classList.toggle('f', i < n); });
+    document.getElementById('rcVerdict').innerHTML = VERDICT[n][0] + '<small>' + VERDICT[n][1] + '</small>';
+  }
+  function setFactors(on) {
+    root.querySelectorAll('.rc-factor').forEach(function (f) {
+      var v = on.indexOf(f.dataset.p) > -1;
+      f.classList.toggle('is-on', v);
+      f.setAttribute('aria-pressed', String(v));
+    });
+    updateMeter();
+  }
+
+  /* ---------- generic diagram ---------- */
+  function initDia(el) {
+    var d = D[el.dataset.dia];
+    if (!d) return;
+    var info = el.querySelector('.rc-info');
+    var tag = info.querySelector('.tag'), h = info.querySelector('h4'), p = info.querySelector('p'), nb = info.querySelector('.rc-next');
+    var pinned = null, hover = null;
+
+    function item(k) {
+      var it = d.items[k];
+      if (!it) return null;
+      if (it.m) { var m = it.m[d.mode]; return { c: it.c, t: m.t, b: m.b }; }
+      return it;
+    }
+    function render() {
+      var k = hover || pinned, it = k ? item(k) : null;
+      info.style.setProperty('--ic', it ? it.c : 'var(--van)');
+      tag.textContent = it ? (d.order.indexOf(k) + 1) + ' of ' + d.order.length : 'Tap or hover';
+      h.textContent = it ? it.t : d.intro.t;
+      p.innerHTML = it ? it.b : d.intro.b;
+      nb.textContent = k ? 'Next ›' : 'Start ›';
+      el.classList.toggle('has-on', !!k);
+      el.querySelectorAll('[data-p]').forEach(function (n) { n.classList.toggle('on', n.dataset.p === k); });
+    }
+    function keyOf(t) {
+      var n = t.closest && t.closest('[data-p]');
+      return n && el.contains(n) ? n.dataset.p : null;
+    }
+    el.addEventListener('mouseover', function (e) {
+      var k = keyOf(e.target);
+      if (k !== hover) { hover = k; render(); }
+    });
+    el.addEventListener('mouseleave', function () { if (hover) { hover = null; render(); } });
+    el.addEventListener('focusin', function (e) {
+      var k = keyOf(e.target);
+      if (k) { hover = k; render(); }
+    });
+    el.addEventListener('focusout', function () { hover = null; render(); });
+    el.addEventListener('click', function (e) {
+      var k = keyOf(e.target);
+      if (k) {
+        pinned = k; hover = k;
+        if (el.dataset.dia === 'factors') {
+          var f = e.target.closest('.rc-factor');
+          if (f) {
+            f.classList.toggle('is-on');
+            f.setAttribute('aria-pressed', String(f.classList.contains('is-on')));
+            updateMeter();
+            document.getElementById('rcCollege').hidden = true;
+            root.querySelector('[data-fset="college"]').setAttribute('aria-pressed', 'false');
+          }
+        }
+        render();
+        return;
+      }
+      var mb = e.target.closest('[data-modebtn]');
+      if (mb && el.contains(mb)) {
+        d.mode = mb.dataset.modebtn;
+        el.dataset.mode = d.mode;
+        var fl = el.querySelector('.rc-flow'); if (fl) fl.dataset.mode = d.mode;
+        el.querySelectorAll('[data-modebtn]').forEach(function (b) { b.setAttribute('aria-pressed', String(b === mb)); });
+        render();
+        return;
+      }
+      if (e.target.closest('.rc-next')) {
+        var cur = pinned || hover, i = cur ? d.order.indexOf(cur) : -1;
+        pinned = d.order[(i + 1) % d.order.length]; hover = null;
+        render();
+      }
+    });
+    el.addEventListener('keydown', function (e) {
+      if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('[role="button"][data-p], [role="button"] [data-p]')) {
+        e.preventDefault();
+        e.target.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      }
+    });
+    if (d.mode) el.dataset.mode = d.mode;
+    render();
+  }
+  root.querySelectorAll('.rc-dia').forEach(initDia);
+  updateMeter();
+
+  /* ---------- factor presets ---------- */
+  root.addEventListener('click', function (e) {
+    var fs = e.target.closest('[data-fset]');
+    if (!fs) return;
+    var v = fs.dataset.fset;
+    var note = document.getElementById('rcCollege');
+    var cb = root.querySelector('[data-fset="college"]');
+    if (v === 'all') setFactors(FACT);
+    else if (v === 'none') setFactors([]);
+    else setFactors(['emotion']);
+    note.hidden = v !== 'college';
+    cb.setAttribute('aria-pressed', String(v === 'college'));
+  });
+
+  /* ---------- cases ---------- */
+  root.addEventListener('click', function (e) {
+    var cb = e.target.closest('[data-case]');
+    if (!cb) return;
+    root.querySelectorAll('[data-case]').forEach(function (b) { b.setAttribute('aria-pressed', String(b === cb)); });
+    root.querySelectorAll('[data-casepanel]').forEach(function (pn) { pn.hidden = pn.dataset.casepanel !== cb.dataset.case; });
+  });
+
+  /* ---------- jump + copy ---------- */
+  var reduce = false;
+  try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+  root.addEventListener('click', function (e) {
+    var g = e.target.closest('[data-go]');
+    if (g) {
+      var t = document.getElementById(g.dataset.go);
+      if (t) t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      return;
+    }
+    var c = e.target.closest('[data-copy]');
+    if (c) {
+      var txt = document.getElementById('rcRetText').textContent.replace(/\s+/g, ' ').trim();
+      function done(ok) {
+        c.textContent = ok ? 'Copied' : 'Press Ctrl+C to copy';
+        setTimeout(function () { c.textContent = 'Copy paragraph'; }, 1800);
+      }
+      try {
+        navigator.clipboard.writeText(txt).then(function () { done(true); }, function () { sel(); });
+      } catch (err) { sel(); }
+      function sel() {
+        try {
+          var r = document.createRange(); r.selectNodeContents(document.getElementById('rcRetText'));
+          var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+          done(document.execCommand('copy'));
+        } catch (e2) { done(false); }
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>
