@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0D0E11">
+<meta name="description" content="A combined nutrition calculator for homemade cooked white rice and marinated air-fried chicken, using the original chicken calculator design.">
+<title>Food Nutrition Calculator · Rice &amp; Chicken</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Same look as the Course Of Action page: near-black surfaces, bright contrast colors,
+   Bricolage Grotesque headings, Figtree body, colored cards with a solid header, pill controls. */
+:root {
+  --bg: #0D0E11;
+  --surface: #15171C;
+  --surface2: #1E2128;
+  --ink: #EEF0F4;
+  --muted: #9BA2B0;
+  --line: #292D36;
+  --on: #0D0E11;
+  --pe-c: #45D9D2; --pe-t: #112628;
+  --fi-c: #7EE08B; --fi-t: #14261A;
+  --ca-c: #7FA6FF; --ca-t: #151E3A;
+  --ch-c: #FFC555; --ch-t: #2B2111;
+  --ap-c: #FF7DB9; --ap-t: #2A1823;
+  --van: #F3E3B3;  --van-t: #25221A;
+  --font-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Figtree', 'Segoe UI', system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.45;
+  padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; border-radius: 6px; }
+.wrap { max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+
+/* Header */
+.top { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+.top > div { min-width: 0; }
+.eyebrow { margin: 0 0 6px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+h1 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 6vw, 46px); line-height: 1.05; letter-spacing: -.02em; text-wrap: balance; }
+.sub { margin: 10px 0 0; max-width: 60ch; color: var(--muted); }
+.overall { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 12px 18px 12px 14px; font-weight: 600; }
+.overall .pdot { width: 12px; height: 12px; border-radius: 50%; background: var(--van); flex: none; }
+
+/* Layout and colored cards */
+.layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 18px; align-items: start; }
+.c-teal { --c: var(--pe-c); --t: var(--pe-t); }
+.c-van { --c: var(--van); --t: var(--van-t); }
+.card { background: var(--t); border: 1.5px solid color-mix(in srgb, var(--c) 35%, transparent); border-radius: 20px; overflow: hidden; }
+.card-h { background: var(--c); color: var(--on); padding: 16px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.card-h h2 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: -.01em; min-width: 0; }
+.badge { font-size: 12px; font-weight: 600; letter-spacing: .04em; border-radius: 99px; padding: 4px 11px; background: color-mix(in srgb, var(--on) 18%, transparent); white-space: nowrap; }
+.card-b { padding: 18px; display: flex; flex-direction: column; gap: 16px; }
+.hint { margin: 0; color: var(--muted); }
+.hint strong { color: var(--ink); font-weight: 600; }
+.lab { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.small { font-size: 13px; color: var(--muted); margin: 0; }
+
+/* Weight input */
+.label-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+label { font-weight: 600; }
+.weight-field { display: flex; align-items: center; height: 88px; background: var(--bg); border: 1.5px solid var(--line); border-radius: 16px; overflow: hidden; transition: border-color .15s ease, box-shadow .15s ease; }
+.weight-field:focus-within { border-color: var(--c); box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 22%, transparent); }
+input[type="number"] { width: 100%; min-width: 0; background: transparent; border: 0; outline: none; color: var(--ink); font-family: var(--font-display); font-size: 44px; font-weight: 700; letter-spacing: -.02em; padding: 12px 0 12px 20px; font-variant-numeric: tabular-nums; }
+input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="number"] { appearance: textfield; -moz-appearance: textfield; }
+.unit { font-size: 17px; color: var(--muted); font-weight: 600; padding-right: 20px; }
+.weight-help { margin-top: 8px; }
+
+/* Preset chips */
+.presets { display: flex; flex-wrap: wrap; gap: 8px; }
+.preset { display: inline-flex; align-items: center; border: 1.5px solid var(--line); background: var(--surface); border-radius: 99px; padding: 7px 16px; font-weight: 500; transition: background .15s ease, border-color .15s ease, color .15s ease; }
+.preset:hover, .preset:focus-visible { border-color: var(--c); }
+.preset.active { background: var(--c); border-color: var(--c); color: var(--on); font-weight: 600; }
+
+/* Range */
+input[type="range"] { accent-color: var(--c); width: 100%; cursor: pointer; margin: 0; }
+.range-ends { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-top: 4px; font-variant-numeric: tabular-nums; }
+
+/* Notice */
+.notice { display: flex; gap: 12px; align-items: flex-start; background: var(--surface2); border-radius: 12px; padding: 10px 14px; font-size: 14px; color: var(--muted); }
+.notice .ico { flex: none; width: 22px; height: 22px; margin-top: 1px; border-radius: 50%; background: var(--ch-c); color: var(--on); display: grid; place-items: center; font-weight: 700; font-size: 13px; }
+.notice b { color: var(--ink); font-weight: 600; }
+
+/* Results */
+.calorie-block { background: var(--surface2); border: 1.5px solid color-mix(in srgb, var(--c) 40%, transparent); border-radius: 16px; padding: 16px 18px; display: flex; flex-direction: column; gap: 3px; }
+.calories { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.calories strong { font-family: var(--font-display); font-weight: 700; font-size: clamp(48px, 9vw, 68px); line-height: 1; letter-spacing: -.03em; color: var(--c); font-variant-numeric: tabular-nums; }
+.calories span { font-size: 18px; font-weight: 600; color: var(--muted); }
+.calorie-note { margin: 0; font-size: 13px; color: var(--muted); }
+.macro-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.macro { --mc: var(--fi-c); min-width: 0; border-radius: 16px; padding: 14px; background: var(--surface2); border: 1.5px solid color-mix(in srgb, var(--mc) 40%, transparent); display: flex; flex-direction: column; gap: 3px; }
+.macro:nth-child(2) { --mc: var(--ca-c); }
+.macro:nth-child(3) { --mc: var(--ch-c); }
+.macro .name { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.macro strong { font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 4vw, 34px); line-height: 1; color: var(--mc); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.macro small { font-size: 13px; color: var(--muted); }
+.copy-btn { width: 100%; border: 0; background: var(--van); color: var(--on); border-radius: 99px; padding: 12px 18px; font-weight: 600; transition: transform .15s ease, filter .15s ease; }
+.copy-btn:hover { transform: translateY(-2px); filter: brightness(1.06); }
+
+/* Adjust estimates */
+details { background: var(--surface2); border: 1.5px solid var(--line); border-radius: 16px; padding: 0 16px; }
+summary { padding: 14px 0; font-weight: 600; cursor: pointer; }
+details[open] summary { border-bottom: 1px solid var(--line); }
+.settings { padding: 14px 0 16px; display: flex; flex-direction: column; gap: 12px; }
+.settings p { margin: 0; color: var(--muted); font-size: 14px; }
+.settings-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.settings-grid label { display: block; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.settings-grid input { width: 100%; margin-top: 6px; background: var(--bg); color: var(--ink); border: 1.5px solid var(--line); border-radius: 12px; padding: 10px 12px; font: inherit; font-size: 16px; font-variant-numeric: tabular-nums; }
+.settings-grid input:focus-visible { outline-offset: 0; border-color: var(--ink); }
+.reset { align-self: flex-start; border: 1.5px solid var(--line); background: var(--surface); border-radius: 99px; padding: 6px 16px; font-weight: 600; transition: border-color .15s ease; }
+.reset:hover { border-color: var(--van); }
+
+/* Panels (reference + notes) */
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 16px; }
+.sec-h { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 24px; letter-spacing: -.01em; }
+.ref-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px; }
+.tile { --c: var(--van); border-radius: 16px; padding: 14px 16px; background: var(--surface2); border: 1.5px solid color-mix(in srgb, var(--c) 40%, transparent); display: flex; flex-direction: column; gap: 3px; }
+.tile:nth-child(2) { --c: var(--fi-c); }
+.tile:nth-child(3) { --c: var(--ca-c); }
+.tile:nth-child(4) { --c: var(--ch-c); }
+.tile b { font-family: var(--font-display); font-weight: 700; font-size: 32px; line-height: 1; color: var(--c); font-variant-numeric: tabular-nums; }
+.tile span { font-weight: 600; }
+.notes p { margin: 0; color: var(--muted); max-width: 90ch; }
+.notes b { color: var(--ink); font-weight: 600; }
+
+@media (max-width: 480px) {
+  .panel { padding: 18px; }
+  .macro { padding: 12px 10px; }
+  .settings-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* Food selector: same saturated headers, outlined pill/card surfaces as original. */
+.chooser { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+.chooser-title { display: flex; align-items: baseline; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; }
+.food-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.food-option { text-align: left; min-width: 0; border: 1.5px solid var(--line); background: var(--surface2); padding: 16px 18px; border-radius: 16px; display: flex; gap: 12px; align-items: center; justify-content: space-between; transition: transform .15s ease, border-color .15s ease, background .15s ease; }
+.food-option:hover { transform: translateY(-2px); border-color: var(--van); }
+.food-option[aria-pressed="true"] { border-color: var(--van); background: color-mix(in srgb, var(--van) 11%, var(--surface2)); }
+.food-name { font-family: var(--font-display); font-size: clamp(19px, 3vw, 25px); font-weight: 700; line-height: 1.15; }
+.food-caption { display: block; color: var(--muted); font-size: 13px; margin-top: 3px; }
+.food-option[aria-pressed="true"] .food-name { color: var(--van); }
+.food-check { width: 25px; height: 25px; flex: none; display: grid; place-items: center; border: 1.5px solid var(--line); border-radius: 50%; font-weight: 700; font-size: 16px; color: transparent; }
+.food-option[aria-pressed="true"] .food-check { background: var(--van); color: var(--on); border-color: var(--van); }
+.info-ingredients { display: flex; flex-wrap: wrap; gap: 8px; }
+.ingredient { background: var(--surface2); border: 1px solid var(--line); color: var(--muted); border-radius: 99px; padding: 5px 12px; font-size: 13px; }
+@media (max-width: 480px) { .chooser { padding: 18px; } .food-option { padding: 12px; gap: 8px; } .food-caption { font-size: 12px; } }
+
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="top">
+      <div>
+        <p class="eyebrow">Personal food tracker</p>
+        <h1>Food nutrition calculator</h1>
+        <p class="sub">One place for your homemade white rice and air-fried chicken. Choose a dish, enter its weight, and see the estimated calories and macros instantly.</p>
+      </div>
+      <div class="overall"><span class="pdot" aria-hidden="true"></span><span id="overall-label">Weigh before air-frying</span></div>
+    </header>
+
+    <section class="chooser" aria-labelledby="dish-title">
+      <div class="chooser-title">
+        <h2 class="sec-h" id="dish-title">Choose your dish</h2>
+        <span class="small">Select one to calculate</span>
+      </div>
+      <div class="food-options" role="group" aria-label="Select dish">
+        <button type="button" class="food-option" data-food="rice" aria-pressed="false">
+          <span><span class="food-name">White rice</span><span class="food-caption">Cooked · Water + salt</span></span><span class="food-check" aria-hidden="true">✓</span>
+        </button>
+        <button type="button" class="food-option" data-food="chicken" aria-pressed="true">
+          <span><span class="food-name">Chicken</span><span class="food-caption">Marinated · Air-fried</span></span><span class="food-check" aria-hidden="true">✓</span>
+        </button>
+      </div>
+    </section>
+
+    <div class="layout">
+      <section class="card c-teal" aria-labelledby="weight-title">
+        <div class="card-h"><h2 id="weight-title">Enter your portion</h2><span class="badge">Step 01</span></div>
+        <div class="card-b">
+          <p class="hint" id="weight-hint">Use the weight of the <strong>marinated chicken before cooking</strong>, including bones and coating.</p>
+          <div>
+            <div class="label-row"><label for="weight" id="weight-label">Chicken weight</label><span class="small">In grams (g)</span></div>
+            <div class="weight-field"><input id="weight" type="number" min="0" max="100000" step="1" value="450" inputmode="numeric" aria-describedby="weight-help"><span class="unit">grams</span></div>
+            <p class="small weight-help" id="weight-help">Example: enter 450 if your portion weighed 450 g before going into the air fryer.</p>
+          </div>
+          <div class="presets" aria-label="Quick weight choices" id="presets"></div>
+          <div>
+            <input id="weight-range" type="range" min="0" max="1000" step="10" value="450" aria-label="Adjust portion weight">
+            <div class="range-ends"><span>0 g</span><span>1,000 g</span></div>
+          </div>
+          <div class="notice"><span class="ico" aria-hidden="true">i</span><span id="notice-text">These are <b>recipe estimates</b>; bones and marinade affect the weight and nutrition of chicken portions.</span></div>
+        </div>
+      </section>
+
+      <section class="card c-van" aria-labelledby="result-title">
+        <div class="card-h"><h2 id="result-title">Your nutrition</h2><span class="badge">Step 02</span></div>
+        <div class="card-b">
+          <p class="hint">Estimated values for your selected portion.</p>
+          <div class="calorie-block" aria-live="polite" aria-atomic="true">
+            <div class="lab">Total calories</div>
+            <div class="calories"><strong id="calories">550</strong><span>kcal</span></div>
+            <p class="calorie-note" id="serving-label">For 450 g of marinated chicken</p>
+          </div>
+          <div class="macro-grid" aria-live="polite">
+            <div class="macro"><span class="name">Protein</span><strong id="protein">65.0</strong><small>grams</small></div>
+            <div class="macro"><span class="name">Carbs</span><strong id="carbs">7.0</strong><small>grams</small></div>
+            <div class="macro"><span class="name">Fat</span><strong id="fat">29.0</strong><small>grams</small></div>
+          </div>
+          <button class="copy-btn" id="copy" type="button">Copy nutrition summary</button>
+          <details>
+            <summary>Adjust estimates (optional)</summary>
+            <div class="settings">
+              <p id="settings-help">Adjust estimates per 100 g for this dish only. Chicken and rice settings are kept separately in this browser.</p>
+              <div class="settings-grid">
+                <div><label for="set-cal">Calories / 100 g</label><input id="set-cal" type="number" min="0" max="1000" step="0.1"></div>
+                <div><label for="set-pro">Protein / 100 g</label><input id="set-pro" type="number" min="0" max="100" step="0.1"></div>
+                <div><label for="set-carb">Carbs / 100 g</label><input id="set-carb" type="number" min="0" max="100" step="0.1"></div>
+                <div><label for="set-fat">Fat / 100 g</label><input id="set-fat" type="number" min="0" max="100" step="0.1"></div>
+              </div>
+              <button type="button" class="reset" id="reset">Restore original estimates for this dish</button>
+            </div>
+          </details>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel" aria-label="Nutrition reference">
+      <div class="ref-head"><h2 class="sec-h">Nutrition per 100 grams</h2><span class="small" id="ref-context">Marinated chicken, weighed before air-frying</span></div>
+      <div class="tiles">
+        <div class="tile"><b id="ref-cal">122 kcal</b><span>Calories</span></div>
+        <div class="tile"><b id="ref-pro">14.4 g</b><span>Protein</span></div>
+        <div class="tile"><b id="ref-carb">1.6 g</b><span>Carbohydrates</span></div>
+        <div class="tile"><b id="ref-fat">6.4 g</b><span>Fat</span></div>
+      </div>
+    </section>
+
+    <section class="panel notes" aria-label="Recipe and estimate notes">
+      <div><h2 class="sec-h" id="recipe-title">Chicken recipe</h2></div>
+      <div class="info-ingredients" id="ingredients"></div>
+      <p id="recipe-note"></p>
+    </section>
+  </main>
+  <script>
+  (() => {
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const keys = ['cal', 'pro', 'carb', 'fat'];
+    const dishes = {
+      chicken: {
+        name: 'Air-fried chicken', short: 'chicken',
+        initialWeight: 450, presets: [100, 200, 300, 450, 600],
+        defaults: {cal: 550/4.5, pro: 65/4.5, carb: 7/4.5, fat: 29/4.5},
+        legacyStorageKey: 'airfried_chicken_nutrition_v1',
+        overall: 'Weigh before air-frying',
+        weightHint: 'Use the weight of the <strong>marinated chicken before cooking</strong>, including bones and coating.',
+        weightLabel: 'Chicken weight',
+        weightHelp: 'Example: enter 450 if your portion weighed 450 g before going into the air fryer.',
+        notice: 'These are <b>recipe estimates</b>; bones, individual pieces and marinade can change your portion’s nutrition.',
+        servingName: 'marinated chicken (weighed before cooking)',
+        refContext: 'Marinated chicken · before air-frying',
+        recipeTitle: 'Chicken recipe',
+        ingredients: ['Skinless, bone-in broiler chicken', 'Yogurt', 'Lemon', 'Spices', 'Oil marinade'],
+        recipeNote: '<b>How these numbers were estimated:</b> Your original chicken calculator estimates a 450 g portion of marinated, bone-in chicken at 550 kcal, 65 g protein, 7 g carbohydrates and 29 g fat. Results scale by portion weight and assume similar pieces and marinade proportions. Your marinade contains oil (2 tablespoons per batch in the original recipe), but the full batch weight is unspecified, so the numbers are estimates. <b>Weigh the marinated chicken before air-frying, including bones.</b>'
+      },
+      rice: {
+        name: 'Cooked white rice', short: 'rice',
+        initialWeight: 200, presets: [100, 150, 200, 250, 300],
+        defaults: {cal: 130, pro: 2.69, carb: 28.17, fat: 0.28},
+        legacyStorageKey: 'plain_cooked_white_rice_nutrition_v2',
+        overall: 'Weigh after cooking',
+        weightHint: 'Use the weight of the <strong>cooked rice on your plate</strong>, ready to eat.',
+        weightLabel: 'Cooked rice weight',
+        weightHelp: 'Example: enter 200 if you have 200 g of cooked white rice on your plate.',
+        notice: '<b>Water and salt add zero calories.</b> Rice absorbs different amounts of water, so the values are estimates for plain cooked rice.',
+        servingName: 'cooked white rice',
+        refContext: 'Plain white rice · after cooking',
+        recipeTitle: 'White rice recipe',
+        ingredients: ['Uncooked white rice', 'Water', 'Salt', 'Cooked with dum (low-heat steaming)'],
+        recipeNote: '<b>How these numbers were estimated:</b> Your rice calculator uses standard approximate values for plain cooked white rice: 130 kcal, 2.69 g protein, 28.17 g carbohydrates and 0.28 g fat per 100 g. This is rice prepared with water and salt only; no oil, ghee or butter. Actual values can change with water absorption. <b>Weigh your rice after cooking, without the plate or bowl.</b>'
+      }
+    };
+    const storageKey = 'rice_chicken_nutrition_combined_v1';
+    const weightEl = $('weight');
+    const rangeEl = $('weight-range');
+    const choiceButtons = [...document.querySelectorAll('[data-food]')];
+    const state = {selected: 'chicken', weight: {}, amounts: {}};
+
+    function isValidAmounts(obj) {
+      return obj && keys.every(k => typeof obj[k] === 'number' && Number.isFinite(obj[k]) && obj[k] >= 0 && obj[k] <= 1000);
+    }
+    for (const [id, dish] of Object.entries(dishes)) {
+      state.weight[id] = dish.initialWeight;
+      state.amounts[id] = {...dish.defaults};
+    }
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey) || 'null');
+      if (saved && dishes[saved.selected]) state.selected = saved.selected;
+      for (const id of Object.keys(dishes)) {
+        if (saved && isValidAmounts(saved.amounts?.[id])) state.amounts[id] = {...saved.amounts[id]};
+        else {
+          const legacy = JSON.parse(localStorage.getItem(dishes[id].legacyStorageKey) || 'null');
+          if (isValidAmounts(legacy)) state.amounts[id] = {...legacy};
+        }
+        if (saved && Number.isFinite(saved.weight?.[id]) && saved.weight[id] >= 0 && saved.weight[id] <= 100000) state.weight[id] = saved.weight[id];
+      }
+    } catch (_) { /* Storage access is optional (e.g. private browsing). */ }
+    function save() {
+      try {localStorage.setItem(storageKey, JSON.stringify(state));} catch (_) {}
+    }
+    function displayValue(n, digits) {
+      return Number(n).toLocaleString('en-US', {minimumFractionDigits: digits, maximumFractionDigits: digits});
+    }
+    function getWeight() {
+      const n = Number(weightEl.value);
+      return Number.isFinite(n) ? Math.max(0, Math.min(100000, n)) : 0;
+    }
+    function syncSettings() {
+      const values = state.amounts[state.selected];
+      keys.forEach(key => {$(`set-${key}`).value = Number(values[key].toFixed(4));});
+    }
+    function renderPresets() {
+      const holder = $('presets');
+      holder.replaceChildren();
+      for (const weight of dishes[state.selected].presets) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'preset';
+        btn.dataset.weight = String(weight);
+        btn.textContent = `${weight} g`;
+        btn.addEventListener('click', () => {weightEl.value = String(weight); update();});
+        holder.appendChild(btn);
+      }
+    }
+    function update() {
+      const dish = dishes[state.selected];
+      const amounts = state.amounts[state.selected];
+      const weight = getWeight(), factor = weight / 100;
+      state.weight[state.selected] = weight;
+      $('calories').textContent = displayValue(Math.round(amounts.cal * factor), 0);
+      $('protein').textContent = displayValue(amounts.pro * factor, 1);
+      $('carbs').textContent = displayValue(amounts.carb * factor, 1);
+      $('fat').textContent = displayValue(amounts.fat * factor, 1);
+      $('serving-label').textContent = `For ${displayValue(weight, 0)} g of ${dish.servingName}`;
+      $('ref-cal').textContent = `${displayValue(Math.round(amounts.cal), 0)} kcal`;
+      $('ref-pro').textContent = `${displayValue(amounts.pro, 1)} g`;
+      $('ref-carb').textContent = `${displayValue(amounts.carb, 1)} g`;
+      $('ref-fat').textContent = `${displayValue(amounts.fat, 1)} g`;
+      rangeEl.value = String(Math.min(1000, weight));
+      [...document.querySelectorAll('[data-weight]')].forEach(btn => {
+        const active = Number(btn.dataset.weight) === weight;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-pressed', String(active));
+      });
+      save();
+    }
+    function selectDish(id) {
+      if (!dishes[id]) return;
+      state.selected = id;
+      const dish = dishes[id];
+      choiceButtons.forEach(btn => {btn.setAttribute('aria-pressed', String(btn.dataset.food === id));});
+      $('overall-label').textContent = dish.overall;
+      $('weight-hint').innerHTML = dish.weightHint;
+      $('weight-label').textContent = dish.weightLabel;
+      $('weight-help').textContent = dish.weightHelp;
+      $('notice-text').innerHTML = dish.notice;
+      $('ref-context').textContent = dish.refContext;
+      $('recipe-title').textContent = dish.recipeTitle;
+      $('recipe-note').innerHTML = dish.recipeNote;
+      $('ingredients').replaceChildren();
+      dish.ingredients.forEach(label => {
+        const chip = document.createElement('span');
+        chip.className = 'ingredient'; chip.textContent = label;
+        $('ingredients').appendChild(chip);
+      });
+      weightEl.value = String(state.weight[id]);
+      renderPresets(); syncSettings(); update();
+    }
+    choiceButtons.forEach(btn => btn.addEventListener('click', () => selectDish(btn.dataset.food)));
+    weightEl.addEventListener('input', update);
+    rangeEl.addEventListener('input', () => {weightEl.value = rangeEl.value; update();});
+    keys.forEach(key => $(`set-${key}`).addEventListener('input', () => {
+      const input = $(`set-${key}`);
+      const value = Number(input.value);
+      const ceiling = key === 'cal' ? 1000 : 100;
+      if (input.value !== '' && Number.isFinite(value) && value >= 0 && value <= ceiling) {
+        state.amounts[state.selected][key] = value;
+        update();
+      }
+    }));
+    $('reset').addEventListener('click', () => {
+      state.amounts[state.selected] = {...dishes[state.selected].defaults};
+      syncSettings(); update();
+    });
+    $('copy').addEventListener('click', async () => {
+      const dish = dishes[state.selected], amounts = state.amounts[state.selected];
+      const w = getWeight(), factor = w / 100;
+      const text = `${dish.name} (${displayValue(w, 0)} g; ${dish.overall.toLowerCase()}): ${Math.round(amounts.cal * factor)} kcal | Protein ${displayValue(amounts.pro * factor, 1)} g | Carbs ${displayValue(amounts.carb * factor, 1)} g | Fat ${displayValue(amounts.fat * factor, 1)} g. Estimated values.`;
+      let copied = false;
+      try {if (navigator.clipboard?.writeText) {await navigator.clipboard.writeText(text); copied = true;}} catch (_) {}
+      if (!copied) {
+        const field = document.createElement('textarea');
+        field.value = text; field.style.position = 'fixed'; field.style.opacity = '0';
+        document.body.appendChild(field); field.select();
+        try {copied = document.execCommand('copy');} catch (_) {}
+        field.remove();
+      }
+      const btn = $('copy');
+      btn.textContent = copied ? 'Copied to clipboard!' : 'Copy unavailable in this browser';
+      setTimeout(() => {btn.textContent = 'Copy nutrition summary';}, 2100);
+    });
+    selectDish(state.selected);
+  })();
+  </script>
+</body>
+</html>
