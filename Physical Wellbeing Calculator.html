@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0D0E11">
+<meta name="description" content="Physical well-being calculator: a fitness goal calculator (maintenance, fat loss, bulk) and a calorie calculator for homemade rice, chicken and eggs.">
+<title>Physical Well-Being Calculator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Same look as the Course Of Action page: near-black surfaces, bright contrast colors,
+   Bricolage Grotesque headings, Figtree body, colored cards with a solid header, pill controls. */
+:root {
+  --bg: #0D0E11;
+  --surface: #15171C;
+  --surface2: #1E2128;
+  --ink: #EEF0F4;
+  --muted: #9BA2B0;
+  --line: #292D36;
+  --on: #0D0E11;
+  --pe-c: #45D9D2; --pe-t: #112628;
+  --fi-c: #7EE08B; --fi-t: #14261A;
+  --ca-c: #7FA6FF; --ca-t: #151E3A;
+  --ch-c: #FFC555; --ch-t: #2B2111;
+  --ap-c: #FF7DB9; --ap-t: #2A1823;
+  --van: #F3E3B3;  --van-t: #25221A;
+  --font-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Figtree', 'Segoe UI', system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.45;
+  padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; border-radius: 6px; }
+.wrap { max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+
+/* Header */
+.top { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+.top > div { min-width: 0; }
+.eyebrow { margin: 0 0 6px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+h1 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 6vw, 46px); line-height: 1.05; letter-spacing: -.02em; text-wrap: balance; }
+.sub { margin: 10px 0 0; max-width: 60ch; color: var(--muted); }
+.overall { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 12px 18px 12px 14px; font-weight: 600; }
+.overall .pdot { width: 12px; height: 12px; border-radius: 50%; background: var(--van); flex: none; }
+
+/* Layout and colored cards */
+.layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 18px; align-items: start; }
+.c-teal { --c: var(--pe-c); --t: var(--pe-t); }
+.c-van { --c: var(--van); --t: var(--van-t); }
+.card { background: var(--t); border: 1.5px solid color-mix(in srgb, var(--c) 35%, transparent); border-radius: 20px; overflow: hidden; }
+.card-h { background: var(--c); color: var(--on); padding: 16px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.card-h h2 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: -.01em; min-width: 0; }
+.badge { font-size: 12px; font-weight: 600; letter-spacing: .04em; border-radius: 99px; padding: 4px 11px; background: color-mix(in srgb, var(--on) 18%, transparent); white-space: nowrap; }
+.card-b { padding: 18px; display: flex; flex-direction: column; gap: 16px; }
+.hint { margin: 0; color: var(--muted); }
+.hint strong { color: var(--ink); font-weight: 600; }
+.lab { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.small { font-size: 13px; color: var(--muted); margin: 0; }
+
+/* Weight input */
+.label-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+label { font-weight: 600; }
+.weight-field { display: flex; align-items: center; height: 88px; background: var(--bg); border: 1.5px solid var(--line); border-radius: 16px; overflow: hidden; transition: border-color .15s ease, box-shadow .15s ease; }
+.weight-field:focus-within { border-color: var(--c); box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 22%, transparent); }
+input[type="number"] { width: 100%; min-width: 0; background: transparent; border: 0; outline: none; color: var(--ink); font-family: var(--font-display); font-size: 44px; font-weight: 700; letter-spacing: -.02em; padding: 12px 0 12px 20px; font-variant-numeric: tabular-nums; }
+input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="number"] { appearance: textfield; -moz-appearance: textfield; }
+.unit { font-size: 17px; color: var(--muted); font-weight: 600; padding-right: 20px; }
+.weight-help { margin-top: 8px; }
+
+/* Preset chips */
+.presets { display: flex; flex-wrap: wrap; gap: 8px; }
+.preset { display: inline-flex; align-items: center; border: 1.5px solid var(--line); background: var(--surface); border-radius: 99px; padding: 7px 16px; font-weight: 500; transition: background .15s ease, border-color .15s ease, color .15s ease; }
+.preset:hover, .preset:focus-visible { border-color: var(--c); }
+.preset.active { background: var(--c); border-color: var(--c); color: var(--on); font-weight: 600; }
+
+/* Range */
+input[type="range"] { accent-color: var(--c); width: 100%; cursor: pointer; margin: 0; }
+.range-ends { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-top: 4px; font-variant-numeric: tabular-nums; }
+
+/* Notice */
+.notice { display: flex; gap: 12px; align-items: flex-start; background: var(--surface2); border-radius: 12px; padding: 10px 14px; font-size: 14px; color: var(--muted); }
+.notice .ico { flex: none; width: 22px; height: 22px; margin-top: 1px; border-radius: 50%; background: var(--ch-c); color: var(--on); display: grid; place-items: center; font-weight: 700; font-size: 13px; }
+.notice b { color: var(--ink); font-weight: 600; }
+
+/* Results */
+.calorie-block { background: var(--surface2); border: 1.5px solid color-mix(in srgb, var(--c) 40%, transparent); border-radius: 16px; padding: 16px 18px; display: flex; flex-direction: column; gap: 3px; }
+.calories { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.calories strong { font-family: var(--font-display); font-weight: 700; font-size: clamp(48px, 9vw, 68px); line-height: 1; letter-spacing: -.03em; color: var(--c); font-variant-numeric: tabular-nums; }
+.calories span { font-size: 18px; font-weight: 600; color: var(--muted); }
+.calorie-note { margin: 0; font-size: 13px; color: var(--muted); }
+.macro-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.macro { --mc: var(--fi-c); min-width: 0; border-radius: 16px; padding: 14px; background: var(--surface2); border: 1.5px solid color-mix(in srgb, var(--mc) 40%, transparent); display: flex; flex-direction: column; gap: 3px; }
+.macro:nth-child(2) { --mc: var(--ca-c); }
+.macro:nth-child(3) { --mc: var(--ch-c); }
+.macro .name { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.macro strong { font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 4vw, 34px); line-height: 1; color: var(--mc); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.macro small { font-size: 13px; color: var(--muted); }
+.copy-btn { width: 100%; border: 0; background: var(--van); color: var(--on); border-radius: 99px; padding: 12px 18px; font-weight: 600; transition: transform .15s ease, filter .15s ease; }
+.copy-btn:hover { transform: translateY(-2px); filter: brightness(1.06); }
+
+/* Adjust estimates */
+details { background: var(--surface2); border: 1.5px solid var(--line); border-radius: 16px; padding: 0 16px; }
+summary { padding: 14px 0; font-weight: 600; cursor: pointer; }
+details[open] summary { border-bottom: 1px solid var(--line); }
+.settings { padding: 14px 0 16px; display: flex; flex-direction: column; gap: 12px; }
+.settings p { margin: 0; color: var(--muted); font-size: 14px; }
+.settings-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.settings-grid label { display: block; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.settings-grid input { width: 100%; margin-top: 6px; background: var(--bg); color: var(--ink); border: 1.5px solid var(--line); border-radius: 12px; padding: 10px 12px; font: inherit; font-size: 16px; font-variant-numeric: tabular-nums; }
+.settings-grid input:focus-visible { outline-offset: 0; border-color: var(--ink); }
+.reset { align-self: flex-start; border: 1.5px solid var(--line); background: var(--surface); border-radius: 99px; padding: 6px 16px; font-weight: 600; transition: border-color .15s ease; }
+.reset:hover { border-color: var(--van); }
+
+/* Panels (reference + notes) */
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 16px; }
+.sec-h { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 24px; letter-spacing: -.01em; }
+.ref-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px; }
+.tile { --c: var(--van); border-radius: 16px; padding: 14px 16px; background: var(--surface2); border: 1.5px solid color-mix(in srgb, var(--c) 40%, transparent); display: flex; flex-direction: column; gap: 3px; }
+.tile:nth-child(2) { --c: var(--fi-c); }
+.tile:nth-child(3) { --c: var(--ca-c); }
+.tile:nth-child(4) { --c: var(--ch-c); }
+.tile b { font-family: var(--font-display); font-weight: 700; font-size: 32px; line-height: 1; color: var(--c); font-variant-numeric: tabular-nums; }
+.tile span { font-weight: 600; }
+.notes p { margin: 0; color: var(--muted); max-width: 90ch; }
+.notes b { color: var(--ink); font-weight: 600; }
+
+@media (max-width: 480px) {
+  .panel { padding: 18px; }
+  .macro { padding: 12px 10px; }
+  .settings-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* Food selector: same saturated headers, outlined pill/card surfaces as original. */
+.chooser { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+.chooser-title { display: flex; align-items: baseline; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; }
+.food-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.food-option { text-align: left; min-width: 0; border: 1.5px solid var(--line); background: var(--surface2); padding: 16px 18px; border-radius: 16px; display: flex; gap: 12px; align-items: center; justify-content: space-between; transition: transform .15s ease, border-color .15s ease, background .15s ease; }
+.food-option:hover { transform: translateY(-2px); border-color: var(--van); }
+.food-option[aria-pressed="true"] { border-color: var(--van); background: color-mix(in srgb, var(--van) 11%, var(--surface2)); }
+.food-name { font-family: var(--font-display); font-size: clamp(19px, 3vw, 25px); font-weight: 700; line-height: 1.15; }
+.food-caption { display: block; color: var(--muted); font-size: 13px; margin-top: 3px; }
+.food-option[aria-pressed="true"] .food-name { color: var(--van); }
+.food-check { width: 25px; height: 25px; flex: none; display: grid; place-items: center; border: 1.5px solid var(--line); border-radius: 50%; font-weight: 700; font-size: 16px; color: transparent; }
+.food-option[aria-pressed="true"] .food-check { background: var(--van); color: var(--on); border-color: var(--van); }
+.info-ingredients { display: flex; flex-wrap: wrap; gap: 8px; }
+.ingredient { background: var(--surface2); border: 1px solid var(--line); color: var(--muted); border-radius: 99px; padding: 5px 12px; font-size: 13px; }
+@media (max-width: 480px) { .chooser { padding: 18px; } .food-option { padding: 12px; gap: 8px; } .food-caption { font-size: 12px; } }
+
+
+
+/* Goal calculator additions (same look, new controls) */
+.hidden { display: none !important; }
+.field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.field { min-width: 0; }
+.field.wide { grid-column: 1 / -1; }
+.field > label { display: block; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.field input, .field select { width: 100%; margin-top: 6px; background: var(--bg); color: var(--ink); border: 1.5px solid var(--line); border-radius: 12px; padding: 11px 12px; font: inherit; font-size: 16px; font-variant-numeric: tabular-nums; }
+.field input[type="number"] { font-family: var(--font-body); font-size: 16px; font-weight: 400; letter-spacing: 0; padding: 11px 12px; }
+.field input:focus-visible, .field select:focus-visible { outline-offset: 0; border-color: var(--c, var(--ink)); }
+.field select { appearance: none; -webkit-appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%); background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%; background-size: 6px 6px, 6px 6px; background-repeat: no-repeat; padding-right: 36px; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.seg { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.group-title { margin: 0; }
+.flags { display: flex; flex-direction: column; gap: 10px; }
+.notice.warn .ico { background: var(--ap-c); }
+.notice.good .ico { background: var(--fi-c); }
+.notice.bad .ico { background: var(--ap-c); }
+.notice.bad { border: 1.5px solid color-mix(in srgb, var(--ap-c) 55%, transparent); }
+.sub-metrics { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 0; font-size: 13px; color: var(--muted); }
+.sub-metrics b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.proj { display: flex; flex-direction: column; border: 1.5px solid var(--line); border-radius: 16px; overflow: hidden; }
+.proj-row { display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 10px; align-items: baseline; padding: 11px 16px; background: var(--surface2); font-variant-numeric: tabular-nums; }
+.proj-row + .proj-row { border-top: 1px solid var(--line); }
+.proj-row.head { background: var(--surface); font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.proj-row b { font-family: var(--font-display); font-size: 18px; }
+.proj-row .d { color: var(--muted); text-align: right; }
+.proj-row .w { color: var(--muted); }
+.proj-row.last { background: color-mix(in srgb, var(--van) 11%, var(--surface2)); }
+.proj-row.last b { color: var(--van); }
+.sources { margin: 0; padding-left: 18px; color: var(--muted); font-size: 13px; display: flex; flex-direction: column; gap: 6px; }
+.sources a { color: var(--pe-c); text-decoration: none; }
+.sources a:hover, .sources a:focus-visible { text-decoration: underline; }
+.notes ul { margin: 0; padding-left: 18px; color: var(--muted); max-width: 90ch; display: flex; flex-direction: column; gap: 8px; }
+.notes li b { color: var(--ink); font-weight: 600; }
+@media (max-width: 480px) {
+  .field-grid { gap: 10px; }
+  .proj-row { padding: 10px 12px; grid-template-columns: 1fr 1fr 1fr; }
+}
+
+.food-option:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+/* Page tabs */
+.app-title { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 15px; letter-spacing: .02em; color: var(--muted); }
+.apphead { display: flex; flex-direction: column; gap: 12px; position: sticky; top: 0; z-index: 10; margin: -28px -16px 0; padding: 18px 16px 12px; background: linear-gradient(var(--bg) 82%, transparent); }
+.tabs { display: flex; gap: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 99px; padding: 5px; }
+.tab { flex: 1 1 0; min-width: 0; border: 0; background: transparent; color: var(--muted); border-radius: 99px; padding: 12px 14px; font-weight: 600; font-size: 15px; line-height: 1.2; text-align: center; transition: background .15s ease, color .15s ease; }
+.tab:hover { color: var(--ink); }
+.tab[aria-selected="true"] { background: var(--van); color: var(--on); }
+.tabpanel { display: flex; flex-direction: column; gap: 24px; }
+.tabpanel[hidden] { display: none; }
+@media (max-width: 480px) { .tab { padding: 11px 8px; font-size: 14px; } }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="apphead">
+      <p class="app-title">Physical well-being calculator</p>
+      <div class="tabs" role="tablist" aria-label="Calculators">
+        <button type="button" class="tab" role="tab" id="tabbtn-fitness" data-tab="fitness" aria-controls="tab-fitness" aria-selected="true">Fitness goal calculator</button>
+        <button type="button" class="tab" role="tab" id="tabbtn-calorie" data-tab="calorie" aria-controls="tab-calorie" aria-selected="false" tabindex="-1">Calorie calculator</button>
+      </div>
+    </div>
+
+    <div class="tabpanel" id="tab-fitness" role="tabpanel" aria-labelledby="tabbtn-fitness">
+    <header class="top">
+      <div>
+        <h1>Fitness goal calculator</h1>
+        <p class="sub">Enter your details and pick a goal. You get your estimated maintenance calories, a daily calorie target, protein, carbs and fat, and a realistic timeline. Works for anyone 18 or older.</p>
+      </div>
+      <div class="overall"><span class="pdot" aria-hidden="true"></span><span id="overall-label">Fat loss</span></div>
+    </header>
+
+    <section class="chooser" aria-labelledby="goal-title">
+      <div class="chooser-title">
+        <h2 class="sec-h" id="goal-title">Choose your goal</h2>
+        <span class="small">Select one to calculate</span>
+      </div>
+      <div class="food-options" role="group" aria-label="Select goal">
+        <button type="button" class="food-option" data-goal="fat" aria-pressed="true">
+          <span><span class="food-name">Fat loss</span><span class="food-caption">Lose fat · keep muscle</span></span><span class="food-check" aria-hidden="true">✓</span>
+        </button>
+        <button type="button" class="food-option" data-goal="maintain" aria-pressed="false">
+          <span><span class="food-name">Maintain</span><span class="food-caption">Stay at your weight</span></span><span class="food-check" aria-hidden="true">✓</span>
+        </button>
+        <button type="button" class="food-option" data-goal="lean" aria-pressed="false">
+          <span><span class="food-name">Lean bulk</span><span class="food-caption">Small surplus · slow gain</span></span><span class="food-check" aria-hidden="true">✓</span>
+        </button>
+        <button type="button" class="food-option" data-goal="fast" aria-pressed="false">
+          <span><span class="food-name">Fast bulk</span><span class="food-caption">Bigger surplus · more fat</span></span><span class="food-check" aria-hidden="true">✓</span>
+        </button>
+      </div>
+    </section>
+
+    <div class="layout">
+      <section class="card c-teal" aria-labelledby="details-title">
+        <div class="card-h"><h2 id="details-title">Your details</h2><span class="badge">Step 01</span></div>
+        <div class="card-b">
+          <div>
+            <div class="lab">Units</div>
+            <div class="seg" id="units-seg" role="group" aria-label="Units">
+              <button type="button" class="preset active" data-units="metric" aria-pressed="true">kg · cm</button>
+              <button type="button" class="preset" data-units="imperial" aria-pressed="false">lb · ft/in</button>
+            </div>
+          </div>
+          <div>
+            <div class="lab">Sex (used in the formula)</div>
+            <div class="seg" id="sex-seg" role="group" aria-label="Sex">
+              <button type="button" class="preset active" data-sex="male" aria-pressed="true">Male</button>
+              <button type="button" class="preset" data-sex="female" aria-pressed="false">Female</button>
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field"><label for="age">Age (years)</label><input id="age" type="number" inputmode="numeric" min="18" max="100" step="1" value="28"></div>
+            <div class="field" id="h-metric"><label for="h-cm">Height (cm)</label><input id="h-cm" type="number" inputmode="decimal" min="120" max="230" step="0.5" value="175"></div>
+            <div class="field hidden" id="h-imperial"><label for="h-ft">Height (ft / in)</label>
+              <div class="pair"><input id="h-ft" type="number" inputmode="numeric" min="3" max="7" step="1" placeholder="ft" aria-label="Feet"><input id="h-in" type="number" inputmode="decimal" min="0" max="11.9" step="0.5" placeholder="in" aria-label="Inches"></div>
+            </div>
+            <div class="field"><label for="weight" id="weight-label">Weight (kg)</label><input id="weight" type="number" inputmode="decimal" min="30" max="250" step="0.1" value="95"></div>
+            <div class="field wide">
+              <label for="activity">Activity level</label>
+              <select id="activity">
+                <option value="1.2">Sedentary · desk job, little or no exercise</option>
+                <option value="1.375">Light · exercise 1–3 days a week</option>
+                <option value="1.55" selected>Moderate · exercise 3–5 days a week</option>
+                <option value="1.725">High · hard exercise 6–7 days a week</option>
+                <option value="1.9">Very high · hard exercise plus a physical job</option>
+              </select>
+            </div>
+          </div>
+          <p class="small">Not sure? Pick one level lower. Most people overestimate how active they are.</p>
+
+          <div id="fat-fields" class="card-b" style="padding:0">
+            <div class="field-grid">
+              <div class="field"><label for="target" id="target-label">Target weight (kg)</label><input id="target" type="number" inputmode="decimal" min="30" max="250" step="0.1" value="80"></div>
+              <div class="field"><label for="months">Time to get there (months)</label><input id="months" type="number" inputmode="decimal" min="0.5" max="60" step="0.5" value="6"></div>
+            </div>
+            <div class="presets" id="month-presets" aria-label="Quick time choices"></div>
+          </div>
+
+          <div class="notice hidden" id="form-msg" role="alert"><span class="ico" aria-hidden="true">!</span><span id="form-msg-text"></span></div>
+
+          <details>
+            <summary>Know your real maintenance? (optional)</summary>
+            <div class="settings">
+              <p>If you have tracked your food and weight for 2–3 weeks and know your true maintenance calories, enter it here. It replaces the estimate and is more accurate than any formula.</p>
+              <div class="settings-grid">
+                <div><label for="override">Maintenance calories / day</label><input id="override" type="number" inputmode="numeric" min="1000" max="6000" step="10" placeholder="e.g. 2700"></div>
+              </div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="card c-van" aria-labelledby="plan-title">
+        <div class="card-h"><h2 id="plan-title">Your plan</h2><span class="badge">Step 02</span></div>
+        <div class="card-b">
+          <p class="hint" id="plan-hint">Daily targets for your goal.</p>
+          <div class="calorie-block" aria-live="polite" aria-atomic="true">
+            <div class="lab" id="cal-label">Daily calories</div>
+            <div class="calories"><strong id="calories">—</strong><span>kcal</span></div>
+            <p class="calorie-note" id="cal-note">Fill in your details</p>
+          </div>
+          <div class="macro-grid" aria-live="polite">
+            <div class="macro"><span class="name">Protein</span><strong id="protein">—</strong><small id="protein-sub">grams</small></div>
+            <div class="macro"><span class="name">Carbs</span><strong id="carbs">—</strong><small id="carbs-sub">grams</small></div>
+            <div class="macro"><span class="name">Fat</span><strong id="fat">—</strong><small id="fat-sub">grams</small></div>
+          </div>
+          <p class="sub-metrics" id="protein-range"></p>
+          <div class="flags" id="flags" aria-live="polite"></div>
+          <button class="copy-btn" id="copy" type="button">Copy plan summary</button>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel" aria-label="Your numbers">
+      <div class="ref-head"><h2 class="sec-h">Your numbers</h2><span class="small" id="numbers-context">Estimates based on the Mifflin–St Jeor equation</span></div>
+      <div class="tiles">
+        <div class="tile"><b id="t-bmr">—</b><span>Resting calories (BMR)</span></div>
+        <div class="tile"><b id="t-tdee">—</b><span id="t-tdee-label">Maintenance</span></div>
+        <div class="tile"><b id="t-change">—</b><span>Daily change vs maintenance</span></div>
+        <div class="tile"><b id="t-rate">—</b><span id="t-rate-label">Weekly change</span></div>
+      </div>
+    </section>
+
+    <section class="panel hidden" id="proj-panel" aria-label="Projection">
+      <div class="ref-head"><h2 class="sec-h" id="proj-title">Projected weight</h2><span class="small" id="proj-context"></span></div>
+      <div class="proj" id="proj" role="table" aria-label="Projected weight over time"></div>
+      <p class="small" id="proj-note"></p>
+    </section>
+
+    <section class="panel notes" aria-label="How this works">
+      <div><h2 class="sec-h">How this works</h2></div>
+      <ul>
+        <li><b>Maintenance</b> is your resting calories (Mifflin–St Jeor equation) times an activity multiplier. In reviews this equation was the one most often within 10% of lab measurements, but individual errors can be bigger. Treat it as a starting point and adjust after 2–3 weeks of tracking your average weight.</li>
+        <li><b>Fat loss</b> uses your target weight and timeline, then caps the pace at 1% of body weight per week, a deficit of at most 25% of maintenance, and a floor of 1,200 kcal (women) or 1,500 kcal (men). The timeline is recalculated week by week because maintenance falls as you get lighter; the old fixed “3,500 kcal per pound” rule overestimates weight loss.</li>
+        <li><b>Protein</b> is set higher in a deficit (about 2.0 g/kg, range 1.8–2.4) to protect muscle, together with resistance training. It is capped at 35% of your calories. <b>Fat</b> is at least 25% of calories and 0.6 g/kg. <b>Carbs</b> fill the rest.</li>
+        <li><b>Bulking:</b> lean bulk is about 10% above maintenance (about +150 to +350 kcal), fast bulk about 20% (about +400 to +700 kcal), the one people call a “dirty bulk”. Bigger surpluses speed up gain, but in trained people most of the extra goes to fat. Weight gained is not all muscle.</li>
+        <li><b>Safety:</b> this tool is for healthy adults. If you are under 18, pregnant or breastfeeding, have a medical condition, take medication that affects weight, or have a history of disordered eating, get advice from a doctor or registered dietitian first. These are estimates, not medical advice.</li>
+      </ul>
+      <p class="lab" style="margin-top:6px">Sources</p>
+      <ol class="sources">
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/23631843/" target="_blank" rel="noopener">Bias and accuracy of resting metabolic rate equations in non-obese and obese adults (Clin Nutr, 2013)</a></li>
+        <li><a href="https://doi.org/10.1016/j.jada.2005.02.005" target="_blank" rel="noopener">Comparison of predictive equations for resting metabolic rate: a systematic review (J Am Diet Assoc, 2005)</a></li>
+        <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3859816" target="_blank" rel="noopener">Why is the 3500 kcal per pound weight loss rule wrong? (Hall &amp; Chow, Int J Obes, 2013)</a></li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/24092765/" target="_blank" rel="noopener">Dietary protein during caloric restriction in resistance-trained lean athletes: a systematic review (2014)</a></li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/26817506/" target="_blank" rel="noopener">Higher vs lower protein during an energy deficit combined with intense exercise (Am J Clin Nutr, 2016)</a></li>
+        <li><a href="https://www.gssiweb.org/en/sports-science-exchange/article/sse-159-protein-and-exercise-in-weight-loss-considerations-for-athletes" target="_blank" rel="noopener">Protein and exercise in weight loss: considerations for athletes (Gatorade Sports Science Institute)</a></li>
+      </ol>
+    </section>
+    </div>
+
+    <div class="tabpanel" id="tab-calorie" role="tabpanel" aria-labelledby="tabbtn-calorie" hidden>
+    <header class="top">
+      <div>
+        <h1>Food nutrition calculator</h1>
+        <p class="sub">One place for your homemade white rice, air-fried chicken and eggs. Choose a dish, enter its weight, and see the estimated calories and macros instantly.</p>
+      </div>
+      <div class="overall"><span class="pdot" aria-hidden="true"></span><span id="cc-overall-label">Weigh before air-frying</span></div>
+    </header>
+
+    <section class="chooser" aria-labelledby="cc-dish-title">
+      <div class="chooser-title">
+        <h2 class="sec-h" id="cc-dish-title">Choose your dish</h2>
+        <span class="small">Select one to calculate</span>
+      </div>
+      <div class="food-options" role="group" aria-label="Select dish">
+        <button type="button" class="food-option" data-food="rice" aria-pressed="false">
+          <span><span class="food-name">White rice</span><span class="food-caption">Cooked · Water + salt</span></span><span class="food-check" aria-hidden="true">✓</span>
+        </button>
+        <button type="button" class="food-option" data-food="chicken" aria-pressed="true">
+          <span><span class="food-name">Chicken</span><span class="food-caption">Marinated · Air-fried</span></span><span class="food-check" aria-hidden="true">✓</span>
+        </button>
+        <button type="button" class="food-option" data-food="egg" aria-pressed="false">
+          <span><span class="food-name">Eggs</span><span class="food-caption">Whole · Hard-boiled</span></span><span class="food-check" aria-hidden="true">✓</span>
+        </button>
+      </div>
+    </section>
+
+    <div class="layout">
+      <section class="card c-teal" aria-labelledby="cc-weight-title">
+        <div class="card-h"><h2 id="cc-weight-title">Enter your portion</h2><span class="badge">Step 01</span></div>
+        <div class="card-b">
+          <p class="hint" id="cc-weight-hint">Use the weight of the <strong>marinated chicken before cooking</strong>, including bones and coating.</p>
+          <div>
+            <div class="label-row"><label for="cc-weight" id="cc-weight-label">Chicken weight</label><span class="small">In grams (g)</span></div>
+            <div class="weight-field"><input id="cc-weight" type="number" min="0" max="100000" step="1" value="450" inputmode="numeric" aria-describedby="cc-weight-help"><span class="unit">grams</span></div>
+            <p class="small weight-help" id="cc-weight-help">Example: enter 450 if your portion weighed 450 g before going into the air fryer.</p>
+          </div>
+          <div class="presets" aria-label="Quick weight choices" id="cc-presets"></div>
+          <div>
+            <input id="cc-weight-range" type="range" min="0" max="1000" step="10" value="450" aria-label="Adjust portion weight">
+            <div class="range-ends"><span>0 g</span><span>1,000 g</span></div>
+          </div>
+          <div class="notice"><span class="ico" aria-hidden="true">i</span><span id="cc-notice-text">These are <b>recipe estimates</b>; bones and marinade affect the weight and nutrition of chicken portions.</span></div>
+        </div>
+      </section>
+
+      <section class="card c-van" aria-labelledby="cc-result-title">
+        <div class="card-h"><h2 id="cc-result-title">Your nutrition</h2><span class="badge">Step 02</span></div>
+        <div class="card-b">
+          <p class="hint">Estimated values for your selected portion.</p>
+          <div class="calorie-block" aria-live="polite" aria-atomic="true">
+            <div class="lab">Total calories</div>
+            <div class="calories"><strong id="cc-calories">550</strong><span>kcal</span></div>
+            <p class="calorie-note" id="cc-serving-label">For 450 g of marinated chicken</p>
+          </div>
+          <div class="macro-grid" aria-live="polite">
+            <div class="macro"><span class="name">Protein</span><strong id="cc-protein">65.0</strong><small>grams</small></div>
+            <div class="macro"><span class="name">Carbs</span><strong id="cc-carbs">7.0</strong><small>grams</small></div>
+            <div class="macro"><span class="name">Fat</span><strong id="cc-fat">29.0</strong><small>grams</small></div>
+          </div>
+          <button class="copy-btn" id="cc-copy" type="button">Copy nutrition summary</button>
+          <details>
+            <summary>Adjust estimates (optional)</summary>
+            <div class="settings">
+              <p id="cc-settings-help">Adjust estimates per 100 g for this dish only. Chicken, rice and egg settings are kept separately in this browser.</p>
+              <div class="settings-grid">
+                <div><label for="cc-set-cal">Calories / 100 g</label><input id="cc-set-cal" type="number" min="0" max="1000" step="0.1"></div>
+                <div><label for="cc-set-pro">Protein / 100 g</label><input id="cc-set-pro" type="number" min="0" max="100" step="0.1"></div>
+                <div><label for="cc-set-carb">Carbs / 100 g</label><input id="cc-set-carb" type="number" min="0" max="100" step="0.1"></div>
+                <div><label for="cc-set-fat">Fat / 100 g</label><input id="cc-set-fat" type="number" min="0" max="100" step="0.1"></div>
+              </div>
+              <button type="button" class="reset" id="cc-reset">Restore original estimates for this dish</button>
+            </div>
+          </details>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel" aria-label="Nutrition reference">
+      <div class="ref-head"><h2 class="sec-h">Nutrition per 100 grams</h2><span class="small" id="cc-ref-context">Marinated chicken, weighed before air-frying</span></div>
+      <div class="tiles">
+        <div class="tile"><b id="cc-ref-cal">122 kcal</b><span>Calories</span></div>
+        <div class="tile"><b id="cc-ref-pro">14.4 g</b><span>Protein</span></div>
+        <div class="tile"><b id="cc-ref-carb">1.6 g</b><span>Carbohydrates</span></div>
+        <div class="tile"><b id="cc-ref-fat">6.4 g</b><span>Fat</span></div>
+      </div>
+    </section>
+
+    <section class="panel notes" aria-label="Recipe and estimate notes">
+      <div><h2 class="sec-h" id="cc-recipe-title">Chicken recipe</h2></div>
+      <div class="info-ingredients" id="cc-ingredients"></div>
+      <p id="cc-recipe-note"></p>
+    </section>
+    </div>
+  </main>
+
+  <script>
+  /* ---------- Calculation logic (pure functions, no DOM) ---------- */
+  (function (root) {
+    'use strict';
+    const KCAL_PER_KG = 7700;
+    const FLOOR = { male: 1500, female: 1200 };
+    const MAX_RATE_PCT = 1.0;      // % of body weight per week
+    const MAX_DEFICIT_PCT = 0.25;  // of maintenance
+    const MIN_DEFICIT = 100;       // kcal/day, so a fat loss plan is a real deficit
+    const GOALS = ['fat', 'maintain', 'lean', 'fast'];
+    const PROTEIN = {
+      fat:      { perKg: 2.0, lo: 1.8, hi: 2.4 },
+      maintain: { perKg: 1.6, lo: 1.4, hi: 2.0 },
+      lean:     { perKg: 1.8, lo: 1.6, hi: 2.2 },
+      fast:     { perKg: 1.8, lo: 1.6, hi: 2.2 }
+    };
+
+    const bmr = (sex, kg, cm, age) => 10 * kg + 6.25 * cm - 5 * age + (sex === 'male' ? 5 : -161);
+    const bmi = (kg, cm) => kg / ((cm / 100) * (cm / 100));
+    const minHealthyKg = cm => 18.5 * (cm / 100) * (cm / 100);
+    const roundTo = (n, step) => Math.round(n / step) * step;
+    const clamp = (n, lo, hi) => Math.min(hi, Math.max(lo, n));
+    const tdeeAt = (kg, ctx) => bmr(ctx.sex, kg, ctx.heightCm, ctx.age) * ctx.factor;
+
+    // Weekly simulation: maintenance is recalculated from the current weight each week.
+    function weightAfter(ctx, start, intake, weeks) {
+      let w = start;
+      const whole = Math.floor(weeks);
+      for (let i = 0; i < whole; i++) w += (intake - tdeeAt(w, ctx)) * 7 / KCAL_PER_KG;
+      const rem = weeks - whole;
+      if (rem > 0) w += (intake - tdeeAt(w, ctx)) * 7 * rem / KCAL_PER_KG;
+      return w;
+    }
+    function weeksToReach(ctx, start, intake, target, maxWeeks) {
+      let w = start;
+      for (let i = 1; i <= (maxWeeks || 520); i++) {
+        const next = w + (intake - tdeeAt(w, ctx)) * 7 / KCAL_PER_KG;
+        if (next <= target) return i - 1 + (w - target) / (w - next);
+        if (next >= w) return Infinity;
+        w = next;
+      }
+      return Infinity;
+    }
+    function series(ctx, start, intake, weeks) {
+      const out = [start];
+      let w = start;
+      for (let i = 1; i <= weeks; i++) { w += (intake - tdeeAt(w, ctx)) * 7 / KCAL_PER_KG; out.push(w); }
+      return out;
+    }
+
+    function macros(goal, kg, kcal) {
+      const p = PROTEIN[goal];
+      let protein = Math.min(p.perKg * kg, 0.35 * kcal / 4);
+      const fat = Math.max(0.25 * kcal / 9, 0.6 * kg);
+      const carbs = Math.max(0, (kcal - protein * 4 - fat * 9) / 4);
+      const pct = g => Math.round(g / kcal * 100);
+      return {
+        protein: Math.round(protein), fat: Math.round(fat), carbs: Math.round(carbs),
+        proteinPerKg: protein / kg,
+        proteinLo: Math.round(Math.min(p.lo * kg, 0.35 * kcal / 4)),
+        proteinHi: Math.round(Math.min(p.hi * kg, 0.35 * kcal / 4)),
+        proteinPct: pct(protein * 4), fatPct: pct(fat * 9), carbsPct: pct(Math.max(0, carbs) * 4)
+      };
+    }
+
+    function validate(i) {
+      if (!GOALS.includes(i.goal)) return 'Choose a goal.';
+      if (i.sex !== 'male' && i.sex !== 'female') return 'Choose male or female.';
+      if (![i.age, i.heightCm, i.weightKg, i.factor].every(Number.isFinite)) return 'Fill in your age, height, weight and activity level.';
+      if (i.age < 18) return 'These adult formulas are for ages 18 and over. For teenagers, calorie needs depend on growth, so please ask a doctor or registered dietitian.';
+      if (i.age > 100) return 'Enter an age between 18 and 100.';
+      if (i.heightCm < 120 || i.heightCm > 230) return 'Enter a height between 120 and 230 cm (3 ft 11 in to 7 ft 7 in).';
+      if (i.weightKg < 30 || i.weightKg > 250) return 'Enter a weight between 30 and 250 kg (66 to 551 lb).';
+      if (i.tdeeOverride !== undefined && i.tdeeOverride !== null && !Number.isNaN(i.tdeeOverride) && (i.tdeeOverride < 1000 || i.tdeeOverride > 6000)) return 'Maintenance calories should be between 1,000 and 6,000.';
+      return null;
+    }
+
+    function plan(i) {
+      const err = validate(i);
+      if (err) return { error: err };
+      const w0 = i.weightKg;
+      const b0 = bmr(i.sex, w0, i.heightCm, i.age);
+      const hasOverride = Number.isFinite(i.tdeeOverride);
+      const ctx = { sex: i.sex, age: i.age, heightCm: i.heightCm, factor: hasOverride ? i.tdeeOverride / b0 : i.factor };
+      const tdee0 = hasOverride ? i.tdeeOverride : b0 * i.factor;
+      const res = {
+        goal: i.goal, bmr: b0, tdee: tdee0, bmi: bmi(w0, i.heightCm), flags: [], milestones: [],
+        usedOverride: hasOverride
+      };
+      const add = (level, text) => res.flags.push({ level, text });
+
+      if (i.goal === 'fat') {
+        if (!Number.isFinite(i.targetKg) || !Number.isFinite(i.weeks)) return { error: 'Enter your target weight and how many months you want to take.' };
+        if (i.targetKg >= w0) return { error: 'Your target weight must be lower than your current weight for fat loss.' };
+        if (i.weeks < 2) return { error: 'Choose at least half a month for fat loss.' };
+        const minKg = minHealthyKg(i.heightCm);
+        if (res.bmi < 18.5) return { error: 'Your current weight is already below the healthy range (BMI 18.5), so a fat loss plan is not appropriate. Please talk to a doctor or dietitian.' };
+        if (i.targetKg < minKg) return { error: `That target is below the healthy range for your height (BMI under 18.5). The lowest healthy weight for your height is about ${minKg.toFixed(1)} kg (${(minKg / 0.45359237).toFixed(1)} lb). Choose a target at or above that.` };
+
+        // Intake that would hit the target exactly on time (maintenance recalculated weekly).
+        let lo = 0, hi = tdee0;
+        for (let k = 0; k < 60; k++) {
+          const mid = (lo + hi) / 2;
+          if (weightAfter(ctx, w0, mid, i.weeks) > i.targetKg) hi = mid; else lo = mid;
+        }
+        const needed = (lo + hi) / 2;
+        const capDeficit = Math.min(MAX_RATE_PCT / 100 * w0 * KCAL_PER_KG / 7, MAX_DEFICIT_PCT * tdee0);
+        const capIntake = tdee0 - capDeficit;
+        const floor = FLOOR[i.sex];
+        let intake = Math.max(needed, capIntake, floor);
+        const limitedByPace = capIntake > needed && capIntake >= floor;
+        const limitedByFloor = floor > needed && floor > capIntake;
+        if (tdee0 < floor + MIN_DEFICIT) return { error: 'Your estimated maintenance is already close to the minimum safe intake, so a calorie deficit is not appropriate. Please talk to a doctor or dietitian, or check your activity level and numbers.' };
+        intake = Math.min(roundTo(intake, 10), roundTo(tdee0 - MIN_DEFICIT, 10));
+        const kcal = intake;
+        const weeksNeeded = weeksToReach(ctx, w0, kcal, i.targetKg);
+
+        res.intake = kcal;
+        res.change = kcal - tdee0;
+        res.changePct = res.change / tdee0 * 100;
+        res.weeklyKg = res.change * 7 / KCAL_PER_KG;          // negative
+        res.weeklyPct = res.weeklyKg / w0 * 100;
+        res.weeks = weeksNeeded;
+        res.requestedWeeks = i.weeks;
+        res.targetKg = i.targetKg;
+        res.endTdee = tdeeAt(i.targetKg, ctx);
+        const rate = Math.abs(res.weeklyPct);
+        res.pace = rate <= 0.5 ? 'Gentle' : rate <= 0.75 ? 'Steady' : 'Aggressive';
+        res.macros = macros('fat', w0, kcal);
+
+        const wk = Number.isFinite(weeksNeeded) ? Math.ceil(weeksNeeded) : 0;
+        if (wk > 0) {
+          const step = wk <= 52 ? 4 : wk <= 104 ? 8 : 12;
+          const s = series(ctx, w0, kcal, wk);
+          for (let w = step; w < wk; w += step) res.milestones.push({ week: w, kg: s[w] });
+          res.milestones.push({ week: weeksNeeded, kg: i.targetKg, last: true });
+        }
+
+        if (limitedByPace || limitedByFloor) {
+          const mo = (weeksNeeded / 4.345).toFixed(1);
+          add('warn', `Your goal needs a faster pace than is safe, so the plan is capped at ${kcal.toLocaleString('en-US')} kcal a day (${limitedByFloor ? 'the minimum daily intake' : 'a deficit of no more than 25% of maintenance and 1% of body weight per week'}). At this pace you reach ${i.targetKg.toFixed(1)} kg in about ${Math.ceil(weeksNeeded)} weeks (${mo} months) instead of ${(i.weeks / 4.345).toFixed(1)} months.`);
+        } else if (weeksNeeded > i.weeks * 1.05) {
+          add('info', `Your timeline works out to about ${Math.ceil(weeksNeeded)} weeks because the plan is rounded to a practical calorie level.`);
+        }
+        if (kcal < b0) add('warn', 'This target is below your resting calories (BMR). That is hard to sustain and raises the risk of muscle loss and fatigue. A longer timeline is safer.');
+        if (res.pace === 'Aggressive') add('warn', 'Aggressive pace. Lift weights 2–4 times a week and keep protein at the target so most of the weight lost is fat. Consider a longer timeline.');
+        else if (res.pace === 'Steady') add('good', 'A steady pace like this is usually sustainable and keeps most muscle if you lift and hit your protein.');
+        else add('good', 'A gentle pace: the easiest to sustain and the best for keeping muscle.');
+        add('info', `Maintenance falls as you lose weight, to about ${Math.round(res.endTdee).toLocaleString('en-US')} kcal at ${i.targetKg.toFixed(1)} kg. Recalculate every 5 kg lost, and re-check your average weight every 2 weeks.`);
+      } else {
+        let surplus = 0;
+        if (i.goal === 'lean') surplus = clamp(0.10 * tdee0, 150, 350);
+        if (i.goal === 'fast') surplus = clamp(0.20 * tdee0, 400, 700);
+        const kcal = roundTo(tdee0 + surplus, 10);
+        res.intake = kcal;
+        res.change = kcal - tdee0;
+        res.changePct = res.change / tdee0 * 100;
+        res.weeklyKg = res.change * 7 / KCAL_PER_KG;
+        res.weeklyPct = res.weeklyKg / w0 * 100;
+        res.macros = macros(i.goal, w0, kcal);
+        if (i.goal !== 'maintain') {
+          const s = series(ctx, w0, kcal, 24);
+          for (let w = 4; w <= 24; w += 4) res.milestones.push({ week: w, kg: s[w], last: w === 24 });
+          res.endTdee = tdeeAt(s[24], ctx);
+          if (res.bmi >= 30) add('warn', 'Your BMI is 30 or higher. Most people in this range do better with maintenance or fat loss first, then a bulk later.');
+          else if (res.bmi >= 25) add('info', 'Your BMI is 25 or higher, so a lean bulk or maintenance will give a better muscle-to-fat ratio than a fast bulk.');
+          if (i.goal === 'fast') add('warn', 'Fast bulk adds weight quickly but most of the extra surplus becomes fat, especially if you have been training for more than a year. A lean bulk usually gives better results.');
+          else add('good', 'A small surplus keeps fat gain low. Aim for a gain of roughly 0.25–0.5% of body weight per week and adjust by 100–150 kcal if your 2-week average moves faster or slower.');
+          add('info', 'Weight gained is not all muscle. Strength training and the protein target are what turn the surplus into muscle.');
+        } else {
+          add('info', 'Maintenance is an estimate. Eat this for 2–3 weeks while tracking your average weight; if it drifts, adjust by 100–150 kcal.');
+        }
+      }
+      if (i.sex === 'female') add('info', 'If you are pregnant or breastfeeding, calorie and protein needs are different. Please follow your doctor’s advice instead of this plan.');
+      return res;
+    }
+
+    root.NutriCalc = { bmr, bmi, minHealthyKg, plan, weightAfter, weeksToReach, macros, tdeeAt, KCAL_PER_KG };
+  })(globalThis);
+  </script>
+  <script>
+  /* ---------- Page wiring ---------- */
+  (() => {
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const N = globalThis.NutriCalc;
+    const LB = 0.45359237;
+    const state = { units: 'metric', sex: 'male', goal: 'fat' };
+    const GOAL_NAME = { fat: 'Fat loss', maintain: 'Maintenance', lean: 'Lean bulk', fast: 'Fast bulk' };
+    const GOAL_HINT = {
+      fat: 'Daily calories and macros to lose fat at a steady, safe pace.',
+      maintain: 'Daily calories and macros to hold your current weight.',
+      lean: 'A small surplus for slow, mostly lean weight gain.',
+      fast: 'A bigger surplus for quicker weight gain, with more fat gain.'
+    };
+    const num = id => { const v = $(id).value.trim(); return v === '' ? NaN : Number(v); };
+    const fmtInt = n => Math.round(n).toLocaleString('en-US');
+    const signed = (n, d) => (n > 0 ? '+' : n < 0 ? '−' : '') + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+    const imperial = () => state.units === 'imperial';
+    const wUnit = () => (imperial() ? 'lb' : 'kg');
+    const toDisp = kg => (imperial() ? kg / LB : kg);
+    const fmtW = kg => `${toDisp(kg).toFixed(1)} ${wUnit()}`;
+    const fmtDelta = kg => `${signed(toDisp(kg), 1)} ${wUnit()}`;
+
+    function readInputs() {
+      const k = imperial() ? LB : 1;
+      const heightCm = imperial() ? (num('h-ft') * 12 + (num('h-in') || 0)) * 2.54 : num('h-cm');
+      const ov = num('override');
+      return {
+        goal: state.goal, sex: state.sex, age: num('age'), heightCm,
+        weightKg: num('weight') * k, factor: Number($('activity').value),
+        targetKg: num('target') * k, weeks: num('months') * 52 / 12,
+        tdeeOverride: Number.isFinite(ov) ? ov : undefined
+      };
+    }
+
+    function flagEl(f) {
+      const d = document.createElement('div');
+      d.className = 'notice ' + (f.level === 'warn' ? 'warn' : f.level === 'good' ? 'good' : '');
+      const ico = document.createElement('span'); ico.className = 'ico'; ico.setAttribute('aria-hidden', 'true');
+      ico.textContent = f.level === 'warn' ? '!' : f.level === 'good' ? '✓' : 'i';
+      const t = document.createElement('span'); t.textContent = f.text;
+      d.append(ico, t);
+      return d;
+    }
+
+    function clearResults(msg) {
+      ['calories', 'protein', 'carbs', 'fat', 't-bmr', 't-tdee', 't-change', 't-rate'].forEach(id => { $(id).textContent = '—'; });
+      $('cal-note').textContent = 'Fill in your details';
+      $('protein-range').textContent = '';
+      $('flags').replaceChildren();
+      $('proj-panel').classList.add('hidden');
+      const box = $('form-msg');
+      if (msg) { $('form-msg-text').textContent = msg; box.className = 'notice bad'; }
+      else box.className = 'notice hidden';
+    }
+
+    function render() {
+      $('overall-label').textContent = GOAL_NAME[state.goal];
+      $('plan-hint').textContent = GOAL_HINT[state.goal];
+      $('fat-fields').classList.toggle('hidden', state.goal !== 'fat');
+      const r = N.plan(readInputs());
+      if (r.error) { clearResults(r.error); return; }
+      $('form-msg').className = 'notice hidden';
+
+      $('cal-label').textContent = state.goal === 'fat' ? 'Daily calories for fat loss' : state.goal === 'maintain' ? 'Daily calories to maintain' : 'Daily calories to gain';
+      $('calories').textContent = fmtInt(r.intake);
+      $('cal-note').textContent = state.goal === 'maintain'
+        ? `Your estimated maintenance${r.usedOverride ? ' (your own number)' : ''}`
+        : `${signed(r.change, 0)} kcal (${signed(r.changePct, 0)}%) vs maintenance of ${fmtInt(r.tdee)}`;
+      const m = r.macros;
+      $('protein').textContent = m.protein; $('protein-sub').textContent = `grams · ${m.proteinPct}%`;
+      $('carbs').textContent = m.carbs; $('carbs-sub').textContent = `grams · ${m.carbsPct}%`;
+      $('fat').textContent = m.fat; $('fat-sub').textContent = `grams · ${m.fatPct}%`;
+      $('protein-range').innerHTML = `<span>Protein: <b>${(m.proteinPerKg).toFixed(1)} g/kg</b></span><span>Acceptable range: <b>${m.proteinLo}–${m.proteinHi} g</b></span>`;
+
+      $('t-bmr').textContent = `${fmtInt(r.bmr)} kcal`;
+      $('t-tdee').textContent = `${fmtInt(r.tdee)} kcal`;
+      $('t-tdee-label').textContent = r.usedOverride ? 'Maintenance (your number)' : 'Maintenance (estimated)';
+      $('t-change').textContent = state.goal === 'maintain' ? '0 kcal' : `${signed(r.change, 0)} kcal`;
+      if (state.goal === 'maintain') { $('t-rate').textContent = '≈ 0'; $('t-rate-label').textContent = 'Weekly change'; }
+      else {
+        $('t-rate').textContent = `${fmtDelta(r.weeklyKg)}`;
+        $('t-rate-label').textContent = `Weekly change at the start (${signed(r.weeklyPct, 2)}% of body weight)`;
+      }
+
+      $('flags').replaceChildren(...r.flags.map(flagEl));
+
+      const panel = $('proj-panel');
+      if (r.milestones.length) {
+        panel.classList.remove('hidden');
+        const rows = [];
+        const head = document.createElement('div'); head.className = 'proj-row head'; head.setAttribute('role', 'row');
+        head.innerHTML = '<span>When</span><span>Weight</span><span style="text-align:right">Change</span>';
+        rows.push(head);
+        r.milestones.forEach(ms => {
+          const row = document.createElement('div'); row.className = 'proj-row' + (ms.last ? ' last' : ''); row.setAttribute('role', 'row');
+          const when = document.createElement('span'); when.className = 'w';
+          const wks = Math.round(ms.week * 10) / 10;
+          if (ms.last && state.goal === 'fat') {
+            const d = new Date(Date.now() + ms.week * 7 * 86400000);
+            when.textContent = `Week ${Math.ceil(ms.week)} · ${d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}`;
+          } else when.textContent = `Week ${wks}`;
+          const wt = document.createElement('b'); wt.textContent = fmtW(ms.kg);
+          const dl = document.createElement('span'); dl.className = 'd';
+          dl.textContent = fmtDelta(ms.kg - readInputs().weightKg);
+          row.append(when, wt, dl); rows.push(row);
+        });
+        $('proj').replaceChildren(...rows);
+        if (state.goal === 'fat') {
+          $('proj-title').textContent = 'Projected weight';
+          $('proj-context').textContent = `${r.pace} pace · target ${fmtW(r.targetKg)}`;
+          $('proj-note').textContent = 'Projection recalculates maintenance each week as your weight drops. Real results vary; plateaus and water weight are normal. Adjust using your 2-week average weight.';
+        } else {
+          $('proj-title').textContent = 'Projected weight gain';
+          $('proj-context').textContent = 'Next 24 weeks · includes fat and muscle';
+          $('proj-note').textContent = 'A rough estimate. Gain slows or speeds up with training, sleep and your calorie accuracy. Adjust using your 2-week average weight.';
+        }
+      } else panel.classList.add('hidden');
+    }
+
+    function summaryText() {
+      const r = N.plan(readInputs());
+      if (r.error) return r.error;
+      const m = r.macros;
+      let t = `${GOAL_NAME[state.goal]}: ${fmtInt(r.intake)} kcal/day | Protein ${m.protein} g | Carbs ${m.carbs} g | Fat ${m.fat} g. Maintenance ≈ ${fmtInt(r.tdee)} kcal.`;
+      if (state.goal === 'fat') t += ` Target ${fmtW(r.targetKg)} in about ${Math.ceil(r.weeks)} weeks (${signed(r.weeklyKg, 2)} kg/week at the start).`;
+      return t + ' Estimated values.';
+    }
+
+    /* Controls */
+    document.querySelectorAll('[data-goal]').forEach(btn => btn.addEventListener('click', () => {
+      state.goal = btn.dataset.goal;
+      document.querySelectorAll('[data-goal]').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+      render();
+    }));
+    function setPressed(sel, attr, value) {
+      document.querySelectorAll(sel).forEach(b => {
+        const on = b.dataset[attr] === value;
+        b.classList.toggle('active', on); b.setAttribute('aria-pressed', String(on));
+      });
+    }
+    document.querySelectorAll('[data-sex]').forEach(btn => btn.addEventListener('click', () => {
+      state.sex = btn.dataset.sex; setPressed('[data-sex]', 'sex', state.sex); render();
+    }));
+    document.querySelectorAll('[data-units]').forEach(btn => btn.addEventListener('click', () => {
+      if (btn.dataset.units === state.units) return;
+      const cur = readInputs();             // canonical metric values before switching
+      state.units = btn.dataset.units;
+      setPressed('[data-units]', 'units', state.units);
+      const imp = imperial();
+      $('h-metric').classList.toggle('hidden', imp);
+      $('h-imperial').classList.toggle('hidden', !imp);
+      $('weight-label').textContent = `Weight (${wUnit()})`;
+      $('target-label').textContent = `Target weight (${wUnit()})`;
+      const r1 = n => (Number.isFinite(n) ? String(Math.round(toDisp(n) * 10) / 10) : '');
+      $('weight').value = r1(cur.weightKg); $('target').value = r1(cur.targetKg);
+      if (imp) {
+        if (Number.isFinite(cur.heightCm)) {
+          const totalIn = cur.heightCm / 2.54;
+          let ft = Math.floor(totalIn / 12), inch = Math.round((totalIn - ft * 12) * 2) / 2;
+          if (inch >= 12) { ft += 1; inch = 0; }
+          $('h-ft').value = ft; $('h-in').value = inch;
+        }
+      } else if (Number.isFinite(cur.heightCm)) $('h-cm').value = String(Math.round(cur.heightCm * 2) / 2);
+      render();
+    }));
+    const presetHolder = $('month-presets');
+    [2, 3, 4, 6, 9, 12].forEach(m => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'preset'; b.dataset.months = String(m); b.textContent = `${m} mo`;
+      b.addEventListener('click', () => { $('months').value = String(m); markMonths(); render(); });
+      presetHolder.appendChild(b);
+    });
+    function markMonths() {
+      const v = num('months');
+      document.querySelectorAll('[data-months]').forEach(b => {
+        const on = Number(b.dataset.months) === v; b.classList.toggle('active', on); b.setAttribute('aria-pressed', String(on));
+      });
+    }
+    ['age', 'h-cm', 'h-ft', 'h-in', 'weight', 'activity', 'target', 'months', 'override'].forEach(id => $(id).addEventListener('input', () => { markMonths(); render(); }));
+    $('copy').addEventListener('click', async () => {
+      const text = summaryText();
+      let copied = false;
+      try { if (navigator.clipboard?.writeText) { await navigator.clipboard.writeText(text); copied = true; } } catch (_) {}
+      if (!copied) {
+        const f = document.createElement('textarea'); f.value = text; f.style.position = 'fixed'; f.style.opacity = '0';
+        document.body.appendChild(f); f.select();
+        try { copied = document.execCommand('copy'); } catch (_) {}
+        f.remove();
+      }
+      const b = $('copy'); b.textContent = copied ? 'Copied to clipboard!' : 'Copy unavailable in this browser';
+      setTimeout(() => { b.textContent = 'Copy plan summary'; }, 2100);
+    });
+    markMonths(); render();
+  })();
+  </script>
+  <script>
+  (() => {
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const keys = ['cal', 'pro', 'carb', 'fat'];
+    const dishes = {
+      chicken: {
+        name: 'Air-fried chicken', short: 'chicken',
+        initialWeight: 450, presets: [100, 200, 300, 450, 600],
+        defaults: {cal: 550/4.5, pro: 65/4.5, carb: 7/4.5, fat: 29/4.5},
+        legacyStorageKey: 'airfried_chicken_nutrition_v1',
+        overall: 'Weigh before air-frying',
+        weightHint: 'Use the weight of the <strong>marinated chicken before cooking</strong>, including bones and coating.',
+        weightLabel: 'Chicken weight',
+        weightHelp: 'Example: enter 450 if your portion weighed 450 g before going into the air fryer.',
+        notice: 'These are <b>recipe estimates</b>; bones, individual pieces and marinade can change your portion’s nutrition.',
+        servingName: 'marinated chicken (weighed before cooking)',
+        refContext: 'Marinated chicken · before air-frying',
+        recipeTitle: 'Chicken recipe',
+        ingredients: ['Skinless, bone-in broiler chicken', 'Yogurt', 'Lemon', 'Spices', 'Oil marinade'],
+        recipeNote: '<b>How these numbers were estimated:</b> Your original chicken calculator estimates a 450 g portion of marinated, bone-in chicken at 550 kcal, 65 g protein, 7 g carbohydrates and 29 g fat. Results scale by portion weight and assume similar pieces and marinade proportions. Your marinade contains oil (2 tablespoons per batch in the original recipe), but the full batch weight is unspecified, so the numbers are estimates. <b>Weigh the marinated chicken before air-frying, including bones.</b>'
+      },
+      rice: {
+        name: 'Cooked white rice', short: 'rice',
+        initialWeight: 200, presets: [100, 150, 200, 250, 300],
+        defaults: {cal: 130, pro: 2.69, carb: 28.17, fat: 0.28},
+        legacyStorageKey: 'plain_cooked_white_rice_nutrition_v2',
+        overall: 'Weigh after cooking',
+        weightHint: 'Use the weight of the <strong>cooked rice on your plate</strong>, ready to eat.',
+        weightLabel: 'Cooked rice weight',
+        weightHelp: 'Example: enter 200 if you have 200 g of cooked white rice on your plate.',
+        notice: '<b>Water and salt add zero calories.</b> Rice absorbs different amounts of water, so the values are estimates for plain cooked rice.',
+        servingName: 'cooked white rice',
+        refContext: 'Plain white rice · after cooking',
+        recipeTitle: 'White rice recipe',
+        ingredients: ['Uncooked white rice', 'Water', 'Salt', 'Cooked with dum (low-heat steaming)'],
+        recipeNote: '<b>How these numbers were estimated:</b> Your rice calculator uses standard approximate values for plain cooked white rice: 130 kcal, 2.69 g protein, 28.17 g carbohydrates and 0.28 g fat per 100 g. This is rice prepared with water and salt only; no oil, ghee or butter. Actual values can change with water absorption. <b>Weigh your rice after cooking, without the plate or bowl.</b>'
+      },
+      egg: {
+        name: 'Boiled eggs', short: 'eggs',
+        initialWeight: 200, presets: [50, 100, 150, 200, 250],
+        defaults: {cal: 155, pro: 12.6, carb: 1.1, fat: 10.6},
+        legacyStorageKey: 'boiled_egg_nutrition_v1',
+        overall: 'Weigh without the shell',
+        weightHint: 'Use the weight of the <strong>boiled egg after peeling</strong>. One large egg is about <strong>50 g</strong>, so 100 g is 2 eggs.',
+        weightLabel: 'Egg weight',
+        weightHelp: 'Example: enter 200 for 4 large eggs (about 50 g each without the shell).',
+        notice: '<b>1 large egg ≈ 50 g ≈ 72 kcal and 6.3 g protein.</b> Boiling in water adds no calories; add oil or butter separately if you use any.',
+        servingName: 'boiled egg (peeled, yolk and white)',
+        refContext: 'Boiled egg · peeled',
+        recipeTitle: 'Boiled egg notes',
+        ingredients: ['Whole eggs (yolk and white)', 'Hard-boiled in water'],
+        recipeNote: '<b>How these numbers were estimated:</b> Standard approximate values for hard-boiled whole eggs (yolk and white): 155 kcal, 12.6 g protein, 1.1 g carbohydrates and 10.6 g fat per 100 g. A large egg is about 50 g without the shell, so use 50 g per egg. <b>Weigh the boiled egg after peeling.</b> Boiling in water adds no calories.'
+      }
+    };
+    const storageKey = 'rice_chicken_nutrition_combined_v1';
+    const weightEl = $('cc-weight');
+    const rangeEl = $('cc-weight-range');
+    const choiceButtons = [...document.querySelectorAll('[data-food]')];
+    const state = {selected: 'chicken', weight: {}, amounts: {}};
+
+    function isValidAmounts(obj) {
+      return obj && keys.every(k => typeof obj[k] === 'number' && Number.isFinite(obj[k]) && obj[k] >= 0 && obj[k] <= 1000);
+    }
+    for (const [id, dish] of Object.entries(dishes)) {
+      state.weight[id] = dish.initialWeight;
+      state.amounts[id] = {...dish.defaults};
+    }
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey) || 'null');
+      if (saved && dishes[saved.selected]) state.selected = saved.selected;
+      for (const id of Object.keys(dishes)) {
+        if (saved && isValidAmounts(saved.amounts?.[id])) state.amounts[id] = {...saved.amounts[id]};
+        else {
+          const legacy = JSON.parse(localStorage.getItem(dishes[id].legacyStorageKey) || 'null');
+          if (isValidAmounts(legacy)) state.amounts[id] = {...legacy};
+        }
+        if (saved && Number.isFinite(saved.weight?.[id]) && saved.weight[id] >= 0 && saved.weight[id] <= 100000) state.weight[id] = saved.weight[id];
+      }
+    } catch (_) { /* Storage access is optional (e.g. private browsing). */ }
+    function save() {
+      try {localStorage.setItem(storageKey, JSON.stringify(state));} catch (_) {}
+    }
+    function displayValue(n, digits) {
+      return Number(n).toLocaleString('en-US', {minimumFractionDigits: digits, maximumFractionDigits: digits});
+    }
+    function getWeight() {
+      const n = Number(weightEl.value);
+      return Number.isFinite(n) ? Math.max(0, Math.min(100000, n)) : 0;
+    }
+    function syncSettings() {
+      const values = state.amounts[state.selected];
+      keys.forEach(key => {$(`cc-set-${key}`).value = Number(values[key].toFixed(4));});
+    }
+    function renderPresets() {
+      const holder = $('cc-presets');
+      holder.replaceChildren();
+      for (const weight of dishes[state.selected].presets) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'preset';
+        btn.dataset.weight = String(weight);
+        btn.textContent = `${weight} g`;
+        btn.addEventListener('click', () => {weightEl.value = String(weight); update();});
+        holder.appendChild(btn);
+      }
+    }
+    function update() {
+      const dish = dishes[state.selected];
+      const amounts = state.amounts[state.selected];
+      const weight = getWeight(), factor = weight / 100;
+      state.weight[state.selected] = weight;
+      $('cc-calories').textContent = displayValue(Math.round(amounts.cal * factor), 0);
+      $('cc-protein').textContent = displayValue(amounts.pro * factor, 1);
+      $('cc-carbs').textContent = displayValue(amounts.carb * factor, 1);
+      $('cc-fat').textContent = displayValue(amounts.fat * factor, 1);
+      $('cc-serving-label').textContent = `For ${displayValue(weight, 0)} g of ${dish.servingName}`;
+      $('cc-ref-cal').textContent = `${displayValue(Math.round(amounts.cal), 0)} kcal`;
+      $('cc-ref-pro').textContent = `${displayValue(amounts.pro, 1)} g`;
+      $('cc-ref-carb').textContent = `${displayValue(amounts.carb, 1)} g`;
+      $('cc-ref-fat').textContent = `${displayValue(amounts.fat, 1)} g`;
+      rangeEl.value = String(Math.min(1000, weight));
+      [...document.querySelectorAll('[data-weight]')].forEach(btn => {
+        const active = Number(btn.dataset.weight) === weight;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-pressed', String(active));
+      });
+      save();
+    }
+    function selectDish(id) {
+      if (!dishes[id]) return;
+      state.selected = id;
+      const dish = dishes[id];
+      choiceButtons.forEach(btn => {btn.setAttribute('aria-pressed', String(btn.dataset.food === id));});
+      $('cc-overall-label').textContent = dish.overall;
+      $('cc-weight-hint').innerHTML = dish.weightHint;
+      $('cc-weight-label').textContent = dish.weightLabel;
+      $('cc-weight-help').textContent = dish.weightHelp;
+      $('cc-notice-text').innerHTML = dish.notice;
+      $('cc-ref-context').textContent = dish.refContext;
+      $('cc-recipe-title').textContent = dish.recipeTitle;
+      $('cc-recipe-note').innerHTML = dish.recipeNote;
+      $('cc-ingredients').replaceChildren();
+      dish.ingredients.forEach(label => {
+        const chip = document.createElement('span');
+        chip.className = 'ingredient'; chip.textContent = label;
+        $('cc-ingredients').appendChild(chip);
+      });
+      weightEl.value = String(state.weight[id]);
+      renderPresets(); syncSettings(); update();
+    }
+    choiceButtons.forEach(btn => btn.addEventListener('click', () => selectDish(btn.dataset.food)));
+    weightEl.addEventListener('input', update);
+    rangeEl.addEventListener('input', () => {weightEl.value = rangeEl.value; update();});
+    keys.forEach(key => $(`cc-set-${key}`).addEventListener('input', () => {
+      const input = $(`cc-set-${key}`);
+      const value = Number(input.value);
+      const ceiling = key === 'cal' ? 1000 : 100;
+      if (input.value !== '' && Number.isFinite(value) && value >= 0 && value <= ceiling) {
+        state.amounts[state.selected][key] = value;
+        update();
+      }
+    }));
+    $('cc-reset').addEventListener('click', () => {
+      state.amounts[state.selected] = {...dishes[state.selected].defaults};
+      syncSettings(); update();
+    });
+    $('cc-copy').addEventListener('click', async () => {
+      const dish = dishes[state.selected], amounts = state.amounts[state.selected];
+      const w = getWeight(), factor = w / 100;
+      const text = `${dish.name} (${displayValue(w, 0)} g; ${dish.overall.toLowerCase()}): ${Math.round(amounts.cal * factor)} kcal | Protein ${displayValue(amounts.pro * factor, 1)} g | Carbs ${displayValue(amounts.carb * factor, 1)} g | Fat ${displayValue(amounts.fat * factor, 1)} g. Estimated values.`;
+      let copied = false;
+      try {if (navigator.clipboard?.writeText) {await navigator.clipboard.writeText(text); copied = true;}} catch (_) {}
+      if (!copied) {
+        const field = document.createElement('textarea');
+        field.value = text; field.style.position = 'fixed'; field.style.opacity = '0';
+        document.body.appendChild(field); field.select();
+        try {copied = document.execCommand('copy');} catch (_) {}
+        field.remove();
+      }
+      const btn = $('cc-copy');
+      btn.textContent = copied ? 'Copied to clipboard!' : 'Copy unavailable in this browser';
+      setTimeout(() => {btn.textContent = 'Copy nutrition summary';}, 2100);
+    });
+    selectDish(state.selected);
+  })();
+  </script>
+  <script>
+(() => {
+  'use strict';
+  const tabs = [...document.querySelectorAll('[role="tab"]')];
+  function select(id, focus) {
+    tabs.forEach(t => {
+      const on = t.dataset.tab === id;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById('tab-' + t.dataset.tab).hidden = !on;
+      if (on && focus) t.focus();
+    });
+    try { history.replaceState(null, '', '#' + id); } catch (_) {}
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(t.dataset.tab));
+    t.addEventListener('keydown', e => {
+      let j = null;
+      if (e.key === 'ArrowRight') j = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') j = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') j = 0;
+      else if (e.key === 'End') j = tabs.length - 1;
+      if (j !== null) { e.preventDefault(); select(tabs[j].dataset.tab, true); }
+    });
+  });
+  const fromHash = () => select(location.hash === '#calorie' ? 'calorie' : 'fitness');
+  window.addEventListener('hashchange', fromHash);
+  fromHash();
+})();
+</script>
+</body>
+</html>
