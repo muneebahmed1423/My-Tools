@@ -1,0 +1,2110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0D0E11">
+<title>Right Path Deviation Action Plan</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 46 46'%3E%3Ccircle cx='23' cy='23' r='21' fill='%230D0E11' stroke='%2345D9D2' stroke-width='3'/%3E%3Ctext x='23' y='28.5' text-anchor='middle' font-family='sans-serif' font-weight='700' font-size='16' fill='white'%3ERP%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap">
+<style>
+/* Layout: header with overall progress, goal-distribution wheel, a sessions panel (V and R), filter chips, then one colored card per life area. Single blackish look with bright contrast colors. */
+:root {
+  --bg: #0D0E11;
+  --surface: #15171C;
+  --surface2: #1E2128;
+  --ink: #EEF0F4;
+  --muted: #9BA2B0;
+  --line: #292D36;
+  --on: #0D0E11;
+  --ap-c: #FF7DB9; --ap-t: #2A1823;
+  --pe-c: #45D9D2; --pe-t: #112628;
+  --fi-c: #7EE08B; --fi-t: #14261A;
+  --ca-c: #7FA6FF; --ca-t: #151E3A;
+  --se-c: #FF7070; --se-t: #2D1616;
+  --ch-c: #FFC555; --ch-t: #2B2111;
+  --v-c: #B794FF;
+  --r-c: #FF9250;
+  --van: #F3E3B3;
+  --sl-c: #8C93FF;
+  --font-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Figtree', 'Segoe UI', system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.45;
+  padding: 0 0 56px;
+}
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; border-radius: 6px; }
+.wrap { max-width: 1152px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; padding: 40px max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px)); }
+/* Header */
+.top { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+.top > div { min-width: 0; }
+.eyebrow { margin: 0 0 6px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+h1 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 6vw, 46px); line-height: 1.05; letter-spacing: -.02em; text-wrap: balance; }
+.sub { margin: 10px 0 0; max-width: 60ch; color: var(--muted); }
+.overall { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 12px 18px 12px 12px; }
+.overall svg { display: block; flex: none; }
+.overall .big { font-family: var(--font-display); font-weight: 700; font-size: 26px; line-height: 1; font-variant-numeric: tabular-nums; }
+.overall .small { font-size: 13px; color: var(--muted); margin-top: 4px; font-variant-numeric: tabular-nums; }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 22px; }
+.controls { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; }
+.chips, .seg-ctl { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 8px; border: 1.5px solid var(--line); background: var(--surface); border-radius: 99px; padding: 7px 14px; font-weight: 500; transition: background .15s ease, border-color .15s ease, color .15s ease; }
+.chip .dot { width: 10px; height: 10px; }
+.chip:hover { border-color: var(--c, var(--ink)); }
+.chip[aria-pressed="true"] { background: var(--c, var(--ink)); border-color: var(--c, var(--ink)); color: var(--on); }
+.chip[aria-pressed="true"] .dot { background: var(--on); }
+.chip.all { --c: var(--ink); }
+.seg-ctl { background: var(--surface2); border-radius: 99px; padding: 4px; gap: 2px; flex-wrap: nowrap; }
+.seg-ctl button { border: 0; background: transparent; padding: 6px 14px; border-radius: 99px; font-weight: 500; color: var(--muted); }
+.seg-ctl button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+/* ===== Routine Conditioning (fourth tab) ===== */
+.view.rc { gap: 48px; }
+.rc { --xc: var(--ch-c); --yc: var(--ap-c); --chaos: var(--se-c); --spirit: var(--fi-c); }
+.c-x { --c: var(--ch-c); } .c-y { --c: var(--ap-c); } .c-chaos { --c: var(--se-c); }
+.c-cons { --c: var(--ca-c); } .c-sub { --c: var(--v-c); } .c-bod { --c: var(--pe-c); }
+.c-spirit { --c: var(--fi-c); } .c-van { --c: var(--van); } .c-r { --c: var(--r-c); }
+
+.rc-jump { display: flex; flex-wrap: wrap; gap: 8px; }
+.rc-jump button { display: inline-flex; align-items: center; gap: 8px; border: 1.5px solid var(--line); background: var(--surface); border-radius: 99px; padding: 6px 14px 6px 6px; font-weight: 500; transition: border-color .15s ease, background .15s ease; }
+.rc-jump button b { width: 24px; height: 24px; border-radius: 50%; background: var(--van); color: var(--on); display: grid; place-items: center; font: 700 12px var(--font-display); }
+.rc-jump button:hover { border-color: var(--van); background: color-mix(in srgb, var(--van) 14%, var(--surface)); }
+
+.rc-sec { display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 16px; }
+.rc-sh { display: flex; align-items: center; gap: 14px; }
+.rc-n { flex: none; width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--van); color: var(--van); display: grid; place-items: center; font: 700 20px var(--font-display); }
+.rc-sh h2 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 4vw, 30px); line-height: 1.1; letter-spacing: -.01em; text-wrap: balance; }
+.rc-sub { margin: 10px 0 0; font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: -.005em; }
+.rc-lead { margin: 0; color: var(--muted); max-width: 72ch; }
+.rc-lead b { color: var(--ink); font-weight: 600; }
+.rc-key { margin: 0; background: color-mix(in srgb, var(--van) 12%, var(--surface2)); border-radius: 14px; padding: 14px 18px; font-family: var(--font-display); font-weight: 700; font-size: 18px; line-height: 1.3; text-wrap: balance; max-width: 860px; }
+.rc-defs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 12px; }
+.rc-def { background: var(--surface2); border-radius: 14px; padding: 14px 18px; border-top: 3px solid var(--c, var(--van)); }
+.rc-def h3 { margin: 0 0 4px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--c, var(--van)); }
+.rc-def p { margin: 0; }
+.rc-points { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; max-width: 860px; }
+.rc-points li { background: var(--surface2); border-radius: 12px; padding: 10px 14px; color: var(--muted); }
+.rc-points li b { color: var(--ink); font-weight: 600; }
+
+/* Interactive diagram shell */
+.rc-dia { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 22px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 22px; }
+.rc-dia.stack { grid-template-columns: minmax(0, 1fr); }
+.rc-hint { margin: 0 0 12px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.rc-info { --ic: var(--van); background: var(--surface2); border: 1.5px solid var(--line); border-left: 4px solid var(--ic); border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; min-height: 210px; transition: border-color .2s ease; }
+.rc-info .tag { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ic); }
+.rc-info h4 { margin: 0; font-family: var(--font-display); font-size: 21px; line-height: 1.15; text-wrap: balance; }
+.rc-info p { margin: 0; }
+.rc-info p b { font-weight: 600; }
+.rc-next { align-self: flex-start; margin-top: auto; border: 1.5px solid var(--line); background: var(--surface); border-radius: 99px; padding: 6px 16px; font-weight: 600; transition: border-color .15s ease, background .15s ease; }
+.rc-next:hover { border-color: var(--ic); background: color-mix(in srgb, var(--ic) 14%, var(--surface)); }
+
+.rc-svg { width: 100%; max-width: 560px; height: auto; display: block; overflow: visible; margin: 0 auto; }
+.rc-svg text { fill: var(--ink); font-family: var(--font-body); }
+.rc-svg .lbl { font-size: 13px; font-weight: 700; letter-spacing: .08em; }
+.rc-svg .side { font-size: 16px; font-weight: 600; }
+.rc-svg .xx { font-size: 17px; font-weight: 700; text-anchor: middle; }
+.rc-svg .plain { stroke: var(--muted); stroke-width: 2; fill: none; }
+.rc-part { cursor: pointer; outline-offset: 3px; transition: opacity .18s ease; }
+.rc-part .shape { fill: color-mix(in srgb, var(--c) 14%, transparent); stroke: var(--c); stroke-width: 2.5; transition: fill .18s ease, stroke-width .18s ease; }
+.rc-part .ln { stroke: var(--c); stroke-width: 2; fill: none; }
+.rc-part .arw { stroke: var(--c); stroke-width: 2; fill: none; }
+.rc-part:hover .shape, .rc-part.on .shape, .rc-part:focus-visible .shape { fill: color-mix(in srgb, var(--c) 34%, transparent); stroke-width: 4; }
+.rc-part.on text.side, .rc-part:hover text.side { fill: var(--c); }
+.rc-dia.has-on .rc-part:not(.on), .rc-dia.has-on .rc-node:not(.on) { opacity: .5; }
+
+/* Nodes (HTML parts of diagrams) */
+.rc-node { --c: var(--van); display: flex; flex-direction: column; gap: 2px; text-align: left; background: color-mix(in srgb, var(--c) 10%, var(--surface2)); border: 1.5px solid color-mix(in srgb, var(--c) 45%, transparent); border-radius: 14px; padding: 12px 16px; font: inherit; font-weight: 600; color: var(--ink); cursor: pointer; transition: border-color .15s ease, background .15s ease, transform .15s ease, opacity .18s ease; }
+.rc-node small { font-weight: 400; color: var(--muted); font-size: 12px; }
+.rc-node .n { font: 700 12px var(--font-display); color: var(--c); letter-spacing: .1em; }
+.rc-node:hover, .rc-node.on { border-color: var(--c); background: color-mix(in srgb, var(--c) 24%, var(--surface2)); transform: translateY(-2px); }
+.rc-node.ctr { align-items: center; text-align: center; }
+.rc-arr { color: var(--muted); font-size: 22px; line-height: 1; align-self: center; }
+.rc-row { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; }
+.rc-row > .rc-node { flex: 1 1 120px; }
+.rc-col { display: flex; flex-direction: column; gap: 6px; max-width: 520px; margin: 0 auto; }
+.rc-col .rc-arr { text-align: center; }
+
+/* Clash diagram */
+.rc-clash { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); grid-template-areas: "x mid y" "ch ch ch" "chips chips chips"; gap: 12px; align-items: center; }
+.rc-clash .gx { grid-area: x; } .rc-clash .gy { grid-area: y; } .rc-clash .gch { grid-area: ch; justify-self: center; min-width: min(100%, 240px); }
+.rc-mid { grid-area: mid; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; padding: 6px 4px; border-radius: 12px; font-family: var(--font-display); font-weight: 700; color: var(--chaos); transition: opacity .18s ease, background .15s ease; }
+.rc-mid .ar { color: var(--muted); font-size: 20px; line-height: 1; font-weight: 400; }
+.rc-mid:hover, .rc-mid.on { background: color-mix(in srgb, var(--chaos) 18%, transparent); }
+.rc-chips { grid-area: chips; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; cursor: pointer; padding: 6px; border-radius: 14px; transition: opacity .18s ease, background .15s ease; }
+.rc-chips.on { background: color-mix(in srgb, var(--chaos) 12%, transparent); }
+.rc-chips span { border: 1.5px solid color-mix(in srgb, var(--chaos) 55%, transparent); border-radius: 99px; padding: 4px 12px; font-size: 13px; font-weight: 500; }
+.rc-chips.on span, .rc-chips:hover span { background: color-mix(in srgb, var(--chaos) 22%, transparent); border-color: var(--chaos); }
+.rc-dia.has-on .rc-mid:not(.on), .rc-dia.has-on .rc-chips:not(.on) { opacity: .5; }
+
+/* Factors */
+.rc-factors { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rc-factor { --c: var(--van); position: relative; text-align: left; background: var(--surface2); border: 1.5px dashed var(--line); border-radius: 14px; padding: 16px 14px; font: inherit; font-weight: 600; color: var(--muted); cursor: pointer; display: flex; flex-direction: column; gap: 6px; transition: background .2s ease, border-color .2s ease, color .2s ease; }
+.rc-factor .sw2 { width: 34px; height: 20px; border-radius: 99px; background: var(--line); position: relative; transition: background .2s ease; }
+.rc-factor .sw2::after { content: ""; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: var(--muted); transition: transform .2s ease, background .2s ease; }
+.rc-factor.is-on { background: color-mix(in srgb, var(--c) 20%, var(--surface2)); border: 1.5px solid var(--c); color: var(--ink); }
+.rc-factor.is-on .sw2 { background: var(--c); }
+.rc-factor.is-on .sw2::after { transform: translateX(14px); background: var(--on); }
+.rc-factor:hover { border-color: var(--c); }
+.rc-factor.on { box-shadow: 0 0 0 2px color-mix(in srgb, var(--c) 45%, transparent); }
+.rc-meter { margin-top: 14px; display: grid; gap: 8px; }
+.rc-bars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.rc-bars i { height: 12px; border-radius: 99px; background: var(--surface2); transition: background .25s ease; }
+.rc-bars i.f { background: var(--van); }
+.rc-verdict { margin: 0; font-weight: 600; }
+.rc-verdict small { display: block; font-weight: 400; color: var(--muted); margin-top: 2px; }
+.rc-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.rc-btn { border: 1.5px solid var(--line); background: var(--surface); border-radius: 99px; padding: 6px 14px; font-weight: 500; transition: border-color .15s ease, background .15s ease; }
+.rc-btn:hover { border-color: var(--van); background: color-mix(in srgb, var(--van) 14%, var(--surface)); }
+.rc-btn[aria-pressed="true"] { background: var(--van); color: var(--on); border-color: var(--van); }
+.rc-note { margin: 12px 0 0; background: var(--surface2); border-radius: 12px; padding: 12px 14px; font-size: 14px; color: var(--muted); }
+.rc-note b { color: var(--ink); font-weight: 600; }
+.rc-fine { margin: 0; font-size: 13px; color: var(--muted); max-width: 72ch; }
+
+/* Segmented switch + cases */
+.rc-seg { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.rc-case { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 22px; display: grid; gap: 12px; }
+.rc-case h3 { margin: 0; font-family: var(--font-display); font-size: 20px; }
+.rc-case ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.rc-case li { background: var(--surface2); border-radius: 12px; padding: 10px 14px; }
+.rc-case.focus { border-color: color-mix(in srgb, var(--chaos) 55%, transparent); }
+
+/* Harmony / clash flow */
+.rc-flow { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; }
+.rc-flow > .rc-node { flex: 1 1 110px; }
+.rc-flow .rc-link { align-self: center; font-size: 22px; line-height: 1; color: var(--spirit); }
+.rc-flow .rc-link .bad { display: none; }
+.rc-flow[data-mode="clash"] .rc-link.l2 { color: var(--chaos); }
+.rc-flow[data-mode="clash"] .rc-link.l2 .ok { display: none; }
+.rc-flow[data-mode="clash"] .rc-link.l2 .bad { display: inline; }
+.rc-flow[data-mode="clash"] .rc-node.act { border-style: dashed; }
+.rc-power { height: 8px; border-radius: 99px; margin: 14px 0 6px; background: var(--spirit); transition: background .3s ease; }
+.rc-flow[data-mode="clash"] ~ .rc-power { background: linear-gradient(90deg, var(--spirit) 0 46%, var(--chaos) 46% 58%, color-mix(in srgb, var(--spirit) 22%, var(--surface2)) 58% 100%); }
+.rc-cap { margin: 0; font-size: 12px; color: var(--muted); }
+
+/* Principles and summary */
+.rc-pr { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 12px; align-items: start; }
+.rc-pc { background: var(--surface); border: 1.5px solid var(--line); border-radius: 18px; transition: border-color .15s ease; }
+.rc-pc:hover, .rc-pc[open] { border-color: color-mix(in srgb, var(--van) 55%, transparent); }
+.rc-pc summary { list-style: none; cursor: pointer; display: flex; gap: 12px; align-items: flex-start; padding: 16px; font-weight: 600; }
+.rc-pc summary::-webkit-details-marker { display: none; }
+.rc-pc summary b { flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--van); color: var(--on); display: grid; place-items: center; font: 700 14px var(--font-display); }
+.rc-pc summary small { display: block; font-weight: 400; color: var(--muted); margin-top: 2px; }
+.rc-pc .body { padding: 0 16px 16px 56px; color: var(--muted); display: grid; gap: 8px; }
+.rc-pc .body p { margin: 0; }
+.rc-pc .body b { color: var(--ink); font-weight: 600; }
+.rc-sum { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 6px; align-items: center; }
+.rc-sum li { border: 1.5px solid var(--line); background: var(--surface2); border-radius: 99px; padding: 6px 14px; font-weight: 500; }
+.rc-sum li + li::before { content: "\203A"; color: var(--muted); margin-right: 14px; margin-left: -8px; }
+.rc-sum li.hl { border-color: var(--chaos); background: color-mix(in srgb, var(--chaos) 14%, transparent); }
+.rc-sum li.end { border-color: var(--van); background: color-mix(in srgb, var(--van) 14%, transparent); }
+
+/* Retrieval paragraph */
+.rc-ret { background: color-mix(in srgb, var(--van) 7%, var(--surface)); border: 2px solid color-mix(in srgb, var(--van) 55%, transparent); border-radius: 22px; padding: 26px; display: grid; gap: 14px; }
+.rc-ret h3 { margin: 0; font-family: var(--font-display); font-size: 26px; letter-spacing: -.01em; }
+.rc-ret .when { margin: 0; font-style: italic; color: var(--muted); }
+.rc-ret .text { margin: 0; font-size: 19px; line-height: 1.75; max-width: 70ch; }
+.rc-ret .text b { font-weight: 700; }
+.rc-ret .ur, .rc-pc .ur { font-family: "Noto Nastaliq Urdu", "Jameel Noori Nastaleeq", "Noto Naskh Arabic", "Segoe UI", Tahoma, sans-serif; font-size: 1.1em; }
+
+@media (max-width: 760px) {
+  .rc-dia { grid-template-columns: minmax(0, 1fr); padding: 16px; }
+  .rc-ret { padding: 18px; }
+  .rc-ret .text { font-size: 17px; }
+  .rc-pc .body { padding-left: 16px; }
+  .rc-clash .rc-node { padding: 10px; font-size: 14px; }
+}
+
+.ur[lang="ar"] { font-family: "Noto Naskh Arabic", "Amiri", "Scheherazade New", "Segoe UI", Tahoma, sans-serif; }
+.rc-dua .ar { margin: 0; font-size: 28px; line-height: 2; text-align: center; font-family: "Noto Naskh Arabic", "Amiri", "Scheherazade New", "Segoe UI", Tahoma, sans-serif; }
+.rc-dua .tr { margin: 0; text-align: center; font-style: italic; color: var(--muted); }
+.rc-dua .mean { margin: 0; font-size: 18px; line-height: 1.6; text-align: center; }
+.rc-dua .mean b { font-weight: 700; }
+.rc-own { background: var(--surface2); border-left: 4px solid var(--van); border-radius: 14px; padding: 14px 18px; max-width: 860px; }
+.rc-own h3 { margin: 0 0 4px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--van); }
+.rc-own p { margin: 0; }
+.rc-tw { overflow-x: auto; margin: 4px 0; }
+.rc-tbl { width: 100%; border-collapse: collapse; font-size: 14px; color: var(--ink); }
+.rc-tbl th { text-align: left; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 8px 10px; border-bottom: 1.5px solid var(--line); white-space: nowrap; }
+.rc-tbl td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.rc-pc.wide { grid-column: 1 / -1; }
+.rc-pc .body .rc-tw { margin: 0; }
+.rc-pc .body .rc-note { margin: 0; }
+.rc-pc .body .rc-fine { margin: 0; }
+.rc-part.dash .shape { stroke-dasharray: 6 5; }
+.rc-svg .hr { font-size: 12px; fill: var(--muted); }
+.rc-svg .hr.b { font-weight: 700; fill: var(--ink); }
+.rc-svg .ct { font-size: 34px; font-weight: 700; fill: var(--van); font-family: var(--font-display); }
+.rc-svg .cs { font-size: 14px; fill: var(--muted); }
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+/* ===== Additions for the Introduction page ===== */
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+.view { display: flex; flex-direction: column; gap: 48px; }
+.rc-sec { scroll-margin-top: 16px; }
+
+/* colour helpers (specific enough to beat .rc-node's own --c) */
+.c-fi { --c: var(--fi-c); } .c-pe { --c: var(--pe-c); } .c-se { --c: var(--se-c); }
+.c-ch { --c: var(--ch-c); } .c-v { --c: var(--v-c); } .c-ca { --c: var(--ca-c); }
+.c-ap { --c: var(--ap-c); } .c-r { --c: var(--r-c); } .c-van { --c: var(--van); }
+.rc-node.c-fi { --c: var(--fi-c); } .rc-node.c-pe { --c: var(--pe-c); } .rc-node.c-se { --c: var(--se-c); }
+.rc-node.c-ch { --c: var(--ch-c); } .rc-node.c-v { --c: var(--v-c); } .rc-node.c-ca { --c: var(--ca-c); }
+.rc-node.c-ap { --c: var(--ap-c); } .rc-node.c-r { --c: var(--r-c); } .rc-node.c-van { --c: var(--van); }
+.rc-node.dashed { border-style: dashed; }
+
+/* top navigation */
+.topnav-wrap { background: var(--bg); }
+.topnav {
+  --nav-teal: var(--pe-c);
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  padding: 0 max(24px, env(safe-area-inset-right, 0px)) 0 max(24px, env(safe-area-inset-left, 0px));
+  background: var(--bg);
+  border-bottom: 3px solid color-mix(in srgb, var(--nav-teal) 80%, var(--bg));
+}
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; padding: 10px 0; }
+.brand-logo { flex: none; width: 46px; height: 46px; display: block; }
+.brand-logo svg { display: block; width: 100%; height: 100%; }
+.brand-sep { flex: none; width: 1px; height: 32px; background: var(--line); }
+.brand-name { font-family: var(--font-body); font-weight: 700; font-size: 22px; line-height: 1; letter-spacing: -.01em; color: var(--ink); white-space: nowrap; }
+.tablist { display: flex; align-items: center; gap: 8px; }
+.tab-btn {
+  position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+  height: 44px; margin-block: 10px; padding: 0 clamp(12px, 1.5vw, 30px);
+  border: 0; border-radius: 12px; background: transparent; color: #c3c9d4;
+  font-family: var(--font-body); font-size: 16px; font-weight: 500; line-height: 1.2; white-space: nowrap;
+  -webkit-tap-highlight-color: transparent; transition: background-color .15s ease, color .15s ease;
+}
+.tab-btn svg { flex: none; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.tab-btn[aria-selected="true"] { background: color-mix(in srgb, var(--nav-teal) 20%, var(--bg)); color: #fff; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--nav-teal) 35%, transparent); }
+.tab-btn[aria-selected="true"] svg { color: var(--nav-teal); }
+@media (hover: hover) {
+  .tab-btn:hover { background: rgba(255,255,255,.06); color: #fff; }
+  .tab-btn[aria-selected="true"]:hover { background: color-mix(in srgb, var(--nav-teal) 26%, var(--bg)); }
+}
+.tab-btn:focus-visible { outline: 2px solid var(--nav-teal); outline-offset: 2px; border-radius: 12px; }
+@media (max-width: 760px) {
+  .topnav { flex-direction: column; align-items: stretch; gap: 0; padding: 0; }
+  .brand { padding: 12px 20px 10px; }
+  .brand-logo { width: 40px; height: 40px; }
+  .brand-name { font-size: 20px; }
+  .tablist { overflow-x: auto; scrollbar-width: none; padding: 0 20px; gap: 6px; }
+  .tablist::-webkit-scrollbar { display: none; }
+  .tab-btn { flex: none; margin-block: 0 10px; height: 42px; font-size: 14px; padding: 0 14px; }
+}
+
+/* jump nav + read state */
+.rc-jump button.rd b { background: var(--fi-c); font-size: 0; }
+.rc-jump button.rd b::after { content: "\2713"; font-size: 13px; }
+.rc-sec.read .rc-n { border-color: var(--fi-c); color: var(--fi-c); }
+.rc-btn.read-btn[aria-pressed="true"] { background: var(--fi-c); border-color: var(--fi-c); color: var(--on); }
+.sec-end { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding-top: 4px; border-top: 1px solid var(--line); margin-top: 6px; padding-top: 16px; }
+.sec-end .rc-fine { margin-left: auto; }
+
+/* svg extras */
+.rc-part .ln { transition: stroke-width .18s ease; }
+.rc-part:hover .ln, .rc-part.on .ln { stroke-width: 3.5; }
+.rc-part.dash .shape, .rc-part .shape.dashed { stroke-dasharray: 6 5; }
+.rc-svg .sm { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-anchor: middle; }
+.rc-svg .q { font-size: 14px; font-weight: 600; }
+.rc-part.on text.q, .rc-part:hover text.q { fill: var(--c); }
+.rc-part:focus-visible { outline: 3px solid var(--ink); border-radius: 6px; }
+
+/* fitrah layers */
+.fl-ring { cursor: pointer; outline-offset: 3px; }
+.fl-ring .shape { fill: color-mix(in srgb, var(--c) 14%, var(--surface)); stroke: var(--c); stroke-width: 2.5; transition: fill .2s ease, stroke-width .2s ease, opacity .25s ease; }
+.fl-ring:hover .shape, .fl-ring.on .shape, .fl-ring:focus-visible .shape { fill: color-mix(in srgb, var(--c) 30%, var(--surface)); stroke-width: 4; }
+.fl-ring.lifted .shape { fill: transparent; stroke-dasharray: 3 7; opacity: .5; }
+.fl-ring text { pointer-events: none; transition: opacity .25s ease; }
+.fl-ring.lifted text { opacity: .35; }
+.fl-core .shape { fill: color-mix(in srgb, var(--c) 22%, var(--surface)); }
+.fl-core.glow .shape { filter: drop-shadow(0 0 14px color-mix(in srgb, var(--c) 70%, transparent)); }
+.rc-svg .fl-core text.big { font: 700 22px var(--font-display); fill: var(--c); text-anchor: middle; }
+.layer-bars i.f { background: var(--fi-c); }
+.gate-bars { grid-template-columns: repeat(3, 1fr); }
+.gate-bars i.f { background: var(--fi-c); }
+.rc-info .rc-next[hidden] { display: none; }
+
+/* case / seg */
+.rc-seg .rc-btn[aria-pressed="true"] { background: var(--van); color: var(--on); border-color: var(--van); }
+.rc-case li b { color: var(--ink); }
+
+/* desire tool */
+.rc-factors .wide { grid-column: 1 / -1; }
+.rc-factor[aria-pressed="true"] { background: color-mix(in srgb, var(--c) 20%, var(--surface2)); border: 1.5px solid var(--c); color: var(--ink); }
+.rc-factor[aria-pressed="true"] .sw2 { background: var(--c); }
+.rc-factor[aria-pressed="true"] .sw2::after { transform: translateX(14px); background: var(--on); }
+
+/* nest */
+.nest { display: grid; gap: 10px; }
+.nest-in { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; border: 1.5px solid color-mix(in srgb, var(--fi-c) 40%, transparent); border-radius: 16px; padding: 10px; background: color-mix(in srgb, var(--fi-c) 6%, var(--surface)); }
+.nest-in::before { content: "Inside the goal"; grid-column: 1 / -1; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 760px) { .nest-in { grid-template-columns: 1fr; } }
+
+/* next-in-series */
+.nextrow { display: flex; flex-wrap: wrap; gap: 8px; }
+.nextrow span { border: 1.5px dashed var(--line); border-radius: 99px; padding: 6px 14px; color: var(--muted); font-weight: 500; }
+.nextrow span b { color: var(--van); font-family: var(--font-display); margin-right: 6px; }
+
+/* ===== Deviation tab ===== */
+:root { --glut: #FF3D3D; --glut-t: #2E0C0D; --glut-glow: rgba(255, 61, 61, .6); }
+
+/* ---- the gluttony highlight system ---- */
+mark.gl {
+  background: linear-gradient(180deg, rgba(255,61,61,.55), rgba(255,61,61,.35));
+  color: #fff; font-weight: 800; letter-spacing: .01em;
+  padding: 0 .3em; margin: 0 .05em; border-radius: 5px;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  box-shadow: 0 0 0 1.5px var(--glut), 0 0 14px var(--glut-glow);
+  animation: glPulse 2.2s ease-in-out infinite;
+}
+@keyframes glPulse {
+  0%, 100% { box-shadow: 0 0 0 1.5px var(--glut), 0 0 8px rgba(255,61,61,.45); }
+  50% { box-shadow: 0 0 0 1.5px #ff7a7a, 0 0 22px rgba(255,61,61,.95); }
+}
+@keyframes glTick { to { transform: translateX(-50%); } }
+@keyframes glBreath { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,61,61,.0), 0 0 40px -10px rgba(255,61,61,.5); } 50% { box-shadow: 0 0 0 4px rgba(255,61,61,.25), 0 0 70px -6px rgba(255,61,61,.85); } }
+@media (prefers-reduced-motion: reduce) {
+  mark.gl, .glut-hero, .glut-tick .trk, .glut-root, .glut-bar b.dot { animation: none !important; }
+}
+.hazard { height: 14px; background: repeating-linear-gradient(-45deg, var(--glut) 0 14px, #170505 14px 28px); }
+
+/* sticky banner */
+.glut-bar { position: sticky; top: 0; z-index: 30; margin: 0 calc(-1 * max(16px, env(safe-area-inset-right, 0px))); background: linear-gradient(90deg, #b30f12, #ff3d3d 50%, #b30f12); color: #fff; box-shadow: 0 8px 24px -10px rgba(255,61,61,.8); }
+.glut-bar .row2 { max-width: 1152px; margin: 0 auto; padding: 8px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
+.glut-bar b.dot { width: 12px; height: 12px; border-radius: 50%; background: #fff; flex: none; animation: glPulse 1.2s ease-in-out infinite; }
+.glut-bar .t1 { font-family: var(--font-display); font-weight: 700; font-size: 17px; letter-spacing: .02em; text-transform: uppercase; }
+.glut-bar .t2 { font-size: 14px; font-weight: 600; opacity: .95; }
+.glut-bar button { margin-left: auto; border: 1.5px solid #fff; background: rgba(0,0,0,.25); color: #fff; border-radius: 99px; padding: 4px 14px; font-weight: 700; }
+.glut-bar button:hover { background: #fff; color: #b30f12; }
+.glut-bar::after { content: ""; display: block; height: 6px; background: repeating-linear-gradient(-45deg, #fff 0 10px, #b30f12 10px 20px); opacity: .55; }
+
+/* jump nav chip for the root cause */
+.rc-jump button.jglut { border-color: var(--glut); background: color-mix(in srgb, var(--glut) 22%, var(--surface)); color: #fff; font-weight: 700; animation: glPulse 2.2s ease-in-out infinite; }
+.rc-jump button.jglut b { background: var(--glut); color: #fff; }
+.rc-jump button.jglut.rd b::after { content: "\2713"; }
+
+/* hero */
+.glut-hero { position: relative; border: 3px solid var(--glut); border-radius: 26px; overflow: hidden; background: radial-gradient(120% 80% at 50% 0%, #4a1214 0%, #1c0a0b 55%, #120708 100%); animation: glBreath 3s ease-in-out infinite; padding: 0 0 26px; display: flex; flex-direction: column; gap: 22px; }
+.glut-hero > .glut-inner { padding: 0 clamp(16px, 3vw, 32px); display: flex; flex-direction: column; gap: 22px; }
+.glut-tick { overflow: hidden; background: var(--glut); color: #fff; white-space: nowrap; font-family: var(--font-display); font-weight: 700; font-size: 15px; letter-spacing: .14em; padding: 8px 0; }
+.glut-tick .trk { display: flex; width: max-content; animation: glTick 26s linear infinite; }
+.glut-tick span { padding-right: 28px; }
+.glut-tag { margin: 0; font-size: 13px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: #ff9b9b; }
+.glut-mega { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(40px, 10vw, 96px); line-height: .95; letter-spacing: -.03em; text-transform: uppercase; color: #fff; text-shadow: 0 0 30px rgba(255,61,61,.8), 0 0 70px rgba(255,61,61,.5); text-wrap: balance; }
+.glut-mega em { font-style: normal; color: var(--glut); -webkit-text-stroke: 0; }
+.glut-sub { margin: 0; font-size: clamp(17px, 2.4vw, 22px); line-height: 1.45; max-width: 62ch; color: #ffe3e3; }
+.glut-sub b { color: #fff; }
+.glut-hero .rc-n { border-color: var(--glut); color: var(--glut); }
+.glut-hero .rc-sh h2 { color: #fff; }
+.glut-hero .rc-sub { color: #fff; }
+.glut-hero .rc-lead { color: #f1c7c7; }
+.glut-hero .rc-lead b { color: #fff; }
+.glut-hero .rc-dia { background: rgba(0,0,0,.35); border-color: color-mix(in srgb, var(--glut) 55%, transparent); }
+.glut-hero .rc-info { background: #1f0d0e; border-color: color-mix(in srgb, var(--glut) 35%, var(--line)); }
+.glut-hero .rc-hint { color: #ff9b9b; }
+.glut-rem { display: flex; flex-wrap: wrap; gap: 10px; }
+.glut-rem span { background: var(--glut); color: #fff; font-family: var(--font-display); font-weight: 700; font-size: clamp(16px, 2.2vw, 22px); letter-spacing: .04em; text-transform: uppercase; border-radius: 12px; padding: 10px 18px; box-shadow: 0 0 22px -4px var(--glut-glow); }
+.glut-quote { margin: 0; border-left: 8px solid var(--glut); background: color-mix(in srgb, var(--glut) 18%, #1a0809); border-radius: 6px 18px 18px 6px; padding: 20px 24px; font-family: var(--font-display); font-weight: 700; font-size: clamp(20px, 3vw, 28px); line-height: 1.3; color: #fff; text-wrap: balance; }
+.glut-quote small { display: block; margin-top: 10px; font-family: var(--font-body); font-weight: 600; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: #ff9b9b; }
+.glut-ev { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 14px; }
+.glut-card { background: #1f0d0e; border: 2px solid color-mix(in srgb, var(--glut) 60%, transparent); border-radius: 18px; padding: 18px 20px; display: grid; gap: 10px; }
+.glut-card h3 { margin: 0; font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #ff9b9b; }
+.glut-card p { margin: 0; font-size: 17px; line-height: 1.55; color: #fff; }
+.glut-card small { color: #e6a8a8; font-size: 13px; }
+
+/* the root tree */
+.root-tree { display: grid; gap: 10px; }
+.rt-branches { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 8px; transition: opacity .3s ease; }
+.rt-branches .rc-node { padding: 10px 12px; font-size: 14px; transition: opacity .3s ease, border-color .15s ease, background .15s ease, transform .15s ease; }
+.rt-branches .rc-node.top { grid-column: 1 / -1; border-width: 2px; }
+.rt-branches .rc-node.zina { border-style: dashed; }
+.rt-arrows { display: flex; justify-content: space-around; color: var(--glut); font-size: 26px; line-height: 1; letter-spacing: .5em; text-align: center; }
+.glut-root { width: 100%; border: 3px solid #fff; border-radius: 22px; background: linear-gradient(180deg, #ff3d3d, #b30f12); color: #fff; cursor: pointer; padding: 18px 20px; text-align: center; font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 4vw, 34px); line-height: 1.05; letter-spacing: .02em; text-transform: uppercase; animation: glBreath 2.4s ease-in-out infinite; transition: transform .15s ease; }
+.glut-root small { display: block; margin-top: 6px; font-family: var(--font-body); font-size: 13px; font-weight: 700; letter-spacing: .14em; opacity: .95; }
+.glut-root:hover, .glut-root.on { transform: translateY(-2px) scale(1.01); }
+.root-tree.cut .rt-branches .rc-node { opacity: .22; border-style: dashed; text-decoration: line-through; }
+.root-tree.cut .rt-arrows { opacity: .25; }
+.root-tree.cut .glut-root { background: linear-gradient(180deg, #3a3f4a, #20232a); animation: none; text-decoration: line-through; border-color: var(--muted); }
+.rt-verdict { margin: 0; font-weight: 700; color: #fff; }
+.rt-verdict small { display: block; font-weight: 500; color: #f1c7c7; margin-top: 2px; }
+.glut-hero .rc-btn { border-color: #ff9b9b; background: rgba(0,0,0,.35); color: #fff; font-weight: 700; }
+.glut-hero .rc-btn:hover { background: var(--glut); border-color: #fff; }
+.glut-hero .rc-btn[aria-pressed="true"] { background: #fff; color: #b30f12; border-color: #fff; }
+.gauge { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin: 6px 0; }
+.gauge i { height: 26px; border-radius: 8px; background: #2b1516; border: 1.5px solid #4a2022; transition: background .3s ease, box-shadow .3s ease; }
+.gauge i.f { background: var(--glut); border-color: #fff; box-shadow: 0 0 14px var(--glut-glow); }
+.gauge.small i.f { background: var(--fi-c); border-color: #fff; box-shadow: 0 0 14px color-mix(in srgb, var(--fi-c) 60%, transparent); }
+
+/* red-flagged cards elsewhere */
+.rc-pc.root { border: 2px solid var(--glut); background: color-mix(in srgb, var(--glut) 10%, var(--surface)); animation: glBreath 3s ease-in-out infinite; }
+.rc-pc.root summary b { background: var(--glut); color: #fff; }
+.rc-pc.root summary { font-size: 17px; }
+.rc-pc.root .rootflag { display: inline-block; margin-right: 8px; padding: 2px 10px; border-radius: 99px; background: var(--glut); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; vertical-align: middle; }
+.rc-pc .blk { display: grid; gap: 6px; }
+.rc-pc .blk h5 { margin: 6px 0 0; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--van); }
+.rc-pc .blk h5.pr { color: var(--se-c); } .rc-pc .blk h5.so { color: var(--fi-c); }
+.rc-pc .blk ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.rc-pc .blk li { background: var(--surface2); border-radius: 10px; padding: 8px 12px; color: var(--ink); }
+.rc-pc.root .blk li { background: color-mix(in srgb, var(--glut) 14%, var(--surface2)); }
+
+/* effects widget */
+.fx-case { background: var(--surface); border: 1.5px solid color-mix(in srgb, var(--fc) 45%, transparent); border-left: 5px solid var(--fc); border-radius: 18px; padding: 20px; display: grid; gap: 12px; }
+.fx-case h3 { margin: 0; font-family: var(--font-display); font-size: 21px; }
+.fx-case .intro { margin: 0; color: var(--muted); }
+.fx-case ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.fx-case li { background: var(--surface2); border-radius: 12px; padding: 10px 14px; }
+
+/* lessons filter */
+.lf { display: flex; flex-wrap: wrap; gap: 8px; }
+.lf .chip[aria-pressed="true"] { color: var(--on); }
+.lf .chip.rootchip { border-color: var(--glut); color: #fff; font-weight: 700; background: color-mix(in srgb, var(--glut) 20%, var(--surface)); }
+.lf .chip.rootchip[aria-pressed="true"] { background: var(--glut); }
+.lessons { display: grid; gap: 12px; }
+.lessons .rc-pc[hidden] { display: none; }
+
+/* plan */
+.plan-head { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 18px 22px; }
+.plan-head .big { font-family: var(--font-display); font-weight: 700; font-size: 28px; line-height: 1; font-variant-numeric: tabular-nums; }
+.plan-head .small { margin-top: 4px; font-size: 13px; color: var(--muted); }
+.plan-head .rc-actions { margin: 0 0 0 auto; }
+.plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 14px; align-items: start; }
+.plan-card { background: color-mix(in srgb, var(--c) 8%, var(--surface)); border: 1.5px solid color-mix(in srgb, var(--c) 40%, transparent); border-radius: 20px; overflow: hidden; }
+.plan-card > h3 { margin: 0; background: var(--c); color: var(--on); padding: 12px 16px; font-family: var(--font-display); font-size: 19px; display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+.plan-card > h3 small { font: 600 12px var(--font-body); letter-spacing: .06em; opacity: .85; }
+.plan-card ul { list-style: none; margin: 0; padding: 10px; display: grid; gap: 6px; }
+.pi { width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left; background: color-mix(in srgb, var(--surface) 70%, transparent); border: 0; border-radius: 12px; padding: 10px 12px; transition: background .15s ease; }
+.pi:hover { background: var(--surface2); }
+.pi .ck { flex: none; width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--c); display: grid; place-items: center; color: var(--on); font-size: 13px; font-weight: 800; transition: background .15s ease; }
+.pi .ck::after { content: "\2713"; opacity: 0; }
+.pi[aria-pressed="true"] .ck { background: var(--c); }
+.pi[aria-pressed="true"] .ck::after { opacity: 1; }
+.pi[aria-pressed="true"] .tx { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--c); }
+.dots7 { display: flex; gap: 10px; padding: 14px 12px 8px 14px; flex-wrap: wrap; justify-content: center; }
+.dots7 button { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--c); background: transparent; color: var(--ink); font-weight: 700; font-size: 12px; }
+.dots7 button[aria-pressed="true"] { background: var(--c); color: var(--on); }
+.plan-card.glut { border: 3px solid var(--glut); background: linear-gradient(180deg, #3a1011, #1c0a0b); animation: glBreath 3s ease-in-out infinite; grid-column: 1 / -1; --c: var(--glut); }
+.plan-card.glut > h3 { background: linear-gradient(90deg, #b30f12, #ff3d3d); color: #fff; font-size: clamp(20px, 3vw, 28px); text-transform: uppercase; letter-spacing: .03em; }
+.plan-card.glut .why { margin: 0; padding: 14px 18px 0; font-size: 17px; line-height: 1.5; color: #fff; }
+.plan-card.glut .pi { background: rgba(0,0,0,.35); }
+.plan-card.glut .pi .tx { font-size: 18px; font-weight: 700; color: #fff; }
+.plan-card.glut .pi[aria-pressed="true"] .tx { color: #ffb4b4; }
+.plan-card.glut .pi .ck { border-color: #fff; }
+.plan-card.glut .pi[aria-pressed="true"] .ck { background: #fff; color: #b30f12; }
+.glut-end { border: 3px solid var(--glut); border-radius: 22px; background: linear-gradient(90deg, #b30f12, #ff3d3d 50%, #b30f12); color: #fff; padding: 22px 26px; display: grid; gap: 8px; text-align: center; animation: glBreath 3s ease-in-out infinite; }
+.glut-end h3 { margin: 0; font-family: var(--font-display); font-size: clamp(26px, 5vw, 46px); letter-spacing: -.01em; text-transform: uppercase; line-height: 1; }
+.glut-end p { margin: 0; font-weight: 600; font-size: 17px; }
+
+/* diagram helpers */
+.rc-row.chain { align-items: center; }
+.rc-row.chain .rc-arr { flex: none; }
+.rc-info.glutinfo { border-left-color: var(--glut); }
+.rc-flow-bad .rc-node { --c: var(--se-c); }
+.rc-svg .num { font: 700 14px var(--font-display); text-anchor: middle; fill: var(--on); }
+@media (max-width: 760px) { .glut-bar button { margin-left: 0; } .plan-head .rc-actions { margin-left: 0; } }
+.rt-branches .rc-node { text-align: left; align-items: flex-start; }
+.glut-card { align-content: start; }
+.salawat { font-family: "Noto Naskh Arabic", "Amiri", "Scheherazade New", "Segoe UI", Tahoma, "Arial Unicode MS", sans-serif; font-weight: 700; font-size: 1.15em; line-height: 1; letter-spacing: 0; text-transform: none; }
+
+ul.ptxt { list-style: none; margin: 0; padding: 12px 14px 14px; display: grid; gap: 10px; }
+ul.ptxt li { position: relative; padding-left: 20px; line-height: 1.5; color: var(--ink); }
+ul.ptxt li::before { content: ""; position: absolute; left: 2px; top: .55em; width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+.plan-card.glut ul.ptxt li { color: #fff; font-size: 17px; font-weight: 600; }
+.plan-card.glut ul.ptxt li::before { background: #fff; }
+#view-act .top { align-items: center; }
+
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <marker id="mRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#FF7070"/></marker>
+  <marker id="mGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7EE08B"/></marker>
+  <marker id="mTeal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#45D9D2"/></marker>
+  <marker id="mAmber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#FFC555"/></marker>
+  <marker id="mViolet" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#B794FF"/></marker>
+  <marker id="mVan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#F3E3B3"/></marker>
+</defs></svg>
+
+<header class="topnav-wrap">
+<nav class="topnav" aria-label="Main">
+  <div class="brand">
+    <span class="brand-logo" aria-hidden="true"><svg viewBox="0 0 46 46"><circle cx="23" cy="23" r="21" fill="#0D0E11" stroke="#45D9D2" stroke-width="3"/><text x="23" y="28.5" text-anchor="middle" font-family="Figtree, system-ui, sans-serif" font-weight="700" font-size="16" fill="#fff">RP</text></svg></span>
+    <span class="brand-sep" aria-hidden="true"></span>
+    <span class="brand-name" title="Fitrah · The Right Path">Right Path</span>
+  </div>
+  <div class="tablist" role="tablist" aria-label="Views">
+    <button type="button" class="tab-btn" role="tab" id="tab-intro" data-act="tab" data-v="intro" aria-selected="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>Introduction</button>
+    <button type="button" class="tab-btn" role="tab" id="tab-dev" data-act="tab" data-v="dev" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>Deviation</button>
+    <button type="button" class="tab-btn" role="tab" id="tab-act" data-act="tab" data-v="act" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M3.5 6l1.2 1.2L7 4.8M3.5 12l1.2 1.2L7 10.8M3.5 18l1.2 1.2L7 16.8"/></svg>Action Plan</button>
+  </div>
+</nav>
+</header>
+
+<main class="wrap">
+<div id="view-intro" class="view" hidden>
+
+  <header class="top">
+    <div>
+      <p class="eyebrow">Fitrah &middot; The Right Path</p>
+      <h1>Introduction</h1>
+      <p class="sub">Why the question &ldquo;which way of life should I choose?&rdquo; is the wrong question, what the right path and fitrah actually are, and where real choice begins. Hover or tap any part of a diagram to see what it does, and mark each section as read.</p>
+    </div>
+    <div class="overall" id="overall"></div>
+  </header>
+
+  <nav class="rc-jump" aria-label="Sections of this page">
+    <button type="button" data-go="s1"><b>1</b>The false question</button>
+    <button type="button" data-go="s2"><b>2</b>The right path</button>
+    <button type="button" data-go="s3"><b>3</b>The ground</button>
+    <button type="button" data-go="s4"><b>4</b>Fitrah</button>
+    <button type="button" data-go="s5"><b>5</b>All together</button>
+    <button type="button" data-go="s6"><b>6</b>The true question</button>
+    <button type="button" data-go="s7"><b>7</b>Desires in goals</button>
+    <button type="button" data-go="s8"><b>8</b>In short</button>
+  </nav>
+
+  <!-- 1 THE FALSE QUESTION OF CHOICE -->
+  <section class="rc-sec" id="s1" aria-label="The false question of choice">
+    <div class="rc-sh"><span class="rc-n">1</span><h2>The False Question of Choice</h2></div>
+    <h3 class="rc-sub">A confusion that looks like open-mindedness</h3>
+    <p class="rc-lead">There is a kind of confusion that looks like open-mindedness. It says there are many ways to live and that you must choose among them. It is true that people live in many different ways. But the conclusion drawn from that fact does not follow: that all these ways are genuine options, that they are equally available to you, and that selecting among them is a neutral act. <b>That conclusion is a trap.</b></p>
+
+    <div class="rc-defs">
+      <div class="rc-def c-ch"><h3>&ldquo;Lifestyle choice&rdquo;</h3><p>The phrase assumes that truth is separate from the way you live, and that your way of living is a personal preference, like choosing a paint colour for your room.</p></div>
+      <div class="rc-def c-se"><h3>A misunderstanding of truth</h3><p>Putting why humans exist and what life is for on the same level as ordinary tastes is not real open-mindedness. It is a misunderstanding of what truth is.</p></div>
+      <div class="rc-def c-fi"><h3>The right path</h3><p>Not a cultural preference. It is a description of what you actually are and what you were made for as a human being.</p></div>
+    </div>
+
+    <h3 class="rc-sub">Taste or truth?</h3>
+    <div class="rc-dia stack" id="tasteDia">
+      <div>
+        <p class="rc-hint">Switch between the two kinds of question</p>
+        <div class="rc-seg" role="group" aria-label="Kind of question">
+          <button type="button" class="rc-btn" data-case="taste" aria-pressed="true">A question of taste</button>
+          <button type="button" class="rc-btn" data-case="truth" aria-pressed="false">A question of truth</button>
+        </div>
+        <div class="rc-case" id="tasteCase"></div>
+      </div>
+    </div>
+
+    <h3 class="rc-sub">The fish and the water</h3>
+    <p class="rc-lead">The truth of your existence is not an opinion. Treating the right path as one lifestyle option among many is as confused as <b>a fish treating water as one habitat option among many.</b></p>
+    <div class="rc-dia" data-dia="fish">
+      <div>
+        <p class="rc-hint">A fish, its water and its swimming</p>
+        <svg class="rc-svg" viewBox="0 0 560 360" role="group" aria-label="A fish in water, with the space above the water where it cannot live">
+          <g class="rc-part c-se dash" data-p="out" tabindex="0" role="button" aria-label="Out of the water">
+            <rect class="shape" x="20" y="20" width="320" height="92" rx="16"/>
+            <text class="lbl" x="180" y="62" text-anchor="middle">OUT OF WATER</text>
+            <text class="hr" x="180" y="84" text-anchor="middle">not a habitat, not a lifestyle</text>
+            <rect x="380" y="38" width="175" height="28" fill="transparent"/>
+            <text class="side" x="385" y="58">Out of the water</text>
+            <line class="arw" x1="378" y1="54" x2="344" y2="58" marker-end="url(#mRed)"/>
+          </g>
+          <g class="rc-part c-fi" data-p="water" tabindex="0" role="button" aria-label="The water">
+            <rect class="shape" x="20" y="132" width="320" height="208" rx="18"/>
+            <text class="lbl" x="180" y="160" text-anchor="middle">WATER</text>
+            <rect x="380" y="152" width="175" height="28" fill="transparent"/>
+            <text class="side" x="385" y="172">The water</text>
+            <line class="arw" x1="378" y1="168" x2="344" y2="166" marker-end="url(#mGreen)"/>
+          </g>
+          <g class="rc-part c-pe" data-p="fish" tabindex="0" role="button" aria-label="The fish">
+            <ellipse class="shape" cx="200" cy="226" rx="44" ry="22"/>
+            <path class="shape" d="M158 226 L130 204 L130 248 Z"/>
+            <circle cx="222" cy="220" r="3.2" fill="var(--ink)"/>
+            <rect x="380" y="222" width="175" height="28" fill="transparent"/>
+            <text class="side" x="385" y="242">The fish</text>
+            <line class="arw" x1="378" y1="238" x2="248" y2="230" marker-end="url(#mTeal)"/>
+          </g>
+          <g class="rc-part c-ch" data-p="swim" tabindex="0" role="button" aria-label="Where in the water it swims">
+            <path d="M52 306 C 100 268, 138 322, 190 292 S 268 196, 312 258" fill="none" stroke="transparent" stroke-width="26"/>
+            <path class="ln" d="M52 306 C 100 268, 138 322, 190 292 S 268 196, 312 258" stroke-dasharray="7 6" marker-end="url(#mAmber)"/>
+            <rect x="380" y="282" width="175" height="28" fill="transparent"/>
+            <text class="side" x="385" y="302">Where it swims</text>
+            <line class="arw" x1="378" y1="298" x2="322" y2="264" marker-end="url(#mAmber)"/>
+          </g>
+        </svg>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+
+    <h3 class="rc-sub">How the trap works</h3>
+    <p class="rc-lead">The framing of choice is not only intellectually wrong but <b>spiritually dangerous.</b> It does not announce itself. Follow it step by step.</p>
+    <div class="rc-dia" data-dia="trap">
+      <div>
+        <p class="rc-hint">The mechanism of the trap</p>
+        <div class="rc-col">
+          <button type="button" class="rc-node c-ch" data-p="t1"><span class="n">1</span>&ldquo;You have a choice&rdquo;<small>A harmless-sounding idea</small></button>
+          <div class="rc-arr" aria-hidden="true">&darr;</div>
+          <button type="button" class="rc-node c-ch" data-p="t2"><span class="n">2</span>One option among several<small>The right path is made to look reasonable, but not special</small></button>
+          <div class="rc-arr" aria-hidden="true">&darr;</div>
+          <button type="button" class="rc-node c-se" data-p="t3"><span class="n">3</span>False legitimacy<small>The alternatives seem able to lead somewhere real</small></button>
+          <div class="rc-arr" aria-hidden="true">&darr;</div>
+          <button type="button" class="rc-node c-se" data-p="t4"><span class="n">4</span>Every hard moment is an exit<small>The alternatives quietly suggest themselves</small></button>
+        </div>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+
+    <p class="rc-key">The honest position, reached by genuine reasoning and not by blind following: there is only one way to live that is aligned with what you actually are, and every other way of living is a deviation from it, not an alternative to it.</p>
+    <p class="rc-note"><b>A note on freedom.</b> The right path is not a restriction placed on your freedom. It is a description of your nature. None of this means a human life holds no choices at all. It means the choice has been placed in the wrong location. There is a true question of choice, and it sits <b>inside</b> the right path, not outside it. That is taken up in section 6.</p>
+    <div class="sec-end"><button type="button" class="rc-btn read-btn" data-read="1" aria-pressed="false">Mark section as read</button></div>
+  </section>
+
+  <!-- 2 WHAT IS THE RIGHT PATH -->
+  <section class="rc-sec" id="s2" aria-label="What is the right path">
+    <div class="rc-sh"><span class="rc-n">2</span><h2>What Is the Right Path?</h2></div>
+    <h3 class="rc-sub">Two ways a human being can live</h3>
+    <p class="rc-lead">The right path is a concept in Islamic theology, which is the religion I follow. It says that there are two ways a human being can live. One is to become a Muslim and live as a Muslim. The other is to remain a non-Muslim and live as a non-Muslim.</p>
+    <div class="rc-defs">
+      <div class="rc-def c-fi"><h3>The right path</h3><p>The path a human being can walk that leads straight to paradise. A very straight path. Its Arabic name is <b>Sirat-e-Mustaqim.</b></p></div>
+      <div class="rc-def c-se"><h3>The deviant path</h3><p>Anyone who is not on the right path is on the deviant path, which can be called the wrong path.</p></div>
+      <div class="rc-def c-v"><h3>Real success</h3><p>Success in the afterlife, which means reaching paradise.</p></div>
+    </div>
+
+    <div class="rc-dia" data-dia="ways">
+      <div>
+        <p class="rc-hint">The straight path and the deviant path</p>
+        <svg class="rc-svg" viewBox="0 0 560 420" role="group" aria-label="A person under test on earth, a straight path up to paradise, and a deviant path that veers away">
+          <g class="rc-part c-v" data-p="paradise" tabindex="0" role="button" aria-label="Paradise">
+            <circle class="shape" cx="180" cy="52" r="42"/>
+            <text class="sm" x="180" y="56" style="fill: var(--v-c)">PARADISE</text>
+            <rect x="380" y="38" width="175" height="28" fill="transparent"/>
+            <text class="side" x="385" y="58">Paradise</text>
+            <line class="arw" x1="378" y1="54" x2="226" y2="52" marker-end="url(#mViolet)"/>
+          </g>
+          <g class="rc-part c-fi" data-p="path" tabindex="0" role="button" aria-label="The right path">
+            <rect x="160" y="100" width="40" height="250" fill="transparent"/>
+            <line class="ln" x1="180" y1="350" x2="180" y2="116" style="stroke-width: 8; stroke-linecap: round"/>
+            <polygon points="180,96 166,122 194,122" fill="var(--c)"/>
+            <rect x="380" y="192" width="175" height="48" fill="transparent"/>
+            <text class="side" x="385" y="212">The right path</text>
+            <text class="hr" x="385" y="232">Sirat-e-Mustaqim</text>
+            <line class="arw" x1="378" y1="208" x2="200" y2="214" marker-end="url(#mGreen)"/>
+          </g>
+          <g class="rc-part c-se" data-p="deviant" tabindex="0" role="button" aria-label="The deviant path">
+            <path d="M176 330 C 116 304, 84 262, 68 206 S 30 120, 42 84" fill="none" stroke="transparent" stroke-width="26"/>
+            <path d="M184 330 C 244 304, 276 262, 292 206 S 330 120, 318 84" fill="none" stroke="transparent" stroke-width="26"/>
+            <path class="ln" d="M176 330 C 116 304, 84 262, 68 206 S 30 120, 42 84" stroke-dasharray="7 6"/>
+            <path class="ln" d="M184 330 C 244 304, 276 262, 292 206 S 330 120, 318 84" stroke-dasharray="7 6"/>
+            <circle cx="42" cy="84" r="4" fill="var(--c)"/><circle cx="318" cy="84" r="4" fill="var(--c)"/>
+            <rect x="380" y="300" width="175" height="28" fill="transparent"/>
+            <text class="side" x="385" y="320">The deviant path</text>
+            <line class="arw" x1="378" y1="316" x2="272" y2="258" marker-end="url(#mRed)"/>
+          </g>
+          <g class="rc-part c-pe" data-p="start" tabindex="0" role="button" aria-label="A person under test on earth">
+            <circle class="shape" cx="180" cy="374" r="24"/>
+            <text class="sm" x="180" y="378" style="fill: var(--pe-c)">YOU</text>
+            <rect x="380" y="360" width="175" height="28" fill="transparent"/>
+            <text class="side" x="385" y="380">Under test on earth</text>
+            <line class="arw" x1="378" y1="376" x2="208" y2="374" marker-end="url(#mTeal)"/>
+          </g>
+        </svg>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+
+    <h3 class="rc-sub">Questions that come up</h3>
+    <p class="rc-lead">Two or three questions come up when we talk about the right path in the context of Muslims and non-Muslims. To walk on it a person needs to be a Muslim, with faith in God and in all that Islam says. But what about non-Muslims who are happy and content, or even spiritual? What about the People of the Book, such as Christians and Jews?</p>
+    <div class="rc-pr">
+      <details class="rc-pc wide">
+        <summary><b>1</b><span>What about non-Muslims who are happy, content or even spiritual?<small>In my own understanding</small></span></summary>
+        <div class="body">
+          <p>First I need to say that I am an ignorant person and I do not know everything. But according to my knowledge and understanding, some non-Muslims do feel a void within themselves, and that void is filled when they revert to Islam. Others did not get that chance. Allah Almighty did not give it to them, so they became unresponsive to the void within, unconscious of it, and stopped feeling it even though it is still there.</p>
+          <p>That does not mean it is something they are constantly worried about. They can still feel joy and happiness. But real contentment and real satisfaction may be something they have no idea about or feel no need for. That is a very unfortunate thing to go through, and Allah Almighty made it part of their destiny. This raises another question, about destiny versus choice, but that is a separate debate. <b>The bottom line is that everything lies in Allah&rsquo;s hand.</b></p>
+        </div>
+      </details>
+      <details class="rc-pc wide">
+        <summary><b>2</b><span>If people are not aware of the right path, how can they be concerned with it?<small>The path is a description of your nature</small></span></summary>
+        <div class="body">
+          <p>The right path is the path explained in Islam, and it is in harmony with the very nature of human beings, whether a person is Muslim or not. <b>The right path is a description of your nature.</b> But that does not mean people are necessarily aware of it, and if they are not aware of it, how can they be concerned with it?</p>
+        </div>
+      </details>
+    </div>
+
+    <h3 class="rc-sub">The quest</h3>
+    <p class="rc-lead">If a human being goes on a quest and asks questions like these, he would eventually conclude, if he was not led astray, that the right path is the real truth.</p>
+    <ul class="rc-sum" aria-label="The quest">
+      <li>Why was I born?</li>
+      <li>What is the purpose of my birth?</li>
+      <li>What is this life?</li>
+      <li>Why was I given this life at this time?</li>
+      <li class="end">The right path is the real truth</li>
+    </ul>
+    <div class="sec-end"><button type="button" class="rc-btn read-btn" data-read="2" aria-pressed="false">Mark section as read</button></div>
+  </section>
+
+  <!-- 3 THE GROUND -->
+  <section class="rc-sec" id="s3" aria-label="The ground you are standing on">
+    <div class="rc-sh"><span class="rc-n">3</span><h2>The Right Path as the Ground You Are Standing On</h2></div>
+    <h3 class="rc-sub">Not a destination</h3>
+    <p class="rc-lead">The right path is not a destination. It is not something ahead of you, not something reached after enough preparation, not a future project. It is a <b>ground</b>: something you are either standing on right now or failing to stand on right now. It exists beneath you, not in front of you, and it is available in this present moment, requiring nothing but that you place your weight on it.</p>
+
+    <div class="rc-dia" data-dia="ground">
+      <div>
+        <p class="rc-hint">The ground beneath you</p>
+        <svg class="rc-svg" viewBox="0 0 560 360" role="group" aria-label="A person standing on solid ground, with a distant flag ahead that stands for the wrong picture of a destination">
+          <g class="rc-part c-fi" data-p="ground" tabindex="0" role="button" aria-label="The ground">
+            <rect class="shape" x="20" y="262" width="520" height="20" rx="10"/>
+            <text class="lbl" x="280" y="312" text-anchor="middle">THE GROUND</text>
+            <text class="hr" x="280" y="332" text-anchor="middle">beneath you &middot; available now</text>
+          </g>
+          <g class="rc-part c-pe" data-p="person" tabindex="0" role="button" aria-label="You, standing on it">
+            <rect x="110" y="104" width="80" height="162" fill="transparent"/>
+            <circle class="shape" cx="150" cy="170" r="15"/>
+            <path class="ln" d="M150 185 L150 235 M150 200 L132 222 M150 200 L168 222 M150 235 L138 262 M150 235 L162 262" stroke-linecap="round" style="stroke-width: 3"/>
+            <text class="q" x="150" y="116" text-anchor="middle">Am I standing on it right now?</text>
+          </g>
+          <g class="rc-part c-ch" data-p="walk" tabindex="0" role="button" aria-label="Walking on the ground">
+            <rect x="185" y="196" width="160" height="50" fill="transparent"/>
+            <line class="arw" x1="190" y1="238" x2="336" y2="238" marker-end="url(#mAmber)"/>
+            <text class="hr b" x="190" y="222" style="fill: var(--c)">walks, builds, earns, decides</text>
+          </g>
+          <g class="rc-part c-se dash" data-p="flag" tabindex="0" role="button" aria-label="A destination ahead">
+            <rect x="450" y="120" width="90" height="146" fill="transparent"/>
+            <line class="ln" x1="470" y1="262" x2="470" y2="150"/>
+            <polygon class="shape" points="470,150 516,166 470,182"/>
+            <text class="hr" x="470" y="130" text-anchor="middle">When will I get there?</text>
+          </g>
+        </svg>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+
+    <div class="rc-defs">
+      <div class="rc-def c-fi"><h3>The only meaningful question</h3><p>A present-tense one: <b>&ldquo;Am I standing on it right now?&rdquo;</b></p></div>
+      <div class="rc-def c-se"><h3>The wrong question</h3><p>The future-tense one: <b>&ldquo;When will I get there?&rdquo;</b></p></div>
+      <div class="rc-def c-pe"><h3>What the ground settles</h3><p>Where he stands.</p></div>
+      <div class="rc-def c-ch"><h3>What it leaves open</h3><p>Every step from there. He still walks, builds, earns and decides what to do with his day.</p></div>
+    </div>
+    <p class="rc-key">Standing on the ground is not the same as standing still.</p>
+    <div class="sec-end"><button type="button" class="rc-btn read-btn" data-read="3" aria-pressed="false">Mark section as read</button></div>
+  </section>
+
+  <!-- 4 FITRAH -->
+  <section class="rc-sec" id="s4" aria-label="What is fitrah">
+    <div class="rc-sh"><span class="rc-n">4</span><h2>What Is Fitrah?</h2></div>
+    <h3 class="rc-sub">The self that is already on the ground</h3>
+    <p class="rc-lead">Fitrah is identified with this ground itself. It is the natural, real, deep, original self, and this self is already on the right path. It does not need to travel to it or be built into it. <b>Fitrah is not neutral raw material waiting to be shaped into righteousness.</b> It is a self that already knows what it is, already recognises the truth, and already inclines toward what is real.</p>
+
+    <div class="rc-dia" id="fitDia">
+      <div>
+        <p class="rc-hint">Fitrah and its coverings &middot; tap a layer</p>
+        <svg class="rc-svg" viewBox="0 0 380 380" role="group" aria-label="The original self at the centre, covered by four outer layers">
+          <g class="fl-ring c-se" data-l="stim" tabindex="0" role="button" aria-label="Artificial stimulation systems"><circle class="shape" cx="190" cy="190" r="178"/><text class="sm" x="190" y="33" style="fill: var(--se-c)">STIMULATION</text></g>
+          <g class="fl-ring c-ap" data-l="sins" tabindex="0" role="button" aria-label="Sins"><circle class="shape" cx="190" cy="190" r="146"/><text class="sm" x="190" y="65" style="fill: var(--ap-c)">SINS</text></g>
+          <g class="fl-ring c-ch" data-l="habits" tabindex="0" role="button" aria-label="Habits"><circle class="shape" cx="190" cy="190" r="114"/><text class="sm" x="190" y="97" style="fill: var(--ch-c)">HABITS</text></g>
+          <g class="fl-ring c-r" data-l="society" tabindex="0" role="button" aria-label="Society"><circle class="shape" cx="190" cy="190" r="82"/><text class="sm" x="190" y="129" style="fill: var(--r-c)">SOCIETY</text></g>
+          <g class="fl-ring fl-core c-pe" data-l="core" tabindex="0" role="button" aria-label="Fitrah, the original self"><circle class="shape" cx="190" cy="190" r="50"/><text class="big" x="190" y="187">FITRAH</text><text class="sm" x="190" y="207" style="fill: var(--muted); letter-spacing: 0; font-weight: 600; font-size: 10px">the original self</text></g>
+        </svg>
+        <div class="rc-meter">
+          <div class="rc-bars layer-bars" id="fitBars" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <p class="rc-verdict" id="fitVerdict"></p>
+        </div>
+        <div class="rc-actions">
+          <button type="button" class="rc-btn" id="fitAll">Uncover everything</button>
+          <button type="button" class="rc-btn" id="fitReset">Cover again</button>
+        </div>
+      </div>
+      <aside class="rc-info" id="fitInfo" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next" id="fitLift" hidden></button>
+      </aside>
+    </div>
+
+    <p class="rc-key">The work of the right path is uncovering, not constructing. You are removing what has been layered over a self that was always whole and already aligned. It is a matter of removal and recognition, not of achievement or arrival.</p>
+
+    <div class="rc-defs">
+      <div class="rc-def c-pe"><h3>A want that grows out of the self</h3><p>It is part of the self.</p></div>
+      <div class="rc-def c-se"><h3>A want laid over it</h3><p>It is not part of the self. It is a covering.</p></div>
+    </div>
+    <p class="rc-note"><b>Notice what this does not say.</b> It does not say that every want a person has is a covering. Telling the two apart is something the later sections depend on (see section 6).</p>
+    <div class="sec-end"><button type="button" class="rc-btn read-btn" data-read="4" aria-pressed="false">Mark section as read</button></div>
+  </section>
+
+  <!-- 5 HOLDING IT ALL TOGETHER -->
+  <section class="rc-sec" id="s5" aria-label="Holding it all together">
+    <div class="rc-sh"><span class="rc-n">5</span><h2>Holding It All Together</h2></div>
+    <p class="rc-lead">Each piece above belongs to one integrated understanding. Open each point in turn.</p>
+    <div class="rc-pr">
+      <details class="rc-pc wide" open>
+        <summary><b>1</b><span>You were born with a fitrah<small>A natural self already oriented toward the right path</small></span></summary>
+        <div class="body">
+          <p>A natural self already oriented toward the right path, already aligned with truth, already disposed toward the worship of Allah. This is not a religious achievement waiting to be earned. <b>It is what you are at the deepest level.</b></p>
+        </div>
+      </details>
+      <details class="rc-pc wide">
+        <summary><b>2</b><span>The right path is the ground of your own nature<small>Not a destination you are trying to reach</small></span></summary>
+        <div class="body">
+          <p>To live on the right path is to be yourself. To deviate from it is to act against yourself, not just against a set of external rules, but <b>against the actual structure of who you are.</b></p>
+        </div>
+      </details>
+      <details class="rc-pc wide">
+        <summary><b>3</b><span>Being yourself does not mean being without wants<small>One question remains</small></span></summary>
+        <div class="body">
+          <p>The self standing on this ground is a whole human being, with ambitions, needs and preferences, and it does not stop having them the moment it stands correctly. So one question remains, and it is the one the false question of choice was hiding: <b>if the path is fixed, what is left for a person to choose?</b></p>
+          <div class="rc-actions"><button type="button" class="rc-btn" data-go="s6">Go to the answer (section 6)</button></div>
+        </div>
+      </details>
+    </div>
+    <div class="sec-end"><button type="button" class="rc-btn read-btn" data-read="5" aria-pressed="false">Mark section as read</button></div>
+  </section>
+
+  <!-- 6 THE TRUE QUESTION OF CHOICE -->
+  <section class="rc-sec" id="s6" aria-label="The true question of choice">
+    <div class="rc-sh"><span class="rc-n">6</span><h2>The True Question of Choice</h2></div>
+    <h3 class="rc-sub">What is left to choose?</h3>
+    <p class="rc-lead">The false question asks which way of life to pick. The true question begins only after that one has been answered, and it is a far more ordinary question: <b>given that I am standing on the ground, what do I do with my life from here?</b></p>
+    <div class="rc-defs">
+      <div class="rc-def c-se"><h3>The false question</h3><p>Which path to stand on. Its answer is fixed.</p></div>
+      <div class="rc-def c-ch"><h3>The true question</h3><p>What to do while standing on it. Here a human being is free, so long as Layer A stays above Layer B.</p></div>
+    </div>
+    <div class="rc-own">
+      <h3>The difficulty</h3>
+      <p>Take someone who wants to become a businessman or a sportsman. These are personal ambitions, and they carry a real desire for achievement. A sportsman gives people quality entertainment, a businessman provides a service, and benefiting the creation of Allah pleases Him. That is true, but it does not settle the matter. If the pursuit comes from a personal desire and a sense of achievement, how can it be devotion to Allah and not simply self-interest? The difficulty is in linking a personal aspiration to a higher purpose in line with Allah&rsquo;s will.</p>
+    </div>
+    <p class="rc-lead">The fish shows where the answer lies. It has no choice about water, and a great deal of choice about where in the water it swims. The matter is layered.</p>
+
+    <h3 class="rc-sub">Two layers in every action</h3>
+    <div class="rc-dia" data-dia="layers">
+      <div>
+        <p class="rc-hint">Layer A is the ground. Layer B is the walking done on it.</p>
+        <svg class="rc-svg" viewBox="0 0 560 380" role="group" aria-label="Layer A, everything for Allah, as a wide base. Layer B, personal desire, as blocks resting on it.">
+          <g class="rc-part c-ch" data-p="b" tabindex="0" role="button" aria-label="Layer B, personal desire">
+            <text class="lbl" x="245" y="40" text-anchor="middle">LAYER B &middot; PERSONAL DESIRE</text>
+            <rect class="shape" x="60" y="62" width="110" height="64" rx="14"/>
+            <rect class="shape" x="190" y="62" width="110" height="64" rx="14"/>
+            <rect class="shape" x="320" y="62" width="110" height="64" rx="14"/>
+            <text class="q" x="115" y="100" text-anchor="middle">Ambitions</text>
+            <text class="q" x="245" y="100" text-anchor="middle">Needs</text>
+            <text class="q" x="375" y="100" text-anchor="middle">Preferences</text>
+          </g>
+          <g class="rc-part c-van" data-p="depend" tabindex="0" role="button" aria-label="The two layers depend on each other">
+            <rect x="130" y="138" width="130" height="64" fill="transparent"/>
+            <line class="arw" x1="150" y1="132" x2="150" y2="208" marker-start="url(#mVan)" marker-end="url(#mVan)"/>
+            <text class="hr b" x="162" y="176">depend on each other</text>
+          </g>
+          <g class="rc-part c-van" data-p="guide" tabindex="0" role="button" aria-label="Layer A guides and shapes Layer B">
+            <rect x="330" y="138" width="170" height="64" fill="transparent"/>
+            <line class="arw" x1="345" y1="132" x2="345" y2="208" marker-start="url(#mVan)"/>
+            <text class="hr b" x="357" y="176">A guides and shapes B</text>
+          </g>
+          <g class="rc-part c-fi" data-p="a" tabindex="0" role="button" aria-label="Layer A, everything for Allah">
+            <rect class="shape" x="40" y="214" width="410" height="118" rx="20"/>
+            <text class="lbl" x="245" y="266" text-anchor="middle">LAYER A &middot; EVERYTHING FOR ALLAH</text>
+            <text class="hr" x="245" y="290" text-anchor="middle">the dominant layer &middot; the ground</text>
+          </g>
+        </svg>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+
+    <h3 class="rc-sub">What a desire must pass through</h3>
+    <p class="rc-lead">Layer B is not unlimited. A desire in this layer has to meet <b>two conditions.</b> First, it must not be inherently wrong; wrong desires are those explicitly prohibited in Islamic teaching. Second, it must not grow out of a negative emotion. Desires driven by excessive fear, anger, revenge or jealousy are also improper.</p>
+    <div class="rc-dia" id="dsrDia">
+      <div>
+        <p class="rc-hint">Try it &middot; test a desire</p>
+        <div class="rc-seg" role="group" aria-label="Examples" id="dsrPresets"></div>
+        <div class="rc-factors" id="dsrFactors">
+          <button type="button" class="rc-factor" style="--c: var(--se-c)" data-f="proh" aria-pressed="false"><span class="sw2"></span>It is explicitly prohibited in Islamic teaching</button>
+          <button type="button" class="rc-factor" style="--c: var(--se-c)" data-f="neg" aria-pressed="false"><span class="sw2"></span>It grows out of excessive fear, anger, revenge or jealousy</button>
+          <button type="button" class="rc-factor wide" style="--c: var(--ap-c)" data-f="imp" aria-pressed="false"><span class="sw2"></span>I am simply obeying it on impulse, without examining it</button>
+        </div>
+        <div class="rc-meter">
+          <div class="rc-bars gate-bars" id="dsrBars" aria-hidden="true"><i></i><i></i><i></i></div>
+          <p class="rc-verdict" id="dsrCount"></p>
+        </div>
+      </div>
+      <aside class="rc-info" id="dsrInfo" aria-live="polite"><span class="tag"></span><h4></h4><p></p></aside>
+    </div>
+    <p class="rc-note">Once a desire has passed both conditions, nothing more is demanded of it. A person who wants financial stability is free to choose his profession, whether as a sportsman, an accountant or a lawyer. The choice of a spouse is likewise a personal one. These decisions fall under <b>individual rights</b>, and those rights must be acknowledged and fulfilled.</p>
+
+    <div class="rc-own">
+      <h3>The rights of the self</h3>
+      <p>Just as a person has duties toward Allah and toward others, he also has rights over himself, and honouring those rights is part of keeping balance in life. The nafs has its rights, and they need to be fulfilled.</p>
+    </div>
+    <p class="rc-key">A desire that has been examined, tested against the two conditions and then chosen is a right. An impulse simply obeyed in the moment is the nafs taking over a decision that belonged to the person: a covering pretending to be Layer B.</p>
+    <div class="rc-own">
+      <h3>The attitude to life</h3>
+      <p>Do everything for Allah Almighty while leaving room for personal desires in the areas where they belong. There will be moments of pursuing what one wants. What matters is to remember that desire never takes precedence over devotion. All worship, obligations and acts of devotion belong to Allah alone. In the matter of desires a person is free, within what is right, but those desires must never overshadow the greater purpose.</p>
+    </div>
+    <div class="sec-end"><button type="button" class="rc-btn read-btn" data-read="6" aria-pressed="false">Mark section as read</button></div>
+  </section>
+
+  <!-- 7 DESIRES INSIDE GOALS -->
+  <section class="rc-sec" id="s7" aria-label="Desires inside goals">
+    <div class="rc-sh"><span class="rc-n">7</span><h2>Desires Inside Goals</h2></div>
+    <h3 class="rc-sub">Layered together</h3>
+    <p class="rc-lead">Desires rarely stand alone. They sit inside larger goals, and the two are layered together. Choose an example and tap the parts.</p>
+    <div class="rc-dia" data-dia="nest">
+      <div>
+        <p class="rc-hint">A desire inside a goal</p>
+        <div class="rc-seg" role="group" aria-label="Choose an example" id="nestSeg">
+          <button type="button" class="rc-btn" data-nest="person" aria-pressed="true">Personality</button>
+          <button type="button" class="rc-btn" data-nest="health" aria-pressed="false">Health</button>
+        </div>
+        <div id="nestHost"></div>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+
+    <h3 class="rc-sub">The method, every time</h3>
+    <div class="rc-dia" data-dia="method">
+      <div>
+        <p class="rc-hint">Inside every essential goal there will be smaller personal desires woven in</p>
+        <div class="rc-col">
+          <button type="button" class="rc-node c-ca" data-p="m1"><span class="n">1</span>Recognise the desire</button>
+          <div class="rc-arr" aria-hidden="true">&darr;</div>
+          <button type="button" class="rc-node c-ch" data-p="m2"><span class="n">2</span>Assess: right or wrong?</button>
+          <div class="rc-arr" aria-hidden="true">&darr;</div>
+          <button type="button" class="rc-node c-van" data-p="m3"><span class="n">3</span>Decide whether to pursue it</button>
+          <div class="rc-arr" aria-hidden="true">&darr;</div>
+          <div class="rc-row">
+            <button type="button" class="rc-node c-fi" data-p="yes">Right, and in line with the higher purpose<small>Embrace it</small></button>
+            <button type="button" class="rc-node c-se" data-p="no">Wrong, or against the higher purpose<small>Do not pursue it</small></button>
+          </div>
+        </div>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+    <p class="rc-key">The aim is never to deny the desire, but to know where it sits.</p>
+    <div class="sec-end"><button type="button" class="rc-btn read-btn" data-read="7" aria-pressed="false">Mark section as read</button></div>
+  </section>
+
+  <!-- 8 IN SHORT -->
+  <section class="rc-sec" id="s8" aria-label="In short">
+    <div class="rc-sh"><span class="rc-n">8</span><h2>In Short</h2></div>
+    <ul class="rc-sum" aria-label="The whole argument in one line">
+      <li>One right path, not an option among many</li>
+      <li>The ground of your own nature</li>
+      <li>Fitrah: the original self already standing on it</li>
+      <li>Uncover that self, do not build a new one</li>
+      <li>Layer A: everything for Allah</li>
+      <li class="hl">Layer B: right, examined desires</li>
+      <li class="end">The choice of path is false. The choice of what to do on it is real.</li>
+    </ul>
+    <div class="rc-own">
+      <h3>Summary</h3>
+      <p>There is one right path, and it is not an option among many. It is the ground of your own nature. Fitrah is the original self already standing on that ground, and the work is to uncover that self, not to build a new one. Standing on the ground does not remove the freedom to walk. A person does everything for Allah (Layer A) and still has room for right, examined desires (Layer B).</p>
+    </div>
+    <p class="rc-key">The choice of path is false. The choice of what to do on it is real.</p>
+    <h3 class="rc-sub">Next in this series</h3>
+    <div class="nextrow" aria-label="Parts referenced at the end of the source document"><span><b>RP-B1</b>Obligations</span><span><b>RP-B2</b>Complete Ibadat</span></div>
+    <p class="rc-fine">These two parts are named at the end of the source document and will have their own tabs.</p>
+    <div class="sec-end"><button type="button" class="rc-btn read-btn" data-read="8" aria-pressed="false">Mark section as read</button></div>
+  </section>
+
+</div>
+
+<div id="view-dev" class="view" hidden>
+
+  <div class="glut-bar" role="note" aria-label="Root cause reminder">
+    <div class="row2">
+      <b class="dot" aria-hidden="true"></b>
+      <span class="t1">Root cause: overeating / gluttony</span>
+      <span class="t2">Eat less &middot; Stay hungry &middot; Stop negotiating with the nafs</span>
+      <button type="button" data-go="d4">Why? &rsaquo;</button>
+    </div>
+  </div>
+
+  <header class="top">
+    <div>
+      <p class="eyebrow">Fitrah &middot; My case specific</p>
+      <h1>Deviation</h1>
+      <p class="sub">Returning to Allah Almighty at 22: what the right path produced, what leaving it has produced, the root cause, the lessons of this era, and the plan to get back up. Hover or tap any part of a diagram to see what it does.</p>
+    </div>
+    <div class="overall" id="d-overall"></div>
+  </header>
+
+  <nav class="rc-jump" aria-label="Sections of this page">
+    <button type="button" data-go="d1"><b>1</b>The situation</button>
+    <button type="button" data-go="d2"><b>2</b>Right path: effects</button>
+    <button type="button" data-go="d3"><b>3</b>Wrong path: effects</button>
+    <button type="button" class="jglut" data-go="d4"><b>4</b>ROOT CAUSE: OVEREATING</button>
+    <button type="button" data-go="d5"><b>5</b>Barakah</button>
+    <button type="button" data-go="d6"><b>6</b>Lessons</button>
+    <button type="button" data-go="d7"><b>7</b>The goal</button>
+    <button type="button" data-go="d8"><b>8</b>Action plan</button>
+  </nav>
+
+  <!-- 1 THE SITUATION -->
+  <section class="rc-sec" id="d1" aria-label="The situation">
+    <div class="rc-sh"><span class="rc-n">1</span><h2>The Situation</h2></div>
+    <h3 class="rc-sub">Returning to fitrah, age 22</h3>
+    <p class="rc-lead">Right now, at 22, you are living off the path of fitrah, off the Sirat-e-Mustaqim, the right path, and you are working through what it currently looks like to be in this state. You have felt this regression, you have lived through it, and now the task in front of you is <b>to return.</b></p>
+    <p class="rc-lead">The natural first instinct is to think that returning is simple: do a Salat-e-Tawbah, say a dua of forgiveness, and you&rsquo;re back on the fitrah path. That is true in a limited sense, but it is not the whole picture. <b>Getting back is more layered than a single act of repentance.</b> To understand why, you first have to understand what being on the right path actually produces in a person&rsquo;s life, because that is exactly what has been lost, and exactly what needs to be rebuilt.</p>
+    <div class="rc-dia" data-dia="return">
+      <div>
+        <p class="rc-hint">Why one act is not the whole return</p>
+        <div class="rc-col">
+          <button type="button" class="rc-node c-se" data-p="r1"><span class="n">1</span>Repent immediately<small>Salat-e-Tawbah, dua, istighfar</small></button>
+          <div class="rc-arr" aria-hidden="true">&darr;</div>
+          <button type="button" class="rc-node c-pe" data-p="r2"><span class="n">2</span>The direction is restored<small>Tawbah restores the direction</small></button>
+          <div class="rc-arr" aria-hidden="true">&darr;</div>
+          <button type="button" class="rc-node c-ch" data-p="r3"><span class="n">3</span>Keep rebuilding<small>The life built around that direction</small></button>
+          <div class="rc-arr" aria-hidden="true">&darr;</div>
+          <button type="button" class="rc-node c-fi" data-p="r4"><span class="n">4</span>The fruits return<small>Qurb, lower wahn, discipline, focus, identity</small></button>
+        </div>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+    <div class="sec-end"><button type="button" class="rc-btn read-btn" data-dread="1" aria-pressed="false">Mark section as read</button></div>
+  </section>
+
+  <!-- 2 RIGHT PATH PRODUCES -->
+  <section class="rc-sec" id="d2" aria-label="What the right path produces">
+    <div class="rc-sh"><span class="rc-n">2</span><h2>What the Right Path Produces</h2></div>
+    <p class="rc-lead">When you live in line with fitrah consistently, not for half a day here and there, but steadily, <b>three categories of effect</b> show up in your life. Open each one.</p>
+    <div class="rc-dia stack" id="fxRight">
+      <div>
+        <p class="rc-hint">On the right path</p>
+        <div class="rc-seg" role="group" aria-label="Category" data-fxseg="right">
+          <button type="button" class="rc-btn" data-k="A" aria-pressed="true">A &middot; Qurb-e-Ilahi</button>
+          <button type="button" class="rc-btn" data-k="B" aria-pressed="false">B &middot; Physical and worldly</button>
+          <button type="button" class="rc-btn" data-k="C" aria-pressed="false">C &middot; Bond with Islam&rsquo;s material side</button>
+        </div>
+        <div class="fx-case" id="fxRightCase"></div>
+      </div>
+    </div>
+    <p class="rc-key">This is the state you had roughly a year ago, and it is the state you are trying to return to: not just the repentance, but the fruit of sustained alignment.</p>
+    <div class="sec-end"><button type="button" class="rc-btn read-btn" data-dread="2" aria-pressed="false">Mark section as read</button></div>
+  </section>
+
+  <!-- 3 WRONG PATH PRODUCED -->
+  <section class="rc-sec" id="d3" aria-label="What the wrong path has produced">
+    <div class="rc-sh"><span class="rc-n">3</span><h2>What the Wrong Path Has Produced</h2></div>
+    <p class="rc-lead">Every one of the above categories has a <b>mirror image</b> when fitrah is abandoned.</p>
+    <div class="rc-dia stack" id="fxWrong">
+      <div>
+        <p class="rc-hint">On the wrong path</p>
+        <div class="rc-seg" role="group" aria-label="Category" data-fxseg="wrong">
+          <button type="button" class="rc-btn" data-k="A" aria-pressed="true">A &middot; Loss of Qurb and identity</button>
+          <button type="button" class="rc-btn" data-k="B" aria-pressed="false">B &middot; Wahn</button>
+          <button type="button" class="rc-btn" data-k="C" aria-pressed="false">C &middot; Loss of the material bond</button>
+        </div>
+        <div class="fx-case" id="fxWrongCase"></div>
+      </div>
+    </div>
+    <h3 class="rc-sub">How wahn takes over</h3>
+    <div class="rc-dia" data-dia="wahn">
+      <div>
+        <p class="rc-hint">Wahn: attachment to the world and to what people think of you</p>
+        <div class="rc-col">
+          <button type="button" class="rc-node c-ch" data-p="w1"><span class="n">1</span>Qurb-e-Ilahi weakens</button>
+          <div class="rc-arr" aria-hidden="true">&darr;</div>
+          <button type="button" class="rc-node c-ch" data-p="w2"><span class="n">2</span>Wahn rises<small>Attachment to the world and to opinions</small></button>
+          <div class="rc-arr" aria-hidden="true">&darr;</div>
+          <button type="button" class="rc-node c-se" data-p="w3"><span class="n">3</span>Fear of death, fear of violence</button>
+          <div class="rc-arr" aria-hidden="true">&darr;</div>
+          <button type="button" class="rc-node c-se" data-p="w4"><span class="n">4</span>Going along with negative forces<small>To protect a fragile sense of safety</small></button>
+          <div class="rc-arr" aria-hidden="true">&darr;</div>
+          <button type="button" class="rc-node c-se" data-p="w5"><span class="n">5</span>Living as if this world were permanent</button>
+          <div class="rc-arr" aria-hidden="true">&darr;</div>
+          <button type="button" class="rc-node c-se" data-p="w6"><span class="n">6</span>The afterlife fades out<small>Death, Judgment Day, Jannah, Jahannam</small></button>
+        </div>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+    <div class="sec-end"><button type="button" class="rc-btn read-btn" data-dread="3" aria-pressed="false">Mark section as read</button></div>
+  </section>
+
+  <!-- 4 ROOT CAUSE : HERO -->
+  <section class="rc-sec" id="d4" aria-label="Root cause analysis: overeating">
+    <div class="glut-hero">
+      <div class="hazard" aria-hidden="true"></div>
+      <div class="glut-tick" aria-hidden="true"><div class="trk" id="glTrk"></div></div>
+      <div class="glut-inner">
+        <p class="glut-tag">&#9888; The main cause of deviation &middot; 4. Root cause analysis</p>
+        <h2 class="glut-mega">Overeating<br><em>is the root.</em></h2>
+        <p class="glut-sub"><b>Not zina.</b> What I&rsquo;ve come to see is that every problem I have with sins, <b>every single one</b>, traces back somewhere to overeating. <mark class="gl">The root cause is gluttony.</mark> This is specific to your case.</p>
+        <div class="glut-rem" aria-label="The remedy"><span>Eat less</span><span>Stop overeating</span><span>Fat loss</span><span>Stay hungry</span></div>
+        <p class="glut-quote">Changing your diet is no small matter, and neither is trying to control your nafs by controlling what you eat and eating less. You&rsquo;re actually going after <mark class="gl">the very root of all the sins you commit.</mark><small>Root cause analysis &middot; overeating, not zina, is the primary cause</small></p>
+
+        <h3 class="rc-sub">The evidence</h3>
+        <div class="glut-ev">
+          <div class="glut-card">
+            <h3>Aisha bint Abi Bakr (may Allah be pleased with her)</h3>
+            <p>The first calamity to hit this Ummah after its Prophet <span class="salawat" lang="ar">&#65018;</span> was <mark class="gl">fullness</mark>, meaning <mark class="gl">overeating.</mark> Once people&rsquo;s stomachs were full, their bodies grew fat, their hearts grew weak, and their desires ran out of control.</p>
+          </div>
+          <div class="glut-card">
+            <h3>The Prophet <span class="salawat" lang="ar">&#65018;</span> made the same point</h3>
+            <p id="gaugeTxt"></p>
+            <div class="rc-seg" role="group" aria-label="Believer or disbeliever" id="gaugeSeg">
+              <button type="button" class="rc-btn" data-g="1" aria-pressed="true">Mu&rsquo;min (believer)</button>
+              <button type="button" class="rc-btn" data-g="7" aria-pressed="false">Kafir (disbeliever)</button>
+            </div>
+            <div class="gauge" id="gauge" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <small>Intestines used: <span id="gaugeN">1</span> of 7 &middot; Sahih al-Bukhari 5397 (Sahih)</small>
+          </div>
+        </div>
+
+        <h3 class="rc-sub">What it grows into</h3>
+        <p class="rc-lead">Theologically it may look like zina is the central problem and the source of every serious difficulty. But the more accurate read is that <b>zina is a secondary cause, an offshoot of something deeper.</b> The primary cause is <mark class="gl">overeating.</mark></p>
+        <div class="rc-dia" data-dia="root">
+          <div>
+            <p class="rc-hint">The root and what grows from it &middot; tap any part</p>
+            <div class="root-tree" id="rootTree">
+              <div class="rt-branches">
+                <button type="button" class="rc-node c-se top" data-p="pray"><span class="n">THE MOST SERIOUS EFFECT</span>Prayer, namaz and dua become harder to sustain</button>
+                <button type="button" class="rc-node c-ap zina" data-p="zina"><span class="n">OFFSHOOT</span>Zina</button>
+                <button type="button" class="rc-node c-ch" data-p="comfort"><span class="n">ADDICTION</span>Comfort</button>
+                <button type="button" class="rc-node c-se" data-p="more"><span class="n">A LOOP</span>More overeating</button>
+                <button type="button" class="rc-node c-r" data-p="obese"><span class="n">BODY</span>Obesity</button>
+                <button type="button" class="rc-node c-ca" data-p="lazy"><span class="n">DISCIPLINE</span>Laziness</button>
+                <button type="button" class="rc-node c-v" data-p="strength"><span class="n">CAPABILITY</span>Loss of strength</button>
+              </div>
+              <div class="rt-arrows" aria-hidden="true">&uarr;&uarr;&uarr;&uarr;&uarr;</div>
+              <button type="button" class="glut-root" data-p="root">Overeating<br>Gluttony<small>ROOT CAUSE &middot; EVERY SIN TRACES BACK HERE</small></button>
+            </div>
+            <p class="rt-verdict" id="rootVerdict"></p>
+            <div class="rc-actions"><button type="button" class="rc-btn" id="rootCut" aria-pressed="false">Remove the root</button></div>
+          </div>
+          <aside class="rc-info glutinfo" aria-live="polite">
+            <span class="tag"></span><h4></h4><p></p>
+            <button type="button" class="rc-next"></button>
+          </aside>
+        </div>
+        <p class="glut-quote">The nafs and Shaytan&rsquo;s whispers are real factors too, but <mark class="gl">the most dangerous factor that is actually within personal control is overeating.</mark><small>Control what you can control</small></p>
+      </div>
+      <div class="hazard" aria-hidden="true"></div>
+    </div>
+
+    <h3 class="rc-sub">The other obstacles</h3>
+    <p class="rc-lead">Alongside the root cause, three further things have made getting up again hard. Tap each one.</p>
+    <div class="rc-dia" data-dia="obst">
+      <div>
+        <p class="rc-hint">Why getting up again has been so hard</p>
+        <div class="rc-col">
+          <button type="button" class="rc-node c-ap" data-p="o1"><span class="n">1</span>The nafs<small>Decision-making handed over</small></button>
+          <div class="rc-arr" aria-hidden="true">+</div>
+          <button type="button" class="rc-node c-v" data-p="o2"><span class="n">2</span>Shaytan&rsquo;s whispering<small>Regret, &ldquo;return is impossible&rdquo;</small></button>
+          <div class="rc-arr" aria-hidden="true">+</div>
+          <button type="button" class="rc-node c-se" data-p="o3"><span class="n">3</span>The terror barrier<small>The initial barrier to starting</small></button>
+          <div class="rc-arr" aria-hidden="true">&darr;</div>
+          <button type="button" class="rc-node c-fi" data-p="o4"><span class="n">&rarr;</span>The first step is on you alone<small>Then Allah&rsquo;s help carries the rest</small></button>
+        </div>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+    <div class="sec-end"><button type="button" class="rc-btn read-btn" data-dread="4" aria-pressed="false">Mark section as read</button></div>
+  </section>
+
+  <!-- 5 BARAKAH -->
+  <section class="rc-sec" id="d5" aria-label="On barakah and the fallen state">
+    <div class="rc-sh"><span class="rc-n">5</span><h2>On Barakah and the Fallen State</h2></div>
+    <p class="rc-lead">If you are not on the right path, <b>there is no barakah and no divine help.</b> That is the rule. For non-Muslims not on a &ldquo;right path&rdquo; in the Islamic sense, good work and hard work still get rewarded in this world, because Allah is Adil (just) and does not wrong anyone. Beyond that general principle, the deeper mechanics of how that compensation works are not fully known here. Allah knows best.</p>
+    <p class="rc-lead">For a Muslim in a fallen state, <b>two scenarios</b> are possible.</p>
+    <div class="rc-dia" data-dia="swamp">
+      <div>
+        <p class="rc-hint">Work still gets done, without barakah</p>
+        <svg class="rc-svg" viewBox="0 0 560 360" role="group" aria-label="A person sinking slowly in a swamp, with the bank of the right path nearby">
+          <g class="rc-part c-fi" data-p="bank" tabindex="0" role="button" aria-label="The right path">
+            <rect class="shape" x="250" y="150" width="90" height="56" rx="12"/>
+            <text class="sm" x="295" y="183" style="fill: var(--fi-c)">RIGHT PATH</text>
+            <rect x="380" y="152" width="175" height="28" fill="transparent"/>
+            <text class="side" x="385" y="172">The right path</text>
+            <line class="arw" x1="378" y1="168" x2="344" y2="174" marker-end="url(#mGreen)"/>
+          </g>
+          <g class="rc-part c-ch" data-p="swamp" tabindex="0" role="button" aria-label="The swamp">
+            <rect class="shape" x="20" y="206" width="320" height="136" rx="18"/>
+            <text class="lbl" x="250" y="326" text-anchor="middle">SWAMP</text>
+            <rect x="380" y="290" width="175" height="28" fill="transparent"/>
+            <text class="side" x="385" y="310">No barakah, no help</text>
+            <line class="arw" x1="378" y1="306" x2="344" y2="300" marker-end="url(#mAmber)"/>
+          </g>
+          <g class="rc-part c-se" data-p="sink" tabindex="0" role="button" aria-label="Sinking slowly">
+            <rect x="90" y="170" width="80" height="140" fill="transparent"/>
+            <circle class="shape" cx="130" cy="196" r="14"/>
+            <path class="ln" d="M106 232 Q130 210 154 232 M110 222 L96 200 M150 222 L164 200" stroke-linecap="round"/>
+            <line class="arw" x1="130" y1="250" x2="130" y2="286" marker-end="url(#mRed)"/>
+            <rect x="380" y="226" width="175" height="48" fill="transparent"/>
+            <text class="side" x="385" y="246">Sinking slowly</text>
+            <text class="hr" x="385" y="266">digging the hole deeper</text>
+            <line class="arw" x1="378" y1="242" x2="170" y2="256" marker-end="url(#mRed)"/>
+          </g>
+          <g class="rc-part c-pe" data-p="time" tabindex="0" role="button" aria-label="Time to stand up">
+            <path d="M150 186 C 185 130, 225 130, 250 166" fill="none" stroke="transparent" stroke-width="26"/>
+            <path class="ln" d="M150 186 C 185 130, 225 130, 250 166" stroke-dasharray="7 6" marker-end="url(#mTeal)"/>
+            <text class="hr" x="200" y="114" text-anchor="middle">time to stand up</text>
+            <rect x="380" y="92" width="175" height="48" fill="transparent"/>
+            <text class="side" x="385" y="112">Extra time</text>
+            <text class="hr" x="385" y="132">not guaranteed to last</text>
+            <line class="arw" x1="378" y1="108" x2="236" y2="128" marker-end="url(#mTeal)"/>
+          </g>
+        </svg>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+    <div class="rc-defs">
+      <div class="rc-def c-ch"><h3>Scenario 1</h3><p>Work still gets done, without barakah or divine help. It means Allah is extending more time to stand up and return to the right path.</p></div>
+      <div class="rc-def c-se"><h3>Scenario 2</h3><p>Work does not get done at all. The more direct and simpler manifestation of having no blessings, no help, and no barakah. It is dangerous in its own right.</p></div>
+    </div>
+    <div class="sec-end"><button type="button" class="rc-btn read-btn" data-dread="5" aria-pressed="false">Mark section as read</button></div>
+  </section>
+
+  <!-- 6 LESSONS -->
+  <section class="rc-sec" id="d6" aria-label="Lessons from this era of non fitrah days">
+    <div class="rc-sh"><span class="rc-n">6</span><h2>Lessons From This Era of Non Fitrah Days</h2></div>
+    <p class="rc-lead">Sixteen lessons, each with the <b>problem</b>, the <b>devised solution</b> and the <b>lessons</b>. Filter by theme, and open any card. <mark class="gl">Lesson 8, overeating, is flagged in red.</mark></p>
+    <div class="lf" id="lessonFilter" role="group" aria-label="Filter lessons"></div>
+    <div class="lessons" id="lessons"></div>
+
+    <h3 class="rc-sub">The protocols inside the lessons</h3>
+    <div class="rc-dia" data-dia="repent">
+      <div>
+        <p class="rc-hint">Lesson 2 &middot; the full repentance protocol</p>
+        <div class="rc-col">
+          <button type="button" class="rc-node c-ch" data-p="p1"><span class="n">1</span>Regret</button>
+          <div class="rc-arr" aria-hidden="true">&darr;</div>
+          <button type="button" class="rc-node c-fi" data-p="p2"><span class="n">2</span>Proper repentance</button>
+          <div class="rc-arr" aria-hidden="true">&darr;</div>
+          <button type="button" class="rc-node c-pe" data-p="p3"><span class="n">3</span>Firm commitment not to repeat the sin</button>
+        </div>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+
+    <div class="rc-dia" data-dia="starting">
+      <div>
+        <p class="rc-hint">Lesson 6 &middot; the starting time syndrome, and the way out</p>
+        <p class="rc-cap" style="margin-bottom:8px">The chain that keeps you waiting</p>
+        <div class="rc-row chain">
+          <button type="button" class="rc-node c-se" data-p="s1">Chaos feeling</button><span class="rc-arr" aria-hidden="true">&rarr;</span>
+          <button type="button" class="rc-node c-se" data-p="s2">Indecision</button><span class="rc-arr" aria-hidden="true">&rarr;</span>
+          <button type="button" class="rc-node c-se" data-p="s3">Procrastination</button><span class="rc-arr" aria-hidden="true">&rarr;</span>
+          <button type="button" class="rc-node c-se" data-p="s4">Waiting for a perfect time</button>
+        </div>
+        <p class="rc-cap" style="margin:18px 0 8px">The correct response</p>
+        <div class="rc-row chain">
+          <button type="button" class="rc-node c-ca" data-p="c1">Recognize</button><span class="rc-arr" aria-hidden="true">&rarr;</span>
+          <button type="button" class="rc-node c-ch" data-p="c2">Decide</button><span class="rc-arr" aria-hidden="true">&rarr;</span>
+          <button type="button" class="rc-node c-fi" data-p="c3">Act</button><span class="rc-arr" aria-hidden="true">&rarr;</span>
+          <button type="button" class="rc-node c-pe" data-p="c4">Cement</button>
+        </div>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+
+    <div class="rc-dia" data-dia="shift">
+      <div>
+        <p class="rc-hint">Lesson 7 &middot; shifting versus cementing</p>
+        <svg class="rc-svg" viewBox="0 0 560 400" role="group" aria-label="Shifting is one big jump that rebounds. Cementing is small patterns stacked one at a time.">
+          <g class="rc-part c-ch" data-p="shift" tabindex="0" role="button" aria-label="Shifting: one dramatic jump">
+            <rect class="shape" x="30" y="136" width="100" height="14" rx="7"/>
+            <rect class="shape" x="230" y="56" width="100" height="14" rx="7"/>
+            <text class="hr" x="80" y="172" text-anchor="middle">non-Fitrah</text>
+            <text class="hr" x="280" y="46" text-anchor="middle">Fitrah</text>
+            <path class="ln" d="M112 128 Q 168 20 238 48" stroke-dasharray="7 6" marker-end="url(#mAmber)"/>
+            <rect x="380" y="46" width="175" height="28" fill="transparent"/>
+            <text class="side" x="385" y="66">Shifting</text>
+            <text class="hr" x="385" y="86">one dramatic decision</text>
+            <line class="arw" x1="378" y1="62" x2="334" y2="64" marker-end="url(#mAmber)"/>
+          </g>
+          <g class="rc-part c-se" data-p="rebound" tabindex="0" role="button" aria-label="Exhaustion and rebound">
+            <path d="M296 76 C 330 170, 200 190, 134 150" fill="none" stroke="transparent" stroke-width="24"/>
+            <path class="ln" d="M296 76 C 330 170, 200 190, 134 150" marker-end="url(#mRed)"/>
+            <rect x="380" y="130" width="175" height="48" fill="transparent"/>
+            <text class="side" x="385" y="150">Rebound</text>
+            <text class="hr" x="385" y="170">conscious vs subconscious</text>
+            <line class="arw" x1="378" y1="146" x2="324" y2="138" marker-end="url(#mRed)"/>
+          </g>
+          <line class="plain" x1="20" y1="205" x2="540" y2="205" stroke-dasharray="4 6"/>
+          <g class="rc-part c-fi" data-p="cement" tabindex="0" role="button" aria-label="Cementing: small patterns stacked one at a time">
+            <rect class="shape" x="30" y="354" width="50" height="26" rx="6"/>
+            <rect class="shape" x="88" y="328" width="50" height="52" rx="6"/>
+            <rect class="shape" x="146" y="302" width="50" height="78" rx="6"/>
+            <rect class="shape" x="204" y="276" width="50" height="104" rx="6"/>
+            <rect class="shape" x="262" y="250" width="50" height="130" rx="6"/>
+            <text class="num" x="55" y="372" style="fill: var(--ink)">1</text><text class="num" x="113" y="372" style="fill: var(--ink)">2</text><text class="num" x="171" y="372" style="fill: var(--ink)">3</text><text class="num" x="229" y="372" style="fill: var(--ink)">4</text><text class="num" x="287" y="372" style="fill: var(--ink)">5</text>
+            <rect x="380" y="300" width="175" height="48" fill="transparent"/>
+            <text class="side" x="385" y="320">Cementing</text>
+            <text class="hr" x="385" y="340">small patterns, one at a time</text>
+            <line class="arw" x1="378" y1="316" x2="318" y2="316" marker-end="url(#mGreen)"/>
+          </g>
+        </svg>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+
+    <h3 class="rc-sub">17. The overall lesson of the non-Fitrah period</h3>
+    <p class="rc-key">The right path is not something to reach later. It is the ground to stand on now.</p>
+    <p class="rc-lead">When deviation occurs, do these in order:</p>
+    <ul class="rc-sum" aria-label="What to do when deviation occurs">
+      <li>Repent immediately</li>
+      <li>Remain sinful rather than hopeless</li>
+      <li>Stop further regression</li>
+      <li class="hl">Refuse negotiation with the nafs</li>
+      <li>Recognize whispers</li>
+      <li>Cross the terror barrier</li>
+      <li>Prevent bad patterns from becoming established</li>
+      <li class="end">Cement the correct patterns gradually, through repeated present-moment action</li>
+    </ul>
+    <p class="rc-own" style="margin-top:4px"><span style="display:block;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--van);margin-bottom:4px">The objective</span>The objective is not simply to stop sinning. It is to restore the complete Fitrah-aligned life: Qurb-e-Ilahi, taqwa, Islamic identity, low wahn, disciplined growth, meaningful work, physical health, and a living bond with Islam.</p>
+    <div class="sec-end"><button type="button" class="rc-btn read-btn" data-dread="6" aria-pressed="false">Mark section as read</button></div>
+  </section>
+
+  <!-- 7 THE GOAL -->
+  <section class="rc-sec" id="d7" aria-label="The goal">
+    <div class="rc-sh"><span class="rc-n">7</span><h2>The Goal</h2></div>
+    <p class="rc-key">The goal is not simply to repent for the sins and for having left the path. That is only one piece.</p>
+    <p class="rc-lead">The real goal is to reach the positive effects of being on the right path again <b>in full</b>, the way things were roughly a year ago:</p>
+    <div class="rc-defs">
+      <div class="rc-def c-fi"><h3>1 &middot; Qurb-e-Ilahi</h3><p>Closeness to Allah, and the identity that comes from it.</p></div>
+      <div class="rc-def c-pe"><h3>2 &middot; The physical and worldly effects</h3><p>Less stress, low wahn, structure around the five prayers, focus.</p></div>
+      <div class="rc-def c-ch"><h3>3 &middot; The material bond with Islam</h3><p>The rebuilt bond with the mosque, the Quran, the holy cities, the scholars and reciters.</p></div>
+    </div>
+    <div class="sec-end"><button type="button" class="rc-btn read-btn" data-dread="7" aria-pressed="false">Mark section as read</button></div>
+  </section>
+
+  <!-- 8 ACTION PLAN -->
+  <section class="rc-sec" id="d8" aria-label="Action plan">
+    <div class="rc-sh"><span class="rc-n">8</span><h2>Action Plan</h2></div>
+    <p class="rc-lead">The plan, written out: what to do and why. <mark class="gl">The physical foundation (food) is flagged in red</mark> because it sits close to the top of the priorities. The daily checklist for ticking steps off lives in its own tab.</p>
+    <div class="rc-actions"><button type="button" class="rc-btn" data-act="tab" data-v="act">Open the Action Plan tab &rsaquo;</button></div>
+    <div class="plan-grid" id="planText"></div>
+
+    <h3 class="rc-sub">Belief cultivation</h3>
+    <div class="rc-own">
+      <h3>The belief to hold</h3>
+      <p>Sin is avoided because it is sin, not because of its consequences. Sinning departs iman from being. Repeating a sin fades regret, and without regret there is no repentance, and without repentance iman does not return, and a heart without iman loses its only foundation and support and order. The nafs is controlled with willpower, do not negotiate with the nafs at all: no listening to it, no entertaining it. <mark class="gl">Stay hungry, stop overeating</mark>, and stop the negotiations with the nafs completely.</p>
+    </div>
+
+    <h3 class="rc-sub">Every time you fall, get up</h3>
+    <p class="rc-lead">Practical steps to get back up on the path, to normality and uniformity (the fitrah path).</p>
+    <div class="rc-dia" data-dia="getup">
+      <div>
+        <p class="rc-hint">Two steps, every time</p>
+        <div class="rc-col">
+          <button type="button" class="rc-node c-ch" data-p="g1"><span class="n">STEP 1</span>Repentance<small>Carried out in the proper manner</small></button>
+          <div class="rc-arr" aria-hidden="true">&darr;</div>
+          <button type="button" class="rc-node c-pe" data-p="g2"><span class="n">STEP 2</span>Reprogramming and visualization sessions<small>Resume them</small></button>
+          <div class="rc-arr" aria-hidden="true">&darr;</div>
+          <button type="button" class="rc-node c-fi" data-p="g3"><span class="n">NOTE</span>Being able to restart is the sign<small>Fitrah life is being cemented</small></button>
+        </div>
+      </div>
+      <aside class="rc-info" aria-live="polite">
+        <span class="tag"></span><h4></h4><p></p>
+        <button type="button" class="rc-next"></button>
+      </aside>
+    </div>
+
+    <div class="glut-end" role="note">
+      <h3>Remember the root: overeating</h3>
+      <p>Eat less &middot; Stay hungry &middot; No overeating &middot; No negotiating with the nafs</p>
+    </div>
+    <div class="sec-end"><button type="button" class="rc-btn read-btn" data-dread="8" aria-pressed="false">Mark section as read</button></div>
+  </section>
+
+</div>
+<div id="view-act" class="view" hidden>
+
+  <div class="glut-bar" role="note" aria-label="Root cause reminder">
+    <div class="row2">
+      <b class="dot" aria-hidden="true"></b>
+      <span class="t1">Root cause: overeating / gluttony</span>
+      <span class="t2">Eat less &middot; Stay hungry &middot; Stop negotiating with the nafs</span>
+      <button type="button" data-act="tab" data-v="dev">Why? &rsaquo;</button>
+    </div>
+  </div>
+
+  <header class="top">
+    <div>
+      <p class="eyebrow">Fitrah &middot; Daily steps</p>
+      <h1>Action Plan</h1>
+      <p class="sub">Only the steps to do. Tick each one off today; the ticks reset each new day. The reasons behind every step are in the Deviation tab.</p>
+    </div>
+    <div class="plan-head">
+      <svg id="planRing" width="60" height="60" viewBox="0 0 60 60" aria-hidden="true"></svg>
+      <div><div class="big" id="planBig"></div><div class="small" id="planSmall">today</div></div>
+      <div class="rc-actions"><button type="button" class="rc-btn" id="planReset">Reset today</button></div>
+    </div>
+  </header>
+
+  <div class="plan-grid" id="planGrid"></div>
+
+  <div class="glut-end" role="note">
+    <h3>Remember the root: overeating</h3>
+    <p>Eat less &middot; Stay hungry &middot; No overeating &middot; No negotiating with the nafs</p>
+  </div>
+
+</div>
+
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  function lsGet(k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var C = { green: 'var(--fi-c)', teal: 'var(--pe-c)', red: 'var(--se-c)', amber: 'var(--ch-c)', violet: 'var(--v-c)', blue: 'var(--ca-c)', pink: 'var(--ap-c)', orange: 'var(--r-c)', van: 'var(--van)' };
+
+  function setInfo(info, c, tag, t, b) {
+    info.style.setProperty('--ic', c);
+    $('.tag', info).textContent = tag;
+    $('h4', info).textContent = t;
+    $('p', info).innerHTML = b;
+  }
+
+  /* ---------- tabs (built so more tabs can be added later) ---------- */
+  var TABKEY = 'rp-tab-v1';
+  function showTab(v) {
+    if (!document.getElementById('view-' + v)) v = 'intro';
+    $$('.view').forEach(function (el) { el.hidden = el.id !== 'view-' + v; });
+    $$('.tab-btn').forEach(function (b) { b.setAttribute('aria-selected', String(b.dataset.v === v)); });
+    lsSet(TABKEY, v);
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-act="tab"]');
+    if (t) { showTab(t.dataset.v); window.scrollTo(0, 0); }
+  });
+
+  /* ---------- jump buttons ---------- */
+  document.addEventListener('click', function (e) {
+    var g = e.target.closest('[data-go]');
+    if (!g) return;
+    var el = document.getElementById(g.dataset.go);
+    if (el) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  });
+
+  /* ---------- read tracking (one tracker per tab) ---------- */
+  function readTracker(attr, prefix, key, ovSel, nsec) {
+    var st = lsGet(key, {});
+    function render() {
+      var n = 0;
+      $$('[' + attr + ']').forEach(function (b) {
+        var k = b.getAttribute(attr), on = !!st[k];
+        if (on) n++;
+        b.setAttribute('aria-pressed', String(on));
+        b.textContent = on ? 'Read \u2713' : 'Mark section as read';
+        $('#' + prefix + k).classList.toggle('read', on);
+        var j = $('.rc-jump [data-go="' + prefix + k + '"]');
+        if (j) j.classList.toggle('rd', on);
+      });
+      var r = 26, c = 2 * Math.PI * r, off = c * (1 - n / nsec);
+      $(ovSel).innerHTML =
+        '<svg width="60" height="60" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="26" fill="none" stroke="var(--surface2)" stroke-width="7"/>' +
+        '<circle cx="30" cy="30" r="26" fill="none" stroke="var(--pe-c)" stroke-width="7" stroke-linecap="round" stroke-dasharray="' + c.toFixed(2) + '" stroke-dashoffset="' + off.toFixed(2) + '" transform="rotate(-90 30 30)" style="transition: stroke-dashoffset .3s ease"/></svg>' +
+        '<div><div class="big">' + n + ' of ' + nsec + '</div><div class="small">sections read</div></div>';
+    }
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest('[' + attr + ']');
+      if (!b) return;
+      var k = b.getAttribute(attr);
+      st[k] = !st[k];
+      lsSet(key, st);
+      render();
+    });
+    render();
+  }
+
+  /* ---------- diagram content ---------- */
+  var NEST = {
+    person: {
+      ui: { goal: 'Improve my personality so that I can contribute to bettering my land and helping the people of Allah', needs: 'Patience, kindness and other essential traits', desire: 'To be more attractive, charming or appealing' },
+      goal: { c: C.green, t: 'The essential goal', b: 'Improving my personality so that I can contribute to <b>bettering my land and helping the people of Allah Almighty.</b>' },
+      needs: { c: C.teal, t: 'The necessary work', b: 'To do this I need patience, kindness and other essential traits.' },
+      desire: { c: C.amber, t: 'A desire woven in', b: 'Alongside this necessary work there may also be a desire to be more attractive, charming or appealing. <b>That desire is not necessarily bad.</b> It simply lives inside the broader goal of developing the personality.' }
+    },
+    health: {
+      ui: { goal: 'Be fit and healthy', needs: 'Strength to fulfil responsibilities: leadership, protection, personal competence', desire: 'To look better' },
+      goal: { c: C.green, t: 'The essential goal', b: 'Fitness is a priority because a strong and healthy person can fulfil his responsibilities, whether in <b>leadership, protection or personal competence.</b>' },
+      needs: { c: C.teal, t: 'The necessary work', b: 'Being strong and healthy enough to carry those responsibilities.' },
+      desire: { c: C.amber, t: 'A desire woven in', b: 'A side benefit of exercise is that one looks better, and that too is a desire. <b>As long as it does not take precedence over the real goal, it is completely fine.</b>' }
+    },
+    rule: { c: C.van, t: 'The method', b: 'Recognise the desire, assess whether it is right or wrong, and then decide whether to pursue it. If it is right and does not contradict the higher purpose, it should be embraced. <b>The aim is never to deny the desire, but to know where it sits.</b>' }
+  };
+  var nestCase = 'person';
+
+  var DW = {
+    fish: {
+      order: ['water', 'fish', 'out', 'swim'],
+      intro: { t: 'A fish and water', b: 'A fish is not neutral about water. Tap or hover any part of the picture, or press Start.' },
+      items: {
+        water: { c: C.green, t: 'The water: fixed by what it is', b: 'The fish has no choice about water. That is fixed by what it is. In the same way, the right path is not one habitat option among many.' },
+        fish: { c: C.teal, t: 'The fish: not neutral', b: 'The fish is not neutral about water. <b>It either lives in water or it does not live.</b>' },
+        out: { c: C.red, t: 'Out of the water: the negation of living', b: '&ldquo;Living out of water&rdquo; is not a genuine option; it is simply the negation of living. In the same way, <b>&ldquo;living outside the right path&rdquo; is not a genuine lifestyle option.</b>' },
+        swim: { c: C.amber, t: 'Where it swims: left to it', b: 'The fish has a great deal of choice about where in the water it swims. The first is fixed by what it is. The second is left to it. The same is true for a human being, and that is the true question of choice (section 6).' }
+      }
+    },
+    trap: {
+      order: ['t1', 't2', 't3', 't4'],
+      intro: { t: 'The mechanism of the trap', b: 'It does not announce itself. Press Start to follow it, or tap any step.' },
+      items: {
+        t1: { c: C.amber, t: 'It begins with a harmless idea', b: 'The trap does not announce itself. <b>It begins with the harmless-sounding idea that you have a choice.</b>' },
+        t2: { c: C.amber, t: 'The right path becomes one option among several', b: 'You begin to reason as though the right path is one reasonable option among several.' },
+        t3: { c: C.red, t: 'The alternatives gain false legitimacy', b: 'You have already given false legitimacy to the alternatives. You have allowed that another way of living might also lead somewhere real, might also satisfy something genuine, might also offer its own version of flourishing.' },
+        t4: { c: C.red, t: 'Every hard moment becomes an exit', b: 'Once that door is open in the mind, every difficult moment on the right path becomes a moment when the alternatives quietly suggest themselves.' }
+      }
+    },
+    ways: {
+      order: ['start', 'path', 'deviant', 'paradise'],
+      intro: { t: 'Two ways to live', b: 'Tap or hover any part of the diagram, or press Start.' },
+      items: {
+        start: { c: C.teal, t: 'A soul, under test on earth', b: 'His soul was created, and then, due to certain circumstances, he was sent to earth. Here he is going through a test. <b>If he passes, he succeeds; if he fails, he fails.</b>' },
+        path: { c: C.green, t: 'The right path: Sirat-e-Mustaqim', b: 'When a person becomes a Muslim, he becomes aligned with the true nature on which he was created, before he was born, when his soul was created. It is a <b>very straight path</b> that leads straight to paradise.' },
+        deviant: { c: C.red, t: 'The deviant path', b: 'Anyone who is not on the right path is on the deviant path, which can be called the wrong path. If a person moves away from the right path, he is no longer connected to his real nature.' },
+        paradise: { c: C.violet, t: 'Paradise: real success', b: 'Real success is success in the afterlife, which means reaching paradise.' }
+      }
+    },
+    ground: {
+      order: ['ground', 'person', 'flag', 'walk'],
+      intro: { t: 'A ground, not a destination', b: 'Tap or hover any part of the picture, or press Start.' },
+      items: {
+        ground: { c: C.green, t: 'The ground', b: 'It exists <b>beneath you, not in front of you.</b> It is available in this present moment, requiring nothing but that you place your weight on it.' },
+        person: { c: C.teal, t: 'You, either standing on it or not', b: 'You are either standing on it right now or failing to stand on it right now. So the only meaningful question is a present-tense one: <b>&ldquo;Am I standing on it right now?&rdquo;</b>' },
+        flag: { c: C.red, t: 'The wrong picture: a destination ahead', b: 'The right path is not something ahead of you, not something reached after enough preparation, not a future project. <b>&ldquo;When will I get there?&rdquo; is the wrong question.</b>' },
+        walk: { c: C.amber, t: 'Standing is not standing still', b: 'A person who stands on solid ground still walks, builds, earns and decides what to do with his day. The ground settles where he stands. It does not settle every step he takes from there. Without this distinction the right path looks like a narrow corridor with no room to move, and a person who sees it that way will either resent it or start looking for a way out.' }
+      }
+    },
+    layers: {
+      order: ['a', 'b', 'depend', 'guide'],
+      intro: { t: 'Two layers in every action', b: 'Human action has two layers, and they are connected. Tap or hover any part, or press Start.' },
+      items: {
+        a: { c: C.green, t: 'Layer A: the intention to do everything for Allah', b: 'This is the <b>dominant layer.</b> Every action is either directly motivated by this purpose or influenced by it, and this is what keeps all action aligned with devotion. <b>Layer A is the ground.</b>' },
+        b: { c: C.amber, t: 'Layer B: personal desire', b: 'It exists naturally alongside the first, because a person cannot function without desires. <b>Layer B is the walking done on the ground.</b>' },
+        depend: { c: C.van, t: 'They depend on each other', b: 'The two layers depend on each other, and neither can exist without the other. But they are not equal. Layer A holds far greater importance.' },
+        guide: { c: C.van, t: 'A guides and shapes B', b: 'Layer A guides and shapes Layer B so that personal ambition stays in harmony with faith. <b>Desires are not removed. They are kept secondary</b> to the ultimate goal of serving Allah.' }
+      }
+    },
+    nest: {
+      order: ['goal', 'needs', 'desire', 'rule'],
+      intro: { t: 'Desires sit inside goals', b: 'Tap any part of the example, or press Start. Switch the example above to see another.' },
+      get items() { return { goal: NEST[nestCase].goal, needs: NEST[nestCase].needs, desire: NEST[nestCase].desire, rule: NEST.rule }; }
+    },
+    method: {
+      order: ['m1', 'm2', 'm3', 'yes', 'no'],
+      intro: { t: 'Recognise, assess, decide', b: 'The same method works each time. Tap a step, or press Start.' },
+      items: {
+        m1: { c: C.blue, t: 'Recognise the desire', b: 'Inside every essential goal there will be smaller personal desires woven in. First, notice them.' },
+        m2: { c: C.amber, t: 'Assess whether it is right or wrong', b: 'Test it against the two conditions from section 6: it must not be explicitly prohibited, and it must not grow out of a negative emotion.' },
+        m3: { c: C.van, t: 'Decide whether to pursue it', b: 'The decision is a real one, made on purpose. It is not an impulse obeyed in the moment.' },
+        yes: { c: C.green, t: 'Embrace it', b: 'If it is right and does not contradict the higher purpose, <b>it should be embraced.</b> The aim is never to deny the desire.' },
+        no: { c: C.red, t: 'Do not pursue it', b: 'A desire that is wrong, or that would take precedence over devotion, is not pursued. <b>Desire never takes precedence over devotion.</b>' }
+      }
+    }
+  };
+
+  /* ---------- the shared interactive-diagram engine ---------- */
+  function initDia(el) {
+    var d = DW[el.dataset.dia];
+    if (!d) return;
+    var info = $('.rc-info', el), nb = $('.rc-next', info);
+    var pinned = null, hover = null;
+    function render() {
+      var items = d.items, k = hover || pinned, it = k ? items[k] : null;
+      setInfo(info, it ? it.c : 'var(--van)', it ? (d.order.indexOf(k) + 1) + ' of ' + d.order.length : 'Tap or hover', it ? it.t : d.intro.t, it ? it.b : d.intro.b);
+      if (nb) nb.textContent = k ? 'Next ›' : 'Start ›';
+      el.classList.toggle('has-on', !!k);
+      $$('[data-p]', el).forEach(function (n) { n.classList.toggle('on', !!k && n.dataset.p === k); });
+    }
+    function keyOf(t) { var n = t.closest && t.closest('[data-p]'); return n && el.contains(n) ? n.dataset.p : null; }
+    el.addEventListener('mouseover', function (e) { var k = keyOf(e.target); if (k !== hover) { hover = k; render(); } });
+    el.addEventListener('mouseleave', function () { if (hover) { hover = null; render(); } });
+    el.addEventListener('focusin', function (e) { var k = keyOf(e.target); if (k) { hover = k; render(); } });
+    el.addEventListener('focusout', function () { hover = null; render(); });
+    el.addEventListener('click', function (e) {
+      var k = keyOf(e.target);
+      if (k) { pinned = k; hover = k; render(); return; }
+      if (e.target.closest('.rc-next')) {
+        var cur = pinned || hover, i = cur ? d.order.indexOf(cur) : -1;
+        pinned = d.order[(i + 1) % d.order.length]; hover = null; render();
+      }
+    });
+    el.addEventListener('keydown', function (e) {
+      if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('[role="button"][data-p]')) {
+        e.preventDefault();
+        e.target.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      }
+    });
+    el._reset = function () { pinned = null; hover = null; render(); };
+    render();
+  }
+
+  /* ---------- taste or truth ---------- */
+  var TT = {
+    taste: { cls: '', h: 'A question of taste', li: ['<b>Examples:</b> food, music, the colour of your room.', 'Many answers are valid, and the room works whichever colour you pick.', 'Choosing among them is a neutral act.'] },
+    truth: { cls: ' focus', h: 'A question of truth', li: ['<b>Examples:</b> why there is life, what a human being is, how a human being should conduct themselves.', 'These are not questions with several valid answers, the way questions about food or music have.', 'The right path is not a cultural preference. It is a description of what you actually are.'] }
+  };
+  function renderTaste(k) {
+    var t = TT[k], box = $('#tasteCase');
+    box.className = 'rc-case' + t.cls;
+    box.innerHTML = '<h3>' + t.h + '</h3><ul>' + t.li.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>';
+    $$('#tasteDia [data-case]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.case === k)); });
+  }
+  $('#tasteDia').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-case]');
+    if (b) renderTaste(b.dataset.case);
+  });
+
+  /* ---------- fitrah and its coverings ---------- */
+  var FL = {
+    core: { c: C.teal, t: 'Fitrah: the original self', b: 'The natural, real, deep, original self, already on the right path. It already knows what it is, already recognises the truth, and already inclines toward what is real.' },
+    society: { c: C.orange, t: 'Society', b: 'A covering. It is not part of the self. It is a layer placed on top of it.' },
+    habits: { c: C.amber, t: 'Habits', b: 'A covering. It is not part of the self. It is a layer placed on top of it.' },
+    sins: { c: C.pink, t: 'Sins', b: 'A covering. It is not part of the self. It is a layer placed on top of it.' },
+    stim: { c: C.red, t: 'Artificial stimulation systems', b: 'In particular, the artificial stimulation systems built to <b>override the natural reward system.</b> They are not part of the self. They are layers placed on top of it.' }
+  };
+  var LAYERS = ['stim', 'sins', 'habits', 'society'], lifted = {}, sel = null;
+  function renderFit() {
+    var n = 0;
+    LAYERS.forEach(function (k) { if (lifted[k]) n++; });
+    $$('#fitDia [data-l]').forEach(function (g) {
+      var k = g.dataset.l;
+      g.classList.toggle('lifted', !!lifted[k]);
+      g.classList.toggle('on', sel === k);
+    });
+    $('#fitDia .fl-core').classList.toggle('glow', n === 4);
+    $$('#fitBars i').forEach(function (i, idx) { i.classList.toggle('f', idx < n); });
+    $('#fitVerdict').innerHTML = n === 4
+      ? 'All four layers lifted<small>Removal and recognition, not achievement or arrival.</small>'
+      : 'Layers lifted: ' + n + ' of 4<small>Tap a layer, then lift it.</small>';
+    var info = $('#fitInfo'), lift = $('#fitLift');
+    if (sel) {
+      var it = FL[sel], extra = '';
+      if (sel === 'core' && n === 4) extra = ' <b>With every layer lifted, this is what was always underneath: a self that was always whole and already aligned.</b>';
+      setInfo(info, it.c, sel === 'core' ? 'The self' : 'A covering', it.t, it.b + extra);
+      if (sel === 'core') { lift.hidden = true; }
+      else { lift.hidden = false; lift.textContent = lifted[sel] ? 'Put it back' : 'Lift this layer'; }
+    } else {
+      setInfo(info, n === 4 ? C.teal : C.van, 'Tap a layer',
+        n === 4 ? 'Uncovered' : 'Fitrah and its coverings',
+        n === 4 ? 'The self was always whole and already aligned. The work of the right path is <b>uncovering, not constructing.</b>' : 'What hides the self is a set of external coverings: society, habits, sins and, in particular, artificial stimulation systems. Tap a layer to read about it, then lift it. Tap the centre to see what is underneath.');
+      lift.hidden = true;
+    }
+  }
+  $('#fitDia').addEventListener('click', function (e) {
+    var g = e.target.closest('[data-l]');
+    if (g) { sel = g.dataset.l; renderFit(); return; }
+    if (e.target.closest('#fitLift') && sel && sel !== 'core') { lifted[sel] = !lifted[sel]; renderFit(); return; }
+    if (e.target.closest('#fitAll')) { LAYERS.forEach(function (k) { lifted[k] = true; }); sel = null; renderFit(); return; }
+    if (e.target.closest('#fitReset')) { lifted = {}; sel = null; renderFit(); }
+  });
+  $('#fitDia').addEventListener('keydown', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('[data-l]')) {
+      e.preventDefault();
+      sel = e.target.dataset.l; renderFit();
+    }
+  });
+
+  /* ---------- the desire checker ---------- */
+  var PRESETS = [
+    { id: 'prof', label: 'Choosing a profession', s: { proh: false, neg: false, imp: false } },
+    { id: 'spouse', label: 'Choosing a spouse', s: { proh: false, neg: false, imp: false } },
+    { id: 'charm', label: 'Wanting to be more charming', s: { proh: false, neg: false, imp: false } },
+    { id: 'rev', label: 'Wanting revenge', s: { proh: false, neg: true, imp: false } },
+    { id: 'ban', label: 'Something prohibited', s: { proh: true, neg: false, imp: false } },
+    { id: 'imp', label: 'Acting on impulse', s: { proh: false, neg: false, imp: true } }
+  ];
+  var DS = { proh: false, neg: false, imp: false }, activePre = 'prof';
+  $('#dsrPresets').innerHTML = PRESETS.map(function (p) { return '<button type="button" class="rc-btn" data-pre="' + p.id + '" aria-pressed="false">' + p.label + '</button>'; }).join('');
+  function renderDsr() {
+    $$('#dsrFactors .rc-factor').forEach(function (b) { b.setAttribute('aria-pressed', String(!!DS[b.dataset.f])); });
+    $$('#dsrPresets [data-pre]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.pre === activePre)); });
+    var passed = (DS.proh ? 0 : 1) + (DS.neg ? 0 : 1) + (DS.imp ? 0 : 1);
+    $$('#dsrBars i').forEach(function (i, idx) { i.classList.toggle('f', idx < passed); });
+    $('#dsrCount').innerHTML = 'Checks passed: ' + passed + ' of 3<small>Not prohibited, not from a negative emotion, examined and chosen.</small>';
+    var info = $('#dsrInfo');
+    if (DS.proh || DS.neg) {
+      var why = DS.proh && DS.neg ? 'It is explicitly prohibited and it grows out of a negative emotion.' : DS.proh ? 'It is explicitly prohibited in Islamic teaching.' : 'It grows out of excessive fear, anger, revenge or jealousy.';
+      setInfo(info, C.red, 'Verdict', 'A covering, not Layer B', why + ' That is not the self wanting something. <b>It is a layer placed on top of the self, speaking in its voice.</b>');
+    } else if (DS.imp) {
+      setInfo(info, C.pink, 'Verdict', 'A covering pretending to be Layer B', 'An impulse simply obeyed in the moment is the nafs taking over a decision that belonged to the person. A desire that has been <b>examined, tested against the two conditions and then chosen</b> is a right. This one has not been.');
+    } else {
+      setInfo(info, C.green, 'Verdict', 'Layer B: the real self wanting something real', 'It passes both conditions and has been examined and chosen. <b>Nothing more is demanded of it.</b> This is an individual right, to be acknowledged and fulfilled, so long as it stays beneath Layer A and never overshadows the greater purpose.');
+    }
+  }
+  $('#dsrDia').addEventListener('click', function (e) {
+    var f = e.target.closest('[data-f]'), p = e.target.closest('[data-pre]');
+    if (f) { DS[f.dataset.f] = !DS[f.dataset.f]; activePre = null; renderDsr(); return; }
+    if (p) {
+      var pr = PRESETS.filter(function (x) { return x.id === p.dataset.pre; })[0];
+      DS = { proh: pr.s.proh, neg: pr.s.neg, imp: pr.s.imp }; activePre = pr.id; renderDsr();
+    }
+  });
+
+  /* ---------- the goal example ---------- */
+  function renderNest() {
+    var u = NEST[nestCase].ui;
+    $('#nestHost').innerHTML =
+      '<div class="nest">' +
+      '<button type="button" class="rc-node c-fi" data-p="goal"><span class="n">ESSENTIAL GOAL</span>' + u.goal + '</button>' +
+      '<div class="nest-in">' +
+      '<button type="button" class="rc-node c-pe" data-p="needs"><span class="n">THE NECESSARY WORK</span>' + u.needs + '</button>' +
+      '<button type="button" class="rc-node c-ch dashed" data-p="desire"><span class="n">A DESIRE WOVEN IN</span>' + u.desire + '</button>' +
+      '</div>' +
+      '<button type="button" class="rc-node c-van ctr" data-p="rule">The method: recognise, assess, decide</button>' +
+      '</div>';
+    $$('#nestSeg [data-nest]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.nest === nestCase)); });
+    var dia = $('.rc-dia[data-dia="nest"]');
+    if (dia._reset) dia._reset();
+  }
+  $('#nestSeg').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-nest]');
+    if (b) { nestCase = b.dataset.nest; renderNest(); }
+  });
+
+  /* =====================  DEVIATION TAB  ===================== */
+  function gl(s) { return s.replace(/(overeating|Overeating|gluttony|diet control|control of food intake|Eat less|eat less|Stay hungry)/g, '<mark class="gl">$1</mark>'); }
+  function esc(s) { return s; }
+
+  /* ---- ticker ---- */
+  (function () {
+    var unit = '<span>ROOT CAUSE &#10022; OVEREATING &#10022; GLUTTONY &#10022; EAT LESS &#10022; STAY HUNGRY &#10022;</span>', h = '';
+    for (var i = 0; i < 12; i++) h += unit;
+    $('#glTrk').innerHTML = h;
+  })();
+
+  /* ---- diagram content ---- */
+  DW.return = {
+    order: ['r1', 'r2', 'r3', 'r4'],
+    intro: { t: 'Getting back is layered', b: 'One act of repentance is where it starts, not where it ends. Press Start, or tap any step.' },
+    items: {
+      r1: { c: C.amber, t: 'Repent immediately', b: 'Do a Salat-e-Tawbah and say a dua of forgiveness. Repent immediately, <b>but then continue rebuilding.</b> That one act is true in a limited sense, but it is not the whole picture.' },
+      r2: { c: C.teal, t: 'Tawbah restores the direction', b: 'Tawbah restores the direction. Continued alignment restores the life built around that direction.' },
+      r3: { c: C.amber, t: 'Keep rebuilding', b: 'Continue through prayer, Quran, dhikr, tahajjud, <mark class="gl">diet control</mark>, taqwa, R sessions, purposeful work, character development, and renewed Islamic engagement.' },
+      r4: { c: C.green, t: 'The fruits return', b: 'The positive effects previously experienced (Qurb, lower wahn, discipline, focus, Islamic identity, material attachment to Islam, and spiritual softness) were the fruits of sustained alignment, not merely one act. <b>Measure recovery not only by whether repentance occurred, but by whether the life is again becoming aligned.</b>' }
+    }
+  };
+  DW.wahn = {
+    order: ['w1', 'w2', 'w3', 'w4', 'w5', 'w6'],
+    intro: { t: 'How wahn takes over', b: 'Follow the chain from the first loss to the last. Press Start, or tap any step.' },
+    items: {
+      w1: { c: C.amber, t: 'Qurb-e-Ilahi weakens', b: 'As closeness to Allah weakened, attachment to worldly life and the opinions of people increased.' },
+      w2: { c: C.amber, t: 'Wahn rises', b: 'Attachment to the world and to people&rsquo;s opinions grows. Fear of losing comfort, safety, possessions, status, and life itself becomes more influential.' },
+      w3: { c: C.red, t: 'Fear of death, fear of violence', b: 'Wahn produces fear of death and fear of violence.' },
+      w4: { c: C.red, t: 'Going along with negative forces', b: 'A pull toward going along with oppressive or negative forces just to protect a fragile sense of safety and the comforts already built up in this life.' },
+      w5: { c: C.red, t: 'Living as though this world were permanent', b: 'A way of living and planning (house, transportation, every department of life) as though this world were permanent.' },
+      w6: { c: C.red, t: 'The afterlife fades out', b: 'The remembrance of death, Judgment Day, Jannah, and Jahannam fades out. Life gets wasted in the truest sense: <b>if death comes in this state, that is the real definition of failure.</b> Muslim identity itself erodes, since that identity rests on low fear of death and the courage to live and practice openly.' }
+    }
+  };
+  DW.root = {
+    order: ['root', 'zina', 'comfort', 'more', 'obese', 'lazy', 'strength', 'pray'],
+    intro: { t: 'Everything grows from one root', b: '<mark class="gl">Overeating is the root.</mark> Tap the root, or any branch, or press Start.' },
+    items: {
+      root: { c: C.red, t: 'Overeating: the root cause', b: '<mark class="gl">Every problem I have with sins, every single one, traces back somewhere to overeating.</mark> The root cause is gluttony. This is specific to your case. Overeating led toward zina, toward addiction to comfort, toward more overeating, toward obesity, laziness, and the loss of strength, manhood, testosterone, and general capability.' },
+      zina: { c: C.pink, t: 'Zina: a secondary cause, an offshoot', b: 'Theologically it may look like zina is the central problem and the source of every serious difficulty. But the more accurate read is that zina is a secondary cause, an offshoot of something deeper. <b>The primary cause is overeating.</b>' },
+      comfort: { c: C.amber, t: 'Addiction to comfort', b: 'Overeating led toward addiction to comfort. In practice it contributed to comfort-seeking and to greater vulnerability to other harmful behaviors.' },
+      more: { c: C.red, t: 'More overeating', b: 'A loop: overeating led toward <mark class="gl">more overeating.</mark>' },
+      obese: { c: C.orange, t: 'Obesity', b: 'Overeating led toward obesity, weight gain and reduced physical capability. That is why the plan includes fat loss.' },
+      lazy: { c: C.blue, t: 'Laziness', b: 'Overeating led toward laziness, and drained discipline and energy.' },
+      strength: { c: C.violet, t: 'Loss of strength and manhood', b: 'Overeating led toward the loss of strength, manhood, testosterone, and general capability.' },
+      pray: { c: C.red, t: 'The most serious effect', b: '<mark class="gl">The most serious effect of overeating has been that it makes prayer, namaz, and dua harder to sustain.</mark>' }
+    }
+  };
+  DW.obst = {
+    order: ['o1', 'o2', 'o3', 'o4'],
+    intro: { t: 'Three more reasons it is hard to get up', b: 'These are real, but secondary to the root cause. Press Start, or tap any step.' },
+    items: {
+      o1: { c: C.pink, t: 'The nafs: decision-making handed over', b: 'The reason return to fitrah has been so difficult is the habit of surrendering decision-making to the nafs. In reality, the nafs holds no independent power: there is no real &ldquo;power struggle&rdquo; between you and it. <b>The actual problem is confusing its commands for your own decisions.</b>' },
+      o2: { c: C.violet, t: 'Shaytan&rsquo;s whispering', b: 'The second obstacle is Shaytan&rsquo;s whispering, specifically around regret, the belief that return is impossible, and the fear that repentance won&rsquo;t be accepted. These whispers are a direct barrier to recovery and need to be recognized for what they are, <b>not accepted as truth.</b>' },
+      o3: { c: C.red, t: 'The terror barrier', b: 'Three causes for why getting up again has been so hard: (1) handing decision-making over to the nafs, so the animalistic state drives; (2) not pushing through the terror barrier, the initial barrier to starting, which a secular goal-achievement teacher would describe the same way; (3) giving in to Shaytan&rsquo;s whispers instead of recognizing and rejecting them.' },
+      o4: { c: C.green, t: 'The first step is on you alone', b: 'The Quran itself addresses this to the Prophet <span class="salawat" lang="ar">&#65018;</span>: the one wrapped in a blanket is told to get up and begin delivering the message. The rule seems to be that <b>the first step is on you alone</b>, and after that, Allah&rsquo;s help carries the rest of the journey.' }
+    }
+  };
+  DW.swamp = {
+    order: ['swamp', 'sink', 'time', 'bank'],
+    intro: { t: 'A fallen state with no barakah', b: 'Tap or hover any part of the picture, or press Start.' },
+    items: {
+      swamp: { c: C.amber, t: 'The swamp: no barakah, no divine help', b: 'If you are not on the right path, there is no barakah and no divine help. That is the rule.' },
+      sink: { c: C.red, t: 'Sinking slowly', b: 'Work still gets done, without barakah or divine help. This is like being stuck in a swamp and slowly sinking. <b>Every moment spent not returning is digging the hole deeper.</b>' },
+      time: { c: C.teal, t: 'Extra time to stand up', b: 'It means Allah is extending more time to stand up and return to the right path, but that time is not guaranteed to last.' },
+      bank: { c: C.green, t: 'The right path', b: 'The way out is to stand up and return. Extra time should be treated as an opportunity to correct course, not evidence that correction is unnecessary.' }
+    }
+  };
+  DW.repent = {
+    order: ['p1', 'p2', 'p3'],
+    intro: { t: 'The full repentance protocol', b: 'Regret, then proper repentance, then a firm commitment. Press Start, or tap any step.' },
+    items: {
+      p1: { c: C.amber, t: 'Regret', b: 'Repeated sin can weaken regret, therefore regret itself must be protected. Do not weaponize regret into despair: regret should lead to tawbah, not paralysis.' },
+      p2: { c: C.green, t: 'Proper repentance', b: 'Consciously reaffirming Allah Almighty as Lord, recognizing the obligation to obey Him, abandoning the sin, asking forgiveness, and making a genuine commitment not to return. <b>Tawbah is not merely verbal istighfar.</b>' },
+      p3: { c: C.teal, t: 'Firm commitment not to repeat the sin', b: 'Ritual repentance without genuine commitment must not be used as a substitute for real repentance. Maintain a strong practice through Salat-e-Tawbah, istighfar, Sayyid-ul-Istighfar, dua, and sincere self-correction.' }
+    }
+  };
+  DW.starting = {
+    order: ['s1', 's2', 's3', 's4', 'c1', 'c2', 'c3', 'c4'],
+    intro: { t: 'Starting time syndrome', b: 'The top chain keeps you waiting. The bottom chain is the way out. Press Start, or tap any step.' },
+    items: {
+      s1: { c: C.red, t: 'Chaos feeling', b: 'When a serious decision is made (&ldquo;I will stop this permanently&rdquo; or &ldquo;I will begin this consistently&rdquo;) the decision clashes with existing conditioning. This creates the chaos feeling, or terror barrier. It is predictable.' },
+      s2: { c: C.red, t: 'Indecision', b: 'The chaos feeling leads to indecision.' },
+      s3: { c: C.red, t: 'Procrastination', b: 'Indecision turns into procrastination.' },
+      s4: { c: C.red, t: 'Waiting for a perfect time', b: 'The terror barrier is then misinterpreted as evidence that now is the wrong time. <b>There is no perfect future starting time.</b> A starting date may be recorded, but it should never become something you wait for.' },
+      c1: { c: C.blue, t: 'Recognize', b: 'Recognize the chaos feeling for what it is. Do not mistake discomfort for evidence that the decision should be postponed.' },
+      c2: { c: C.amber, t: 'Decide', b: 'Make the decision. The decision, stopping the old behavior, and beginning reprogramming should occur together.' },
+      c3: { c: C.green, t: 'Act', b: 'Stop the old behavior and begin the new one. When the terror barrier appears, act rather than entering indecision.' },
+      c4: { c: C.teal, t: 'Cement', b: 'Begin R sessions together with the decision. They provide support while the new conditioning becomes stronger.' }
+    }
+  };
+  DW.shift = {
+    order: ['shift', 'rebound', 'cement'],
+    intro: { t: 'Shifting versus cementing', b: 'Two ways to imagine change. Tap or hover any part of the picture, or press Start.' },
+    items: {
+      shift: { c: C.amber, t: 'Shifting: one dramatic transfer', b: 'Change was imagined as a dramatic transfer from the non-Fitrah state into the Fitrah state: one major decision would transform the whole person.' },
+      rebound: { c: C.red, t: 'Exhaustion and rebound', b: 'Because existing conditioning remains, the conscious decision then has to fight the subconscious continuously, creating exhaustion and rebound.' },
+      cement: { c: C.green, t: 'Cementing: small patterns, repeated', b: 'Introduce small fitrah-aligned patterns, repeat them, consolidate them, and gradually allow them to become part of the self. Character is assembled rather than transformed through one dramatic decision. <b>Commitment establishes direction; cementing makes that direction durable.</b>' }
+    }
+  };
+  DW.getup = {
+    order: ['g1', 'g2', 'g3'],
+    intro: { t: 'Every time you fall, get up', b: 'Back to normality and uniformity, the fitrah path. Press Start, or tap any step.' },
+    items: {
+      g1: { c: C.amber, t: 'Step 1: Repentance', b: 'Begin with repentance, carried out in the proper manner.' },
+      g2: { c: C.teal, t: 'Step 2: Reprogramming and visualization sessions', b: 'Proceed to resume the reprogramming and visualization sessions.' },
+      g3: { c: C.green, t: 'Note: being able to restart is the sign', b: 'Being able to restart these sessions indicates that the actions associated with a fitrah life are being cemented within one&rsquo;s conditioning and subconscious mind. <b>In effect, fitrah life is being firmly established as a permanent part of your life.</b>' }
+    }
+  };
+
+  /* ---- effects widgets (sections 2 and 3) ---- */
+  var FX_RIGHT = {
+    A: { t: 'A. Qurb-e-Ilahi (closeness to Allah)', i: 'Closeness to Allah is built through strengthening belief, performing the obligatory acts of worship like prayer and fasting, and increasing voluntary acts like Quran recitation and dhikr. Sincere repentance, purifying the heart, and practicing kindness and honesty all deepen this closeness. It produces a cluster of real effects:', l: [
+      '<b>The hardness of the heart melts.</b> Softness grows in its place, and with it: acceptance, fewer but more effective words, less judgment, less pride, less malice toward others.',
+      'You regain the ability to cry: proof that the soul hasn&rsquo;t hardened into stone.',
+      '<b>Barakah increases</b>, in worldly affairs and spiritual ones. Problems past, present, and future get handled with more help from Allah.',
+      'You feel Him more, know Him more, fear Him and hope in Him in balance. The bond strengthens.'] },
+    B: { t: 'B. Physical and worldly effects', i: '', l: [
+      'Less tension, less stress, less mental illness, less anxiety over worldly goals. <b>The afterlife becomes the real priority;</b> worldly matters only carry weight insofar as they touch the afterlife.',
+      '<b>Wahn goes down</b> (attachment to the world and to what people think of you). When wahn is low, fear of death goes down, fear of violence goes down, and the temptation to compromise your identity for worldly gain fades.',
+      'Life becomes organized around the five daily prayers, which brings structure, pattern, and productivity.',
+      'Distractions (zina, pornography, music) fall away, and concentration, focus, and comprehension rise as a result.'] },
+    C: { t: 'C. Bond with the material aspects of Islam', i: '', l: [
+      'A real, felt connection develops with the mosque, the tasbeeh, the Quran, personal study setups, and Islamic apps.',
+      'A deep love develops for the holy cities and holy sites (Madina, Makkah, the Kaaba, Masjid-e-Nabawi, Masjid-e-Aqsa, Masjid-e-Quba) and for the idea of living near them, visiting them, raising a family around them. This becomes a source of motivation, even financial motivation.',
+      'Reverence grows for the Prophet&rsquo;s <span class="salawat" lang="ar">&#65018;</span> companions, the scholars, the Quran reciters, including personal favorites among them.'] }
+  };
+  var FX_WRONG = {
+    A: { t: 'A. Loss of Qurb-e-Ilahi and identity', i: '', l: [
+      'Closeness to Allah disappears, and with it the identity that came from it. <b>You are not a kafir, but you are not really living as a Muslim either:</b> Muslim in name only, disconnected from fitrah.',
+      'That loss of identity brings disorganization: no routine, no boundaries, drifting into haram relationships, following the nafs, taking direction from anyone, believing anything, having no worldview.',
+      'This is a regression that touches every part of life: physical, mental, spiritual, worldly, and otherworldly.'] },
+    B: { t: 'B. Physical and worldly consequences (wahn)', i: '', l: [
+      '<b>Wahn rises:</b> attachment to the world and to people&rsquo;s opinions grows. This produces fear of death, fear of violence, and a pull toward going along with oppressive or negative forces just to protect a fragile sense of safety and the comforts already built up in this life.',
+      'It produces a way of living and planning (house, transportation, every department of life) as though this world were permanent. The remembrance of death, Judgment Day, Jannah, and Jahannam fades out.',
+      'Life gets wasted in the truest sense: if death comes in this state, that is the real definition of failure.',
+      'Muslim identity itself erodes, since that identity rests on low fear of death and the courage to live and practice openly.'] },
+    C: { t: 'C. Loss of the material bond', i: '', l: [
+      'The pull toward the mosque, the Quran, the tasbeeh, the favorite reciters and scholars fades. The love for the holy cities and holy sites fades.',
+      'This loss is genuinely feared, because losing this bond means <b>losing your sources of peace, calm, motivation, and belonging.</b>',
+      'It is, in every sense, downhill from here once this bond goes.'] }
+  };
+  function fxInit(id, data, color) {
+    var box = $('#' + id), cs = $('#' + id + 'Case');
+    function show(k) {
+      var d = data[k];
+      cs.style.setProperty('--fc', color);
+      cs.innerHTML = '<h3>' + d.t + '</h3>' + (d.i ? '<p class="intro">' + d.i + '</p>' : '') + '<ul>' + d.l.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>';
+      $$('[data-k]', box).forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.k === k)); });
+    }
+    box.addEventListener('click', function (e) { var b = e.target.closest('[data-k]'); if (b) show(b.dataset.k); });
+    show('A');
+  }
+  fxInit('fxRight', FX_RIGHT, C.green);
+  fxInit('fxWrong', FX_WRONG, C.red);
+
+  /* ---- hadith gauge ---- */
+  var gaugeN = 1;
+  function renderGauge() {
+    var g = $('#gauge');
+    g.classList.toggle('small', gaugeN === 1);
+    $$('#gauge i').forEach(function (i, idx) { i.classList.toggle('f', idx < gaugeN); });
+    $('#gaugeN').textContent = gaugeN;
+    $$('#gaugeSeg [data-g]').forEach(function (b) { b.setAttribute('aria-pressed', String(+b.dataset.g === gaugeN)); });
+    $('#gaugeTxt').innerHTML = 'A Mu&rsquo;min (believer) eats in one intestine, while a Kafir (disbeliever) eats in seven intestines. <b>' +
+      (gaugeN === 1 ? 'The believer is satisfied with a little food.' : 'The disbeliever eats a lot.') + '</b>';
+  }
+  $('#gaugeSeg').addEventListener('click', function (e) { var b = e.target.closest('[data-g]'); if (b) { gaugeN = +b.dataset.g; renderGauge(); } });
+  renderGauge();
+
+  /* ---- root tree: remove the root ---- */
+  function renderRoot(cut) {
+    $('#rootTree').classList.toggle('cut', cut);
+    $('#rootCut').setAttribute('aria-pressed', String(cut));
+    $('#rootCut').textContent = cut ? 'Let it grow back' : 'Remove the root';
+    $('#rootVerdict').innerHTML = cut
+      ? 'Root removed: the branches have nothing left to grow from.<small>Controlling what you eat and eating less goes after the very root of all the sins you commit.</small>'
+      : 'Every branch grows from the same root.<small>Tap &ldquo;Remove the root&rdquo; to see what happens when you eat less.</small>';
+  }
+  $('#rootCut').addEventListener('click', function () { renderRoot(!$('#rootTree').classList.contains('cut')); });
+  renderRoot(false);
+
+  /* ---- lessons ---- */
+  var LESSONS = [
+    { n: 1, cat: 'return', t: 'Deferring the return to fitrah', g: 'The right path was treated as something for later', p: ['The right path was treated as something to return to later, after becoming ready, fixing certain problems, reaching the right date, or creating the right circumstances. This turned the present into a waiting period. The Fitrah framework instead treats the right path as the ground beneath you now, not a future destination.'], s: ['Stop asking, &ldquo;When will I return?&rdquo; and ask, &ldquo;Am I standing on the right path right now?&rdquo; Return in the present through tawbah, worship, and immediate fitrah-aligned action.'], l: ['Never defer living according to Fitrah to a future version of yourself.', 'The future self is constructed through present actions; postponing return trains further postponement.', 'The purposeful life has already started; there is no future initiation point to wait for.', 'Return should happen as soon as deviation is recognized.'] },
+    { n: 2, cat: 'return', t: 'Treating repentance non-seriously', g: 'Sin, say Astaghfirullah, assume everything is restored', p: ['Repentance became something light and repetitive: sin, say Astaghfirullah, perform a ritual act, and assume everything had been restored. Tawbah was postponed and its seriousness weakened.'], s: ['Use the full repentance protocol: Regret &rarr; Proper repentance &rarr; Firm commitment not to repeat the sin.', 'Proper repentance means consciously reaffirming Allah Almighty as Lord, recognizing the obligation to obey Him, abandoning the sin, asking forgiveness, and making a genuine commitment not to return.'], l: ['Tawbah is not merely verbal istighfar.', 'Ritual repentance without genuine commitment must not be used as a substitute for real repentance.', 'Repeated sin can weaken regret; therefore regret itself must be protected.', 'Repentance should be immediate rather than repeatedly postponed.', 'Maintain a strong repentance practice through Salat-e-Tawbah, istighfar, Sayyid-ul-Istighfar, dua, and sincere self-correction.'] },
+    { n: 3, cat: 'return', t: 'Repenting because of consequences instead of because it is sin', g: 'The motive centred on damage, not on Allah’s prohibition', p: ['The motivation to abandon sins could become centred on their consequences: damage to health, relationships, masculinity, productivity, barakah, peace, or worldly life.'], s: ['Return the intention to its proper foundation: a sin is abandoned primarily because Allah Almighty has forbidden it. Its consequences can be understood, but they remain secondary.'], l: ['Repent from sin because it is sin and disobedience to Allah Almighty.', 'Do not make worldly damage the fundamental reason for obedience.', 'Consequences may reinforce understanding, but they must not replace taqwa as the basis of restraint.', 'The question should ultimately be: Is Allah pleased with this or has Allah forbidden it?'] },
+    { n: 4, cat: 'return', t: 'Thinking of yourself as a rebel rather than a sinful Muslim', g: 'A fall was read as having left the path entirely', p: ['After falling into sin, the fall could be interpreted as having completely left the right path. This created hopelessness and encouraged further delay: &ldquo;I must first fix myself before I can return to Allah.&rdquo;'], s: ['Recognize the distinction between a fallen state and abandoning the path entirely. A fall calls for tawbah and standing back up, not a lengthy reconstruction before repentance.'], l: ['Think of yourself as sinful, not rebel.', 'A fall should trigger immediate tawbah, not identity collapse.', 'Do not wait until you feel worthy of repentance.', 'Tawbah is the act of getting back up; it is not the reward you receive after fixing yourself.', 'A temporary lapse should not be converted into prolonged deviation.'] },
+    { n: 5, cat: 'change', t: 'Dependency fallacy on the tools of change', g: '&ldquo;I can allow this now, I can change it later&rdquo;', p: ['R sessions and subconscious reprogramming became a future rescue mechanism: &ldquo;I can allow this behavior now because I know how to change it later.&rdquo;', 'This allowed harmful and sinful patterns to become established.'], s: ['Use tools of change to correct existing patterns, never as permission to create new ones. Prevent further repetition while simultaneously using R sessions and other cementing methods.'], l: ['Do not allow a sinful or harmful pattern to develop because you believe you can easily reverse it later through R sessions or other tools.', 'The existence of tools for change does not make regression safe.', 'Every repetition further establishes and strengthens the behavioral pattern.', 'Once established, changing the pattern requires significantly more effort.', 'Established patterns produce stronger urges to return when you later try to stop.', 'Greater resistance and stronger urges increase the likelihood of relapse and therefore increase the possibility that the intended change will not happen at all.', 'Tools of change should correct existing patterns, never justify knowingly creating or continuing them.'] },
+    { n: 6, cat: 'change', t: 'Starting time syndrome', g: 'The chaos feeling was read as proof that now is the wrong time', p: ['When a serious decision is made (&ldquo;I will stop this permanently&rdquo; or &ldquo;I will begin this consistently&rdquo;) the decision clashes with existing conditioning. This creates the chaos feeling / terror barrier.', 'The chain becomes: Chaos feeling &rarr; indecision &rarr; procrastination &rarr; waiting for a perfect starting time. The terror barrier is then misinterpreted as evidence that now is the wrong time.'], s: ['Recognize the chaos feeling for what it is. Make the decision, stop the old behavior, begin the new behavior, and begin R sessions together. Treat the terror barrier as something to cross rather than something that authorizes waiting.'], l: ['There is no perfect future starting time.', 'The chaos feeling is predictable when a decision conflicts with established conditioning.', 'Do not mistake discomfort for evidence that the decision should be postponed.', 'The decision, stopping the old behavior, and beginning reprogramming should occur together.', 'R sessions provide support while the new conditioning becomes stronger.', 'A starting date may be recorded, but it should never become something you wait for.', 'When the terror barrier appears, act rather than entering indecision.', 'The correct response is: recognize &rarr; decide &rarr; act &rarr; cement.'] },
+    { n: 7, cat: 'change', t: 'Shifting instead of cementing', g: 'One dramatic decision was expected to transform the whole person', p: ['Change was imagined as a dramatic transfer from the non-Fitrah state into the Fitrah state: one major decision would transform the whole person.', 'The Fitrah framework calls this shifting. Because existing conditioning remains, the conscious decision then has to fight the subconscious continuously, creating exhaustion and rebound.'], s: ['Use cementing: introduce small fitrah-aligned patterns, repeat them, consolidate them, and gradually allow them to become part of the self.'], l: ['Character is assembled rather than transformed through one dramatic decision.', 'Add and consolidate patterns one at a time.', 'Do not demand that willpower instantly rewrite long-standing conditioning.', 'Use R sessions, repetition, replacement behaviors, and gradual consolidation.', 'Commitment establishes direction; cementing makes that direction durable.', 'A slip after progress should not be treated as proof that the entire change has collapsed.'] },
+    { n: 8, cat: 'body', root: true, t: 'Overeating as a primary practical cause', g: 'THE ROOT CAUSE · food intake must be under conscious control', p: ['In the case-specific analysis, overeating became a central practical trigger. It contributed to comfort-seeking, laziness, weight gain, reduced physical capability, difficulty with prayer and dua, and greater vulnerability to other harmful behaviors.'], s: ['Treat control of food intake as a major part of the return: Eat less, stop overeating, pursue fat loss and physical health, and use hunger and restraint as part of strengthening self-control.'], l: ['Do not treat overeating as an isolated dietary problem.', 'Recognize its downstream effects on worship, discipline, energy, sexual behavior, focus, and self-control.', 'Correct the physical foundation alongside the spiritual one.', 'Food intake must remain under conscious control rather than the control of appetite.', 'Prevent overeating before attempting to solve every downstream problem it helps generate.'] },
+    { n: 9, cat: 'inner', t: 'Handing decision-making to the nafs', g: 'Commands of appetite and comfort were treated as personal decisions', p: ['Commands arising from appetite, comfort, sexual desire, laziness, or immediate gratification were treated as though they were personal decisions. This gave the nafs practical control.'], s: ['Separate the command of the nafs from your own conscious decision. Do not negotiate with every impulse. Use willpower and taqwa to retain decision-making authority.'], l: ['The presence of an urge does not make it your decision.', 'Do not confuse &ldquo;I want this right now&rdquo; with &ldquo;I have decided this is what I should do.&rdquo;', 'Stop unnecessary negotiation with the nafs.', 'Decisions should come from belief, taqwa, purpose, and conscious judgment rather than immediate desire.', 'Self-control must be exercised before the nafs establishes a behavioral pattern.'] },
+    { n: 10, cat: 'inner', t: 'Shaytan&rsquo;s whispers', g: '&ldquo;You cannot return.&rdquo; &ldquo;You should fix yourself first.&rdquo;', p: ['Whispers appeared in forms such as: &ldquo;You have gone too far.&rdquo; &ldquo;You cannot return.&rdquo; &ldquo;Your repentance will not be accepted.&rdquo; &ldquo;You should fix yourself first.&rdquo;', 'These thoughts encouraged despair and further postponement.'], s: ['Recognize these thoughts immediately as whispers rather than conclusions that deserve extended consideration. Respond through tawbah, dhikr, worship, and immediate return.'], l: ['Do not weaponize regret into despair.', 'Regret should lead to tawbah, not paralysis.', 'Do not treat the thought that return is impossible as established truth.', 'Do not allow uncertainty about acceptance to become an excuse not to repent.', 'Recognizing the whisper early prevents it from developing into prolonged indecision.'] },
+    { n: 11, cat: 'change', t: 'Losing continuous growth', g: 'When purposeful growth stopped, regression followed', p: ['The Fitrah framework treats growth as a continuous quality of the right path. When purposeful growth stopped, regression followed.', 'This included losing progress in character, work, health, goals, subconscious reprogramming, and disciplined living.'], s: ['Return continuously to growth through purposeful work, character development, fitness, health, R sessions, visualization, worship, and goal-directed tasks.'], l: ['Growth is not a temporary project.', 'After completing one task or recovering from a deviation, immediately return to purposeful growth.', 'Stagnation should be recognized early before it becomes regression.', 'Fitrah and purposeful life should operate together.', 'Your daily life should continuously contain some form of meaningful forward movement.'] },
+    { n: 12, cat: 'body', t: 'Hyperstimulation and artificial reward', g: 'Artificial reward made real life feel insufficient', p: ['Pornography, compulsive digital consumption, music within your framework, and other highly stimulating behaviors competed with prayer, real work, reading, relationships, and ordinary life.', 'The Fitrah document describes repeated artificial stimulation as making slower real-life rewards feel comparatively insufficient and training attention toward immediate reward.'], s: ['Remove or gradually displace hyperstimulating behaviors through cementing, replacement behaviors, R sessions, worship, real work, exercise, reading, and genuine human connection.'], l: ['Protect the reward system from repeated artificial overstimulation.', 'Do not expect prayer, work, reading, and ordinary life to compete easily with continuously intensified stimulation.', 'Replace artificial reward with meaningful real-world activity rather than merely creating an empty space.', 'Reducing hyperstimulation is part of restoring concentration, presence, and satisfaction with ordinary life.'] },
+    { n: 13, cat: 'world', t: 'Rise of wahn', g: 'Worldly security became the highest criterion', p: ['As Qurb-e-Ilahi weakened, attachment to worldly life and the opinions of people increased. Fear of losing comfort, safety, possessions, status, and life itself became more influential.'], s: ['Restore an akhirah-centred worldview through prayer, Quran, dhikr, remembrance of death, Judgment Day, Jannah and Jahannam, and conscious reinforcement of Muslim identity.'], l: ['Do not allow worldly security to become the highest criterion for decisions.', 'Regularly restore the afterlife to its proper place in your worldview.', 'Fear of death and attachment to worldly comfort should be watched as indicators of growing wahn.', 'Muslim identity should not be compromised merely to preserve worldly comfort or social approval.'] },
+    { n: 14, cat: 'world', t: 'Loss of Qurb-e-Ilahi and the material bond with Islam', g: 'The emotional connection with Islam&rsquo;s places and symbols faded', p: ['Deviation was accompanied by fading closeness to Allah and fading emotional connection with the mosque, Quran, tasbeeh, scholars, reciters, companions, Makkah, Madinah, the Kaaba, Masjid-e-Nabawi, Masjid-e-Aqsa, and other Islamic symbols and places.'], s: ['Actively rebuild these bonds through prayer, Quran, dhikr, Islamic study, mosque attendance, listening to Quran recitation, Islamic content, and renewed engagement with the people, places, and objects associated with Islam.'], l: ['Do not treat these bonds as decorative or secondary.', 'Their weakening can serve as an early warning that spiritual alignment is deteriorating.', 'Maintain regular exposure to the things that strengthen Islamic belonging.', 'Protect sources of spiritual peace, identity, motivation, and reverence before they fade.'] },
+    { n: 15, cat: 'return', t: 'Mistaking repentance alone for complete recovery', g: 'One Salat-e-Tawbah and one dua would restore everything', p: ['There was a temptation to think that one Salat-e-Tawbah and one dua would completely restore the previous Fitrah state.', 'But the positive effects previously experienced (Qurb, lower wahn, discipline, focus, Islamic identity, material attachment to Islam, and spiritual softness) were the fruits of sustained alignment, not merely one act.'], s: ['Repent immediately, but then continue rebuilding through prayer, Quran, dhikr, tahajjud, diet control, taqwa, R sessions, purposeful work, character development, and renewed Islamic engagement.'], l: ['Tawbah restores the direction; continued alignment restores the life built around that direction.', 'Do not expect months of regression to have every practical consequence reversed through one ritual act.', 'Seek both forgiveness and reconstruction of the positive fruits of Fitrah.', 'Measure recovery not only by whether repentance occurred, but by whether the life is again becoming aligned.'] },
+    { n: 16, cat: 'world', t: 'Mistaking continued worldly functioning for safety', g: 'Productivity was read as proof that all is well', p: ['Even during deviation, some work may still get done and some worldly objectives may still progress. This can create false reassurance that the condition is therefore acceptable.'], s: ['Do not use productivity or worldly success as the measure of spiritual alignment. Judge the state primarily through obedience, worship, taqwa, Qurb-e-Ilahi, and alignment with the right path.'], l: ['Worldly functioning does not necessarily mean the underlying spiritual condition is healthy.', 'Do not interpret continued productivity as permission to delay return.', 'If deviation is recognized, return immediately whether worldly affairs appear to be functioning or collapsing.', 'Extra time should be treated as an opportunity to correct course, not evidence that correction is unnecessary.'] }
+  ];
+  var LCATS = [['all', 'All 16'], ['root', 'ROOT CAUSE'], ['return', 'Return and repentance'], ['change', 'How change works'], ['inner', 'The nafs and Shaytan'], ['body', 'Body and reward system'], ['world', 'Worldview and bond']];
+  var lcat = 'all';
+  function lessonHTML(L) {
+    var body = '<div class="blk"><h5 class="pr">Problem</h5>' + L.p.map(function (x) { return '<p>' + gl(x) + '</p>'; }).join('') +
+      '<h5 class="so">Devised solution</h5>' + L.s.map(function (x) { return '<p>' + gl(x) + '</p>'; }).join('') +
+      '<h5>Lessons</h5><ul>' + L.l.map(function (x) { return '<li>' + gl(x) + '</li>'; }).join('') + '</ul></div>';
+    var flag = L.root ? '<span class="rootflag">Root cause</span>' : '';
+    return '<details class="rc-pc' + (L.root ? ' root' : '') + '" data-cat="' + L.cat + '" data-root="' + (L.root ? 1 : 0) + '"' + (L.root ? ' open' : '') + '><summary><b>' + L.n + '</b><span>' + flag + L.t + '<small>' + L.g + '</small></span></summary><div class="body">' + body + '</div></details>';
+  }
+  $('#lessons').innerHTML = LESSONS.map(lessonHTML).join('');
+  function renderLF() {
+    $('#lessonFilter').innerHTML = LCATS.map(function (c) {
+      return '<button type="button" class="chip' + (c[0] === 'root' ? ' rootchip' : '') + '" data-lc="' + c[0] + '" aria-pressed="' + (lcat === c[0]) + '">' + c[1] + '</button>';
+    }).join('');
+    $$('#lessons .rc-pc').forEach(function (d) {
+      var show = lcat === 'all' || (lcat === 'root' ? d.dataset.root === '1' : d.dataset.cat === lcat);
+      d.hidden = !show;
+    });
+  }
+  $('#lessonFilter').addEventListener('click', function (e) { var b = e.target.closest('[data-lc]'); if (b) { lcat = b.dataset.lc; renderLF(); } });
+  renderLF();
+
+  /* ---- action plan ---- */
+  var PLAN = [
+    { t: 'Constant / repeated', c: C.teal, items: [
+      { id: 'ist', t: 'Istighfar: on tasbeeh, plus the dua of repentance for sin, plus a dua asking for tawfeeq (the ability and opportunity) to keep doing more repentance and tawbah.' },
+      { id: 'sal', t: 'Salat-e-Tawbah (tawbah prayer).' },
+      { id: 'say', t: 'Sayyid-ul-Istighfar.' },
+      { id: 'bel', bel: true, t: 'Belief cultivation: 7 times a day' }] },
+    { t: 'Daily / regular', c: C.green, items: [
+      { id: 'nam', t: 'The five obligatory prayers (Namaz).' },
+      { id: 'qur', t: 'Quran recitation, and listening to Quran recitation.' },
+      { id: 'dhi', t: 'Dhikr.' },
+      { id: 'tah', t: 'Tahajjud, with dua.' },
+      { id: 'dua', t: 'A specific, sincere dua asking Allah to reverse the damage caused by zina, overeating, and the other factors above, and to restore what has been lost, made with the understanding that there is nothing to &ldquo;offer&rdquo; Allah in exchange, only sincerity.' },
+      { id: 'reg', t: 'Dua asking for tawfeeq to genuinely regret past sins.' }] },
+    { t: 'Boundaries', sub: 'kept today', c: C.blue, items: [
+      { id: 'mus', t: 'No music.' },
+      { id: 'dis', t: 'Avoid the distractions that erode focus and closeness (zina, pornography, and similar).' }] },
+    { t: 'Rebuilding the material bond', c: C.amber, items: [
+      { id: 'bon', t: 'Regularly consume content that strengthens the bond with the material aspects of Islam: the mosque, the holy cities, the scholars and reciters, the companions.' }] },
+    { t: 'Mindset corrections to actively hold', c: C.violet, txtOnly: true, items: [
+      { id: 'm1', t: 'The nafs has no independent power: stop treating this as a power struggle and start treating it as a matter of not confusing its commands with your own will.' },
+      { id: 'm2', t: 'Recognize Shaytan&rsquo;s whispers (regret weaponized into despair, the belief that return is impossible, the fear that repentance won&rsquo;t be accepted) the moment they appear, and reject them as whispers rather than truths.' },
+      { id: 'm3', t: 'Push through the terror barrier deliberately: the first step of any of the above is the one part of this journey that is entirely on you to take.' }] },
+    { t: 'Physical foundation: food', c: C.red, glut: true,
+      why: '<mark class="gl">Correct the diet and control food intake</mark>: fat loss, less eating, <mark class="gl">no overeating.</mark> Treated as close to top priority. This is considered possibly the <b>second most important factor in the entire recovery</b>, directly beneath the spiritual acts above.',
+      items: [{ id: 'eat', w: 'Eat less. No overeating. Stay hungry, and do not negotiate with the nafs about food.', t: 'I ate less today. No overeating. I stayed hungry and did not negotiate with the nafs about food.' }] }
+  ];
+  var PKEY = 'rp-dev-plan-v1';
+  function todayStr() { var d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
+  var PS = lsGet(PKEY, null);
+  if (!PS || PS.date !== todayStr()) PS = { date: todayStr(), done: {}, bel: 0 };
+  var PTOTAL = 0; PLAN.forEach(function (g) { if (!g.txtOnly) PTOTAL += g.items.length; });
+  function pDone(it) { return it.bel ? PS.bel >= 7 : !!PS.done[it.id]; }
+  function renderPlan() {
+    var n = 0;
+    var CL = PLAN.filter(function (g) { return !g.txtOnly; });
+    var ordered = CL.filter(function (g) { return g.glut; }).concat(CL.filter(function (g) { return !g.glut; }));
+    $('#planGrid').innerHTML = ordered.map(function (g) {
+      var lis = g.items.map(function (it) {
+        var d = pDone(it); if (d) n++;
+        if (it.bel) {
+          var dots = ''; for (var i = 1; i <= 7; i++) dots += '<button type="button" data-bel="' + i + '" aria-pressed="' + (PS.bel >= i) + '" aria-label="Belief cultivation ' + i + ' of 7">' + i + '</button>';
+          return '<li><div class="pi" aria-pressed="' + d + '"><span class="ck"></span><span class="tx">' + it.t + ' (' + PS.bel + ' of 7)</span></div><div class="dots7">' + dots + '</div></li>';
+        }
+        return '<li><button type="button" class="pi" data-pi="' + it.id + '" aria-pressed="' + d + '"><span class="ck"></span><span class="tx">' + gl(it.t) + '</span></button></li>';
+      }).join('');
+      return '<div class="plan-card' + (g.glut ? ' glut' : '') + '" style="--c:' + g.c + '"><h3>' + (g.glut ? '&#9888; ' : '') + g.t + (g.sub ? '<small>' + g.sub + '</small>' : '') + '</h3>' + (g.why ? '<p class="why">' + g.why + '</p>' : '') + '<ul>' + lis + '</ul></div>';
+    }).join('');
+    var r = 26, c = 2 * Math.PI * r, off = c * (1 - n / PTOTAL);
+    $('#planRing').innerHTML = '<circle cx="30" cy="30" r="26" fill="none" stroke="var(--surface2)" stroke-width="7"/><circle cx="30" cy="30" r="26" fill="none" stroke="var(--pe-c)" stroke-width="7" stroke-linecap="round" stroke-dasharray="' + c.toFixed(2) + '" stroke-dashoffset="' + off.toFixed(2) + '" transform="rotate(-90 30 30)"/>';
+    $('#planBig').textContent = n + ' of ' + PTOTAL;
+    $('#planSmall').textContent = 'done today';
+  }
+  $('#planGrid').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-bel]'), p = e.target.closest('[data-pi]');
+    if (b) { var i = +b.dataset.bel; PS.bel = PS.bel === i ? i - 1 : i; }
+    else if (p) { PS.done[p.dataset.pi] = !PS.done[p.dataset.pi]; }
+    else return;
+    lsSet(PKEY, PS); renderPlan();
+  });
+  $('#planReset').addEventListener('click', function () { PS = { date: todayStr(), done: {}, bel: 0 }; lsSet(PKEY, PS); renderPlan(); });
+  renderPlan();
+  function renderPlanText() {
+    var vis = PLAN;
+    var ordered = vis.filter(function (g) { return g.glut; }).concat(vis.filter(function (g) { return !g.glut; }));
+    $('#planText').innerHTML = ordered.map(function (g) {
+      var lis = g.items.map(function (it) { return '<li>' + gl(it.w || it.t) + '</li>'; }).join('');
+      return '<div class="plan-card' + (g.glut ? ' glut' : '') + '" style="--c:' + g.c + '"><h3>' + (g.glut ? '&#9888; ' : '') + g.t + '</h3>' + (g.why ? '<p class="why">' + g.why + '</p>' : '') + '<ul class="ptxt">' + lis + '</ul></div>';
+    }).join('');
+  }
+  renderPlanText();
+
+
+  /* ---------- start ---------- */
+  renderTaste('taste');
+  renderNest();
+  $$('.rc-dia[data-dia]').forEach(initDia);
+  renderFit();
+  renderDsr();
+  readTracker('data-read', 's', 'rp-intro-read-v1', '#overall', 8);
+  readTracker('data-dread', 'd', 'rp-dev-read-v1', '#d-overall', 8);
+  showTab(lsGet(TABKEY, 'intro'));
+})();
+
+</script>
+</body>
+</html>
